@@ -148,11 +148,6 @@ local UpdateFrame = function(self)
 	self.healthBar:SetHeight(5 / barScale)
 	self.healthBar:SetWidth(80 / barScale)
 
-	self.castBar:ClearAllPoints()
-	self.castBar:SetPoint("TOP", self.healthBar, "BOTTOM", 0, -2 / barScale)
-	self.castBar:SetHeight(5 / barScale)
-	self.castBar:SetWidth(80 / barScale)
-
 	self.highlight:SetTexture(nil)
 
 	self.name:SetText(self.oldname:GetText())
@@ -176,10 +171,17 @@ end
 local FixCastbar = function(self)
 	self.castbarOverlay:Hide()
 
-	self:SetHeight(5)
-	-- self:SetWidth(80)
 	self:ClearAllPoints()
 	self:SetPoint("TOP", self.healthBar, "BOTTOM", 0, -2)
+	self:SetSize(80, 5)
+
+	while self:GetEffectiveScale() < 1 do
+		self:SetScale(self:GetScale() + 0.01)
+	end
+
+	while self:GetEffectiveScale() > 1 do
+		self:SetScale(self:GetScale() - 0.01)
+	end
 end
 
 local ColorCastBar = function(self, shielded)
@@ -202,7 +204,6 @@ local OnValueChanged = function(self, curValue)
 end
 
 local OnShow = function(self)
-	self.channeling  = UnitChannelInfo("target")
 	FixCastbar(self)
 	ColorCastBar(self, self.shieldedRegion:IsShown())
 end
@@ -284,7 +285,7 @@ local StyleFrame = function(frame)
 
 	spellIconRegion:ClearAllPoints()
 	spellIconRegion:SetAllPoints(iconFrame)
-	spellIconRegion:SetTexCoord(.1, .9, .1, .9)
+	spellIconRegion:SetTexCoord(.08, .92, .08, .92)
 
 	UpdateFrame(frame)
 	frame:SetScript("OnShow", UpdateFrame)

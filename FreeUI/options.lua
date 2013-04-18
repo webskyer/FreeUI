@@ -1,6 +1,7 @@
 local F, C, L = unpack(select(2, ...))
 
 -- All exceptions and special rules for these options are in profiles.lua!
+-- Consider using the in-game options instead, accessed through the game menu or by typing /freeui.
 
 --[[ Global config ]]
 
@@ -9,14 +10,18 @@ C["general"] = {
 	["buffTracker"] = true, 		-- track important buffs for some classes (scroll down to buffTracker table to configure)
 	["combatText"] = true, 			-- show incoming damage and healing near player frame
 	["helmcloakbuttons"] = true, 		-- show buttons to toggle helm/cloak on character frame
-	["interrupt"] = false,			-- announce your interrupts
+	["interrupt"] = true,			-- announce your interrupts
+		["interrupt_party"] = true,		-- enable in 5 mans / scenarios
+		["interrupt_bgs"] = false,		-- enable in battlegrounds
+		["interrupt_lfg"] = true, 		-- enable in dungeon/raid finder/scenario groups
+		["interrupt_outdoors"] = true,	-- enable when not in an instance
 	["mailButton"] = true, 			-- adds a button to the mail frame to collect all attachments
 	["nameplates"] = true, 			-- enable nameplates
 	["threatMeter"] = true,			-- threat bar above the target frame in dps/healer layout
 	["tolbarad"] = false,			-- Tol barad timer on the minimap
 	["tooltip_cursor"] = false,		-- anchor the tooltip to the cursor
 	["tooltip_guildranks"] = true, 	-- show guild ranks in tooltips
-	["uiScaleAuto"] = true,				-- force the correct UI scale
+	["uiScaleAuto"] = true,			-- force the correct UI scale
 	["undressButton"] = true, 		-- undress button on dressup frame
 }
 
@@ -27,6 +32,9 @@ C["automation"] = {
 	["autoRoll"] = true, 			-- automatically DE or greed on BoE greens (DE priority)
 		["autoRoll_maxLevel"] = true, 		-- only automatically roll on items at max level
 	["autoSell"] = true,			-- automatically sell greys
+	["autoSetRole"] = true,			-- automatically set role and hide dialog where possible
+		["autoSetRole_useSpec"] = true,		-- attempt to set role based on your current spec
+		["autoSetRole_verbose"] = false,	-- tells you what happens when setting role
 }
 
 C["actionbars"] = {
@@ -58,14 +66,14 @@ C["notifications"] = {
 C["unitframes"] = {
 	["enable"] = true, 						-- enable the unit frames and their included modules
 	["enableGroup"] = true,					-- enable party/raid frames
+		["healerClasscolours"] = false,				-- colour unitframes by class in healer layout
+		["limitRaidSize"] = false, 					-- show a maximum of 25 players in a raid
+		["partyNameAlways"] = false,				-- show name on party/raid frames in dps/tank layout
 	["enableArena"] = true,					-- enable arena/flag carrier frames
 
 	["cast"] = {"BOTTOM", UIParent, "CENTER", 0, -105}, 	-- only applies with 'castbar' set to 2
 	["castbarSeparate"] = true, 				-- true for a separate player cast bar
 		["castbarSeparateOnlyCasters"] = true, 		-- separate bar only for mages/warlocks/priests
-	["healerClasscolours"] = false,				-- colour unitframes by class in healer layout
-	["limitRaidSize"] = false, 					-- show a maximum of 25 players in a raid
-	["partyNameAlways"] = false,				-- show name on party/raid frames in dps/tank layout
 	["pvp"] = true, 							-- show pvp icon on player frame
 	["targettarget"] = false, 					-- show target of target frame
 
@@ -155,8 +163,7 @@ C["selfbuffs"] = {
 				109260, -- Aspect of the Iron Hawk
 				5118, -- Aspect of the Cheetah
 				13159, -- Aspect of the Pack
-				82661, -- Aspect of the Fox
-				85683, -- Aspect of the Beast
+				125042, -- Aspect of the Beast
 			},
 		},
 	},
@@ -383,13 +390,6 @@ C["debuffFilter"] = {
 	[10326] = true, -- Turn Evil
 	[33786] = true, -- Cyclone
 	[115078] = true, -- Paralysis
-
-	-- NPC debuffs
-	[90932] = true, -- Ragezone
-	[97170] = true, -- Deadzone (1)
-	[97600] = true, -- Deadzone (2)
-	[103527] = true, -- Void Diffusion (test)
-	[106784] = true, -- Brew Explosion
 }
 
 -- Buffs to show on enemy players
@@ -443,7 +443,6 @@ C["dangerousBuffs"] = {
 -- Debuffs healers don't want to see on raid frames
 
 C["hideDebuffs"] = {
-	[25771] = true, -- Forbearance
 	[57724] = true, -- Sated
 	[57723] = true, -- Exhaustion
 	[80354] = true, -- Temporal Displacement
@@ -506,6 +505,7 @@ C["myBuffs"] = {
 
 C["allBuffs"] = {
 	[86657] = true, -- Ancient Guardian
+	[642] = true, -- Divine Shield
 	[47788] = true, -- Guardian Spirit
 	[33206] = true, -- Pain Suppression
 	[31850] = true, -- Ardent Defender

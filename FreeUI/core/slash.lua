@@ -51,6 +51,14 @@ SlashCmdList.TESTUI = function()
 end
 SLASH_TESTUI1 = "/testui"
 
+SlashCmdList.VOLUME = function(value)
+	local numValue = tonumber(value)
+	if numValue and 0 <= numValue and numValue <= 1 then
+		SetCVar("Sound_MasterVolume", numValue)
+	end
+end
+SLASH_VOLUME1 = "/vol"
+
 SlashCmdList.FREEUI = function(cmd)
 	local cmd, args = strsplit(" ", cmd:lower(), 2)
 	if cmd == "dps" then

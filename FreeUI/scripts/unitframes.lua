@@ -42,58 +42,6 @@ local partyHeight = C.unitframes.party_height
 local partyWidthHealer = C.unitframes.party_width_healer
 local partyHeightHealer = C.unitframes.party_height_healer
 
---[[ Dropdown menu ]]
-
--- from oUF_Lily
-
-local name, addon = ...
-local dropdown = CreateFrame('Frame', 'oUF_FreeDropDown', UIParent, 'UIDropDownMenuTemplate')
-
-function addon:menu()
-	dropdown:SetParent(self)
-	return ToggleDropDownMenu(1, nil, dropdown, 'cursor', 0, 0)
-end
-
--- Slightly altered version of:
--- FrameXML/CompactUnitFrame.lua:730:CompactUnitFrameDropDown_Initialize
-local init = function(self)
-	local unit = self:GetParent().unit
-	local menu, name, id
-
-	if(not unit) then
-		return
-	end
-
-	if(UnitIsUnit(unit, "player")) then
-		menu = "SELF"
-	elseif(UnitIsUnit(unit, "vehicle")) then
-		-- NOTE: vehicle check must come before pet check for accuracy's sake because
-		-- a vehicle may also be considered your pet
-		menu = "VEHICLE"
-	elseif(UnitIsUnit(unit, "pet")) then
-		menu = "PET"
-	elseif(UnitIsPlayer(unit)) then
-		id = UnitInRaid(unit)
-		if(id) then
-			menu = "RAID_PLAYER"
-			name = GetRaidRosterInfo(id)
-		elseif(UnitInParty(unit)) then
-			menu = "PARTY"
-		else
-			menu = "PLAYER"
-		end
-	else
-		menu = "TARGET"
-		name = RAID_TARGET_ICON
-	end
-
-	if(menu) then
-		UnitPopup_ShowMenu(self, menu, unit, name, id)
-	end
-end
-
-UIDropDownMenu_Initialize(dropdown, init, 'MENU')
-
 --[[ Short values ]]
 
 local siValue = function(val)
@@ -185,6 +133,13 @@ oUF.Tags.Methods['free:health'] = function(unit)
 	end
 end
 oUF.Tags.Events['free:health'] = oUF.Tags.Events.missinghp
+
+-- boss health requires frequent updates to work
+oUF.Tags.Methods['free:bosshealth'] = function(unit)
+	local val = oUF.Tags.Methods['free:health'](unit)
+	return val or ""
+end
+oUF.Tags.Events['free:bosshealth'] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_TARGETABLE_CHANGED"
 
 oUF.Tags.Methods['free:maxhealth'] = function(unit)
 	if(not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit)) then return end
@@ -354,8 +309,6 @@ end
 --[[ Global ]]
 
 local Shared = function(self, unit, isSingle)
-	self.menu = addon.menu
-
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
 
@@ -533,48 +486,23 @@ local Shared = function(self, unit, isSingle)
 	-- [[ Heal prediction ]]
 
 	if FreeUIConfig.layout == 2 then
-		local mhpb = CreateFrame("StatusBar", nil, self.Health)
-		mhpb:SetPoint("TOPLEFT", self.Health:GetStatusBarTexture(), "TOPRIGHT")
-		mhpb:SetPoint("BOTTOMLEFT", self.Health:GetStatusBarTexture(), "BOTTOMRIGHT")
-		mhpb:SetStatusBarTexture(C.media.texture)
-		mhpb:SetStatusBarColor(0, .5, 1, 0.75)
+		local mhpb = self:CreateTexture()
+		mhpb:SetTexture(C.media.texture)
+		mhpb:SetVertexColor(0, .5, 1)
 
-		local ohpb = CreateFrame("StatusBar", nil, self.Health)
-		ohpb:SetPoint("TOPLEFT", mhpb:GetStatusBarTexture(), "TOPRIGHT")
-		ohpb:SetPoint("BOTTOMLEFT", mhpb:GetStatusBarTexture(), "BOTTOMRIGHT")
-		ohpb:SetStatusBarTexture(C.media.texture)
-		ohpb:SetStatusBarColor(.5, 0, 1, 0.75)
+		local ohpb = self:CreateTexture()
+		ohpb:SetTexture(C.media.texture)
+		ohpb:SetVertexColor(.5, 0, 1)
 
-		local absorbBar = CreateFrame("StatusBar", nil, self.Health)
-		absorbBar:SetPoint("TOPLEFT", self.Health:GetStatusBarTexture(), "TOPRIGHT")
-		absorbBar:SetPoint("BOTTOMLEFT", self.Health:GetStatusBarTexture(), "BOTTOMRIGHT")
-		absorbBar:SetStatusBarColor(1, .5, 1, 0.75)
+		local absorbBar = self:CreateTexture()
+		absorbBar:SetTexture(C.media.texture)
+		absorbBar:SetVertexColor(.8, .34, .8)
 
 		local overAbsorbGlow = self:CreateTexture(nil, "OVERLAY")
 		overAbsorbGlow:SetWidth(16)
 		overAbsorbGlow:SetBlendMode("ADD")
 		overAbsorbGlow:SetPoint("TOPLEFT", self.Health, "TOPRIGHT", -7, 0)
 		overAbsorbGlow:SetPoint("BOTTOMLEFT", self.Health, "BOTTOMRIGHT", -7, 0)
-
-		if unit == "player" then
-			mhpb:SetWidth(playerWidth)
-			ohpb:SetWidth(playerWidth)
-		elseif unit == "target" then
-			mhpb:SetWidth(targetWidth)
-			ohpb:SetWidth(targetWidth)
-		elseif unit == "focus" then
-			mhpb:SetWidth(focusWidth)
-			ohpb:SetWidth(focusWidth)
-		elseif unit == "pet" then
-			mhpb:SetWidth(petWidth)
-			ohpb:SetWidth(petWidth)
-		else
-			mhpb:SetWidth(partyWidthHealer)
-			ohpb:SetWidth(partyWidthHealer)
-		end
-
-		self.mhpb = mhpb
-		self.ohpb = ohpb
 
 		self.HealPrediction = {
 			-- status bar to show my incoming heals
@@ -1327,7 +1255,7 @@ local UnitSpecific = {
 
 		-- complicated filter is complicated
 		-- icon hides if:
-		-- it's a debuff on an enemy target which isn't yours and isn't in the useful buffs filter
+		-- it's a debuff on an enemy target which isn't yours, isn't cast by the target and isn't in the useful buffs filter
 		-- it's a buff on an enemy player target which is not important
 
 		local playerUnits = {
@@ -1337,8 +1265,8 @@ local UnitSpecific = {
 		}
 
 		Auras.CustomFilter = function(_, unit, icon, _, _, _, _, _, _, _, caster, _, _, spellID)
-			if(not playerUnits[icon.owner] and not C.debuffFilter[spellID] and not UnitIsFriend("player", unit) and icon.isDebuff)
-			or(UnitIsPlayer(unit) and not UnitIsFriend("player", unit) and not icon.isDebuff and not C.dangerousBuffs[spellID]) then
+			if(icon.isDebuff and not UnitIsFriend("player", unit) and not playerUnits[icon.owner] and icon.owner ~= self.unit and not C.debuffFilter[spellID])
+			or(not icon.isDebuff and UnitIsPlayer(unit) and not UnitIsFriend("player", unit) and not C.dangerousBuffs[spellID]) then
 				return false
 			end
 			return true
@@ -1403,13 +1331,13 @@ local UnitSpecific = {
 
 		local HealthPoints = F.CreateFS(Health, 8, "RIGHT")
 		HealthPoints:SetPoint("RIGHT", self, "TOPRIGHT", 0, 6)
-		self:Tag(HealthPoints, '[dead][free:health]')
+		self:Tag(HealthPoints, '[dead][free:bosshealth]')
 
 		Health.value = HealthPoints
 
 		local Name = F.CreateFS(self, 8, "LEFT")
 		Name:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 2)
-		Name:SetWidth(110)
+		Name:SetWidth((bossWidth / 2) + 10)
 		Name:SetHeight(8)
 
 		self:Tag(Name, '[name]')
@@ -1798,8 +1726,8 @@ oUF:Factory(function(self)
 		spawnHelper(self, 'targettarget', "BOTTOM", target, "TOP", 0, 15)
 	end
 
-	for n = 1, 5 do
-		spawnHelper(self,'boss' .. n, 'LEFT', 50, 0 - (56 * n))
+	for n = 1, MAX_BOSS_FRAMES do
+		spawnHelper(self, 'boss' .. n, 'LEFT', 50, 0 - (56 * n))
 	end
 
 	if C.unitframes.enableArena then

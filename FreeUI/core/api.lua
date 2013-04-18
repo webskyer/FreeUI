@@ -9,11 +9,16 @@ C.media = {
 	["arrowRight"] = "Interface\\AddOns\\FreeUI\\media\\arrow-right-active",
 	["backdrop"] = "Interface\\ChatFrame\\ChatFrameBackground", -- default backdrop
 	["checked"] = "Interface\\AddOns\\FreeUI\\media\\CheckButtonHilight", -- replace default checked texture
-	["font"] = "Interface\\AddOns\\FreeUI\\media\\Hooge0655.ttf", -- default pixel font
+	["font"] = "Interface\\AddOns\\FreeUI\\media\\PFRondaSeven.ttf", -- default pixel font
 	["font2"] = "Interface\\AddOns\\FreeUI\\media\\font.ttf", -- default font
 	["glow"] = "Interface\\AddOns\\FreeUI\\media\\glowTex", -- glow/shadow texture
+	["roleIcons"] = "Interface\\Addons\\FreeUI\\media\\UI-LFG-ICON-ROLES",
 	["texture"] = "Interface\\AddOns\\FreeUI\\media\\statusbar", -- statusbar texture
 }
+
+if GetLocale() == "ruRU" then
+	C.media.font = "Interface\\AddOns\\FreeUI\\media\\iFlash705.ttf"
+end
 
 C.classcolours = {
 	["DEATHKNIGHT"] = {r = 0.77, g = 0.12, b = 0.23},
@@ -93,7 +98,6 @@ end
 F.CreateFS = function(parent, size, justify)
     local f = parent:CreateFontString(nil, "OVERLAY")
     f:SetFont(C.media.font, size, "OUTLINEMONOCHROME")
-    f:SetShadowColor(0, 0, 0, 0)
     if(justify) then f:SetJustifyH(justify) end
     return f
 end
@@ -224,11 +228,9 @@ F.ReskinScroll = function(f)
 	bu.bg:SetPoint("BOTTOMRIGHT", bu, 0, 4)
 	F.CreateBD(bu.bg, 0)
 
-	local tex = f:CreateTexture(nil, "BACKGROUND")
+	local tex = CreateGradient(f)
 	tex:SetPoint("TOPLEFT", bu.bg, 1, -1)
 	tex:SetPoint("BOTTOMRIGHT", bu.bg, -1, 1)
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 	local up = _G[frame.."ScrollUpButton"]
 	local down = _G[frame.."ScrollDownButton"]
@@ -271,12 +273,12 @@ end
 
 local function colourArrow(f)
 	if f:IsEnabled() then
-		f.downtex:SetVertexColor(r, g, b)
+		f.tex:SetVertexColor(r, g, b)
 	end
 end
 
 local function clearArrow(f)
-	f.downtex:SetVertexColor(1, 1, 1)
+	f.tex:SetVertexColor(1, 1, 1)
 end
 
 F.ReskinDropDown = function(f)
@@ -304,12 +306,12 @@ F.ReskinDropDown = function(f)
 	dis:SetDrawLayer("OVERLAY")
 	dis:SetAllPoints()
 
-	local downtex = down:CreateTexture(nil, "ARTWORK")
-	downtex:SetTexture(C.media.arrowDown)
-	downtex:SetSize(8, 8)
-	downtex:SetPoint("CENTER")
-	downtex:SetVertexColor(1, 1, 1)
-	down.downtex = downtex
+	local tex = down:CreateTexture(nil, "ARTWORK")
+	tex:SetTexture(C.media.arrowDown)
+	tex:SetSize(8, 8)
+	tex:SetPoint("CENTER")
+	tex:SetVertexColor(1, 1, 1)
+	down.tex = tex
 
 	down:HookScript("OnEnter", colourArrow)
 	down:HookScript("OnLeave", clearArrow)
@@ -320,12 +322,16 @@ F.ReskinDropDown = function(f)
 	bg:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bg, 0)
 
-	CreateGradient(bg)
+	local gradient = CreateGradient(f)
+	gradient:SetPoint("TOPLEFT", bg, 1, -1)
+	gradient:SetPoint("BOTTOMRIGHT", bg, -1, 1)
 end
 
 local function colourClose(f)
-	for _, pixel in pairs(f.pixels) do
-		pixel:SetVertexColor(r, g, b)
+	if f:IsEnabled() then
+		for _, pixel in pairs(f.pixels) do
+			pixel:SetVertexColor(r, g, b)
+		end
 	end
 end
 
@@ -353,6 +359,12 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 	F.CreateBD(f, 0)
 
 	CreateGradient(f)
+
+	f:SetDisabledTexture(C.media.backdrop)
+	local dis = f:GetDisabledTexture()
+	dis:SetVertexColor(0, 0, 0, .4)
+	dis:SetDrawLayer("OVERLAY")
+	dis:SetAllPoints()
 
 	f.pixels = {}
 
@@ -389,7 +401,9 @@ F.ReskinInput = function(f, height, width)
 	bd:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bd, 0)
 
-	CreateGradient(bd)
+	local gradient = CreateGradient(f)
+	gradient:SetPoint("TOPLEFT", bd, 1, -1)
+	gradient:SetPoint("BOTTOMRIGHT", bd, -1, 1)
 
 	if height then f:SetHeight(height) end
 	if width then f:SetWidth(width) end
@@ -397,7 +411,7 @@ end
 
 F.ReskinArrow = function(f, direction)
 	f:SetSize(18, 18)
-	F.Reskin(f)
+	F.Reskin(f, true)
 
 	f:SetDisabledTexture(C.media.backdrop)
 	local dis = f:GetDisabledTexture()
@@ -405,10 +419,13 @@ F.ReskinArrow = function(f, direction)
 	dis:SetDrawLayer("OVERLAY")
 
 	local tex = f:CreateTexture(nil, "ARTWORK")
+	tex:SetTexture("Interface\\AddOns\\FreeUI\\media\\arrow-"..direction.."-active")
 	tex:SetSize(8, 8)
 	tex:SetPoint("CENTER")
+	f.tex = tex
 
-	tex:SetTexture("Interface\\AddOns\\FreeUI\\media\\arrow-"..direction.."-active")
+	f:HookScript("OnEnter", colourArrow)
+	f:HookScript("OnLeave", clearArrow)
 end
 
 F.ReskinCheck = function(f)
@@ -426,11 +443,9 @@ F.ReskinCheck = function(f)
 	bd:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bd, 0)
 
-	local tex = f:CreateTexture(nil, "BACKGROUND")
+	local tex = CreateGradient(f)
 	tex:SetPoint("TOPLEFT", 5, -5)
 	tex:SetPoint("BOTTOMRIGHT", -5, 5)
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 	local ch = f:GetCheckedTexture()
 	ch:SetDesaturated(true)
@@ -462,11 +477,9 @@ F.ReskinRadio = function(f)
 	F.CreateBD(bd, 0)
 	f.bd = bd
 
-	local tex = f:CreateTexture(nil, "BACKGROUND")
+	local tex = F.CreateGradient(f)
 	tex:SetPoint("TOPLEFT", 4, -4)
 	tex:SetPoint("BOTTOMRIGHT", -4, 4)
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 	f:HookScript("OnEnter", colourRadio)
 	f:HookScript("OnLeave", clearRadio)
