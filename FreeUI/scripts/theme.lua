@@ -2591,6 +2591,23 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateBG(HelpFrameCharacterStuckHearthstone)
 		HelpFrameCharacterStuckHearthstoneIconTexture:SetTexCoord(.08, .92, .08, .92)
 
+		F.Reskin(HelpBrowserNavHome)
+		F.Reskin(HelpBrowserNavReload)
+		F.Reskin(HelpBrowserNavStop)
+		F.Reskin(HelpBrowserBrowserSettings)
+		F.ReskinArrow(HelpBrowserNavBack, "left")
+		F.ReskinArrow(HelpBrowserNavForward, "right")
+
+		HelpBrowserNavHome:SetSize(18, 18)
+		HelpBrowserNavReload:SetSize(18, 18)
+		HelpBrowserNavStop:SetSize(18, 18)
+		HelpBrowserBrowserSettings:SetSize(18, 18)
+
+		HelpBrowserNavHome:SetPoint("BOTTOMLEFT", HelpBrowser, "TOPLEFT", 2, 4)
+		HelpBrowserBrowserSettings:SetPoint("TOPRIGHT", HelpFrameCloseButton, "BOTTOMLEFT", -4, -1)
+		LoadingIcon:ClearAllPoints()
+		LoadingIcon:SetPoint("LEFT", HelpBrowserNavStop, "RIGHT")
+
 		-- Option panels
 
 		local options = false
