@@ -12,6 +12,7 @@ C.media = {
 	["font"] = "Interface\\AddOns\\FreeUI\\media\\PFRondaSeven.ttf", -- default pixel font
 	["font2"] = "Interface\\AddOns\\FreeUI\\media\\font.ttf", -- default font
 	["glow"] = "Interface\\AddOns\\FreeUI\\media\\glowTex", -- glow/shadow texture
+	["gradient"] = "Interface\\AddOns\\FreeUI\\media\\gradient",
 	["roleIcons"] = "Interface\\Addons\\FreeUI\\media\\UI-LFG-ICON-ROLES",
 	["texture"] = "Interface\\AddOns\\FreeUI\\media\\statusbar", -- statusbar texture
 }
@@ -124,35 +125,44 @@ F.CreatePulse = function(frame) -- pulse function originally by nightcracker
 end
 
 local r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
+local buttonR, buttonG, buttonB, buttonA = unpack(C.general.buttonColour)
+local buttonColourGradient = C.general.buttonColourGradient
 
 local CreateGradient = function(f)
 	local tex = f:CreateTexture(nil, "BORDER")
 	tex:SetPoint("TOPLEFT", 1, -1)
 	tex:SetPoint("BOTTOMRIGHT", -1, 1)
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+	tex:SetTexture(buttonColourGradient and C.media.gradient or C.media.backdrop)
+	tex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
 
 	return tex
 end
 
 F.CreateGradient = CreateGradient
 
-local function StartGlow(f)
+local function colourButton(f)
 	if not f:IsEnabled() then return end
-	f:SetBackdropColor(r, g, b, .1)
+
+	if buttonColourGradient then
+		f:SetBackdropColor(r, g, b, .3)
+	else
+		f.tex:SetVertexColor(r / 4, g / 4, b / 4)
+	end
+
 	f:SetBackdropBorderColor(r, g, b)
-	f.glow:SetAlpha(1)
-	F.CreatePulse(f.glow)
 end
 
-local function StopGlow(f)
-	f:SetBackdropColor(0, 0, 0, 0)
+local function clearButton(f)
+	if buttonColourGradient then
+		f:SetBackdropColor(0, 0, 0, 0)
+	else
+		f.tex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
+	end
+
 	f:SetBackdropBorderColor(0, 0, 0)
-	f.glow:SetScript("OnUpdate", nil)
-	f.glow:SetAlpha(0)
 end
 
-F.Reskin = function(f, noGlow)
+F.Reskin = function(f, noHighlight)
 	f:SetNormalTexture("")
 	f:SetHighlightTexture("")
 	f:SetPushedTexture("")
@@ -166,21 +176,11 @@ F.Reskin = function(f, noGlow)
 
 	F.CreateBD(f, 0)
 
-	CreateGradient(f)
+	f.tex = CreateGradient(f)
 
-	if not noGlow then
-		f.glow = CreateFrame("Frame", nil, f)
-		f.glow:SetBackdrop({
-			edgeFile = C.media.glow,
-			edgeSize = 5,
-		})
-		f.glow:SetPoint("TOPLEFT", -6, 6)
-		f.glow:SetPoint("BOTTOMRIGHT", 6, -6)
-		f.glow:SetBackdropBorderColor(r, g, b)
-		f.glow:SetAlpha(0)
-
-		f:HookScript("OnEnter", StartGlow)
- 		f:HookScript("OnLeave", StopGlow)
+	if not noHighlight then
+		f:HookScript("OnEnter", colourButton)
+ 		f:HookScript("OnLeave", clearButton)
 	end
 end
 
