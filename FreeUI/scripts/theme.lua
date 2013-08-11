@@ -130,7 +130,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Radio buttons ]]
 
-		local radiobuttons = {"ReportPlayerNameDialogPlayerNameCheckButton", "ReportPlayerNameDialogGuildNameCheckButton", "ReportPlayerNameDialogArenaTeamNameCheckButton", "SendMailSendMoneyButton", "SendMailCODButton"}
+		local radiobuttons = {"ReportPlayerNameDialogPlayerNameCheckButton", "ReportPlayerNameDialogGuildNameCheckButton", "SendMailSendMoneyButton", "SendMailCODButton"}
 		for i = 1, #radiobuttons do
 			local radiobutton = _G[radiobuttons[i]]
 			if radiobutton then
@@ -3431,32 +3431,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateBG(PetBattleQueueReadyFrame.Art)
 		F.Reskin(PetBattleQueueReadyFrame.AcceptButton)
 		F.Reskin(PetBattleQueueReadyFrame.DeclineButton)
-
-		-- PVP Banner Frame
-
-		for i = 1, 3 do
-			for j = 1, 2 do
-				select(i, _G["PVPBannerFrameCustomization"..j]:GetRegions()):Hide()
-			end
-		end
-
-		for i = 18, 28 do
-			select(i, PVPBannerFrame:GetRegions()):SetTexture("")
-		end
-
-		PVPBannerFrameCustomizationBorder:Hide()
-
-		F.ReskinPortraitFrame(PVPBannerFrame, true)
-		F.Reskin(select(6, PVPBannerFrame:GetChildren()))
-		F.Reskin(PVPBannerFrameAcceptButton)
-		F.Reskin(PVPColorPickerButton1)
-		F.Reskin(PVPColorPickerButton2)
-		F.Reskin(PVPColorPickerButton3)
-		F.ReskinInput(PVPBannerFrameEditBox, 20)
-		F.ReskinArrow(PVPBannerFrameCustomization1LeftButton, "left")
-		F.ReskinArrow(PVPBannerFrameCustomization1RightButton, "right")
-		F.ReskinArrow(PVPBannerFrameCustomization2LeftButton, "left")
-		F.ReskinArrow(PVPBannerFrameCustomization2RightButton, "right")
 
 		-- PVP Ready Dialog
 
