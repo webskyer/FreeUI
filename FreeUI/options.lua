@@ -8,8 +8,9 @@ local F, C, L = unpack(select(2, ...))
 C["general"] = {
 	["buffreminder"] = true, 		-- reminder for selfbuffs
 	["buffTracker"] = true, 		-- track important buffs for some classes (scroll down to buffTracker table to configure)
-	["buttonColour"] = {.3, .3, .3, .3}, -- determines colour on buttons and other UI elements
-	["buttonColourGradient"] = true, -- gradient or flat texture on buttons
+	["buttonGradientColour"] = {.3, .3, .3, .3}, -- determines colour on buttons and other UI elements
+	["buttonSolidColour"] = {.2, .2, .2, 1}, -- determines colour on buttons and other UI elements
+	["useButtonGradientColour"] = true, -- gradient or flat texture on buttons
 	["combatText"] = true, 			-- show incoming damage and healing near player frame
 	["helmcloakbuttons"] = true, 		-- show buttons to toggle helm/cloak on character frame
 	["interrupt"] = true,			-- announce your interrupts
@@ -21,8 +22,6 @@ C["general"] = {
 	["nameplates"] = true, 			-- enable nameplates
 	["threatMeter"] = true,			-- threat bar above the target frame in dps/healer layout
 	["tolbarad"] = false,			-- Tol barad timer on the minimap
-	["tooltip_cursor"] = false,		-- anchor the tooltip to the cursor
-	["tooltip_guildranks"] = true, 	-- show guild ranks in tooltips
 	["uiScaleAuto"] = true,			-- force the correct UI scale
 	["undressButton"] = true, 		-- undress button on dressup frame
 }
@@ -37,6 +36,7 @@ C["automation"] = {
 	["autoSetRole"] = true,			-- automatically set role and hide dialog where possible
 		["autoSetRole_useSpec"] = true,		-- attempt to set role based on your current spec
 		["autoSetRole_verbose"] = false,	-- tells you what happens when setting role
+	["questRewardHighlight"] = true, -- highlights the quest reward with highest vendor price
 }
 
 C["actionbars"] = {
@@ -73,6 +73,7 @@ C["unitframes"] = {
 		["partyNameAlways"] = false,				-- show name on party/raid frames in dps/tank layout
 	["enableArena"] = true,					-- enable arena/flag carrier frames
 
+	["absorb"] = true, 							-- absorb bar/over absorb glow
 	["cast"] = {"BOTTOM", UIParent, "CENTER", 0, -105}, 	-- only applies with 'castbar' set to 2
 	["castbarSeparate"] = true, 				-- true for a separate player cast bar
 		["castbarSeparateOnlyCasters"] = true, 		-- separate bar only for mages/warlocks/priests
@@ -103,7 +104,7 @@ C["unitframes"] = {
 	["arena_width"] = 229,
 	["arena_height"] = 14,
 	["party_width"] = 38,
-	["party_height"] = 22,
+	["party_height"] = 24,
 	["party_width_healer"] = 56,
 	["party_height_healer"] = 42,
 
@@ -114,6 +115,12 @@ C["unitframes"] = {
 	["num_arena_buffs"] = 8,
 	["num_focus_debuffs"] = 4,
 
+}
+
+C["tooltip"] = {
+	["anchorCursor"] = false,
+	["guildrank"] = true,
+	["title"] = false,
 }
 
 C["classmod"] = {
@@ -132,6 +139,7 @@ C["classmod"] = {
 C["performance"] = {
 	["mapcoords"] = .1, 	-- update interval for map coords in seconds (only with map open)
 	["nameplates"] = .1, 	-- update interval for nameplates in seconds (always)
+	["nameplatesHealth"] = .2, 	-- update interval for nameplate health bar colour (only with name plates shown)
 	["tolbarad"] = 10, 	-- update interval for TB timer in seconds (always)
 }
 
@@ -262,19 +270,6 @@ C["selfbuffs"] = {
 			},
 		},
 	},
-	WARRIOR = {
-		{
-			{
-				6673, -- Battle Shout
-				19506, -- Trueshot Aura
-				57330, -- Horn of Winter
-			},
-			{
-				469, -- Commanding Shout
-				21562, -- Power Word: Fortitude
-			},
-		},
-	}
 }
 
 -- buff tracker: slot 1 is left, slot 2 is middle, slot 3 is right
@@ -308,8 +303,8 @@ C["buffTracker"] = {
 		{spellId = 5171, unitId = "player", isMine = 1, filter = "HELPFUL", slot = 1},
 	},
 	["WARRIOR"] = {
-		-- Last Stand, Shield Wall
-		{spellId = 12975, spellId2 = 871, unitId = "player", isMine = 1, filter = "HELPFUL", slot = 2},
+		-- Last Stand, Shield Wall, Recklessness
+		{spellId = 12975, spellId2 = 871, spellId3 = 1719, unitId = "player", isMine = 1, filter = "HELPFUL", slot = 2},
 		-- Shield Block
 		{spellId = 2565, unitId = "player", isMine = 1, filter = "HELPFUL", slot = 3},
 	}

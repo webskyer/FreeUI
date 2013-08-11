@@ -14,6 +14,7 @@ local panels = {}
 
 local old = {} -- to keep track of whether or not reload is needed
 local needsReload = false
+local userChangedSlider = true -- to use SetValue without running OnValueChanged code
 
 local r, g, b
 
@@ -98,17 +99,9 @@ local function onValueChanged(self, value)
 		self.textInput:SetText(value)
 	end
 
-	SaveValue(self, value)
-end
-
-local function onValueChanged(self, value)
-	value = floor(value*1000)/1000
-
-	if self.textInput then
-		self.textInput:SetText(value)
+	if userChangedSlider then
+		SaveValue(self, value)
 	end
-
-	SaveValue(self, value)
 end
 
 local function createSlider(parent, option, lowText, highText, low, high, step)
@@ -206,7 +199,7 @@ ns.addCategory = function(name)
 
 	local panel = CreateFrame("Frame", "FreeUIOptionsPanel"..name, FreeUIOptionsPanel)
 	panel:SetSize(623, 568)
-	panel:SetPoint("RIGHT", -16, 0)
+	panel:SetPoint("RIGHT", -42, 0)
 	panel:Hide()
 
 	panel.Title = panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -224,8 +217,14 @@ ns.addCategory = function(name)
 	tab:SetPoint("TOPLEFT", 16, -offset)
 	tab:SetSize(160, 44)
 
+	local icon = tab:CreateTexture(nil, "OVERLAY")
+	icon:SetSize(32, 32)
+	icon:SetPoint("LEFT", tab, "LEFT", 8, 0)
+	icon:SetTexCoord(.08, .92, .08, .92)
+	tab.Icon = icon
+
 	tab.Text = tab:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-	tab.Text:SetPoint("CENTER")
+	tab.Text:SetPoint("LEFT", icon, "RIGHT", 8, 0)
 	tab.Text:SetText(ns.localization[tag])
 
 	tab:SetScript("OnMouseUp", onTabClick)
@@ -240,7 +239,7 @@ ns.addCategory = function(name)
 
 	tinsert(panels, panel)
 
-	offset = offset + 54
+	offset = offset + 52
 end
 
 -- [[ Init ]]
@@ -279,11 +278,15 @@ local function displaySettings()
 		if box.children then toggleChildren(box, box:GetChecked()) end
 	end
 
+	userChangedSlider = false
+
 	for _, slider in pairs(sliders) do
 		slider:SetValue(C[slider.group][slider.option])
 		slider.textInput:SetText(floor(C[slider.group][slider.option]*1000)/1000)
 		slider.textInput:SetCursorPosition(0)
 	end
+
+	userChangedSlider = true
 end
 
 local function removeCharData(self)
@@ -384,6 +387,8 @@ init:SetScript("OnEvent", function()
 	for _, panel in pairs(panels) do
 		F.CreateBD(panel.tab, 0)
 		F.CreateGradient(panel.tab)
+		local bg = F.CreateBG(panel.tab.Icon)
+		bg:SetDrawLayer("ARTWORK")
 	end
 
 	setActiveTab(FreeUIOptionsPanel.general.tab)
@@ -393,22 +398,12 @@ init:SetScript("OnEvent", function()
 	end
 
 	for _, box in pairs(checkboxes) do
-		box:SetChecked(C[box.group][box.option])
-		if box.children then
-			toggleChildren(box, box:GetChecked())
-		end
-
 		F.ReskinCheck(box)
 	end
 
 	for _, slider in pairs(sliders) do
-		slider:SetValue(C[slider.group][slider.option])
-
-		slider.textInput:SetText(floor(C[slider.group][slider.option]*1000)/1000)
-		slider.textInput:SetCursorPosition(0)
-		F.ReskinInput(slider.textInput)
-
 		F.ReskinSlider(slider)
+		F.ReskinInput(slider.textInput)
 	end
 
 	for _, setting in pairs(ns.classOptions) do
@@ -421,6 +416,8 @@ init:SetScript("OnEvent", function()
 	local colour = C.classcolours["PALADIN"]
 	FreeUIOptionsPanel.classmod.paladinHP.Text:SetTextColor(colour.r, colour.g, colour.b)
 	FreeUIOptionsPanel.classmod.paladinRF.Text:SetTextColor(colour.r, colour.g, colour.b)
+
+	displaySettings()
 end)
 
 local protect = CreateFrame("Frame")

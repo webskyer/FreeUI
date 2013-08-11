@@ -145,7 +145,7 @@ local leaveButtonPlaced = false
 for i = 1, numOverride do
 	local bu = _G["OverrideActionBarButton"..i]
 	if not bu and not leaveButtonPlaced then
-		bu = OverrideActionBar.LeaveButton
+		bu = OverrideActionBar.leaveButton
 		leaveButtonPlaced = true
 	end
 	if not bu then
@@ -267,33 +267,29 @@ if C.actionbars.rightbars_mouseover == true then
 	bar5:EnableMouse(true)
 
 	local function showButtons()
-		for i = 1, 12 do
-			_G["MultiBarLeftButton"..i]:SetAlpha(1)
-			_G["MultiBarRightButton"..i]:SetAlpha(1)
-		end
+		bar4:SetAlpha(1)
+		bar5:SetAlpha(1)
 	end
 
 	local function hideButtons()
-		for i = 1, 12 do
-			_G["MultiBarLeftButton"..i]:SetAlpha(0)
-			_G["MultiBarRightButton"..i]:SetAlpha(0)
-		end
+		bar4:SetAlpha(0)
+		bar5:SetAlpha(0)
 	end
 
 	for i = 1, 12 do
 		local ab1 = _G["MultiBarLeftButton"..i]
 		local ab2 = _G["MultiBarRightButton"..i]
 
-		ab1:SetAlpha(0)
 		ab1:HookScript("OnEnter", showButtons)
 		ab1:HookScript("OnLeave", hideButtons)
-		ab2:SetAlpha(0)
 		ab2:HookScript("OnEnter", showButtons)
 		ab2:HookScript("OnLeave", hideButtons)
 	end
 
+	bar4:SetAlpha(0)
 	bar4:HookScript("OnEnter", showButtons)
 	bar4:HookScript("OnLeave", hideButtons)
+	bar5:SetAlpha(0)
 	bar5:HookScript("OnEnter", showButtons)
 	bar5:HookScript("OnLeave", hideButtons)
 
@@ -349,20 +345,50 @@ RegisterStateDriver(barextra, "visibility", "[extrabar] show; hide")
 
 local leave = CreateFrame("Frame", "FreeUI_LeaveVehicle", UIParent, "SecureHandlerStateTemplate")
 leave:SetSize(26, 26)
-leave:SetPoint("LEFT", bar1, "RIGHT", 1, 0)
+leave:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 18)
 
-local leavebu = CreateFrame("Button", nil, leave, "SecureHandlerClickTemplate, SecureHandlerStateTemplate")
-leavebu:SetAllPoints()
-leavebu:RegisterForClicks("AnyUp")
-leavebu:SetScript("OnClick", VehicleExit)
+local leaveBu = CreateFrame("Button", nil, leave, "SecureHandlerClickTemplate, SecureHandlerStateTemplate")
+leaveBu:SetAllPoints()
+leaveBu:RegisterForClicks("AnyUp")
+leaveBu:SetScript("OnClick", VehicleExit)
 
-F.CreateBD(leavebu)
+F.CreateBD(leaveBu)
 
-local text = F.CreateFS(leavebu, 8)
-text:SetText("x")
-text:SetPoint("CENTER", 1, 1)
+leaveBu.pixels = {}
 
-RegisterStateDriver(leavebu, "visibility", "[petbattle][vehicleui][overridebar] hide; [@vehicle,exists][possessbar] show; hide")
+for i = 1, 18 do
+	local tex = leaveBu:CreateTexture()
+	tex:SetTexture(1, 1, 1)
+	tex:SetSize(1, 1)
+	tex:SetPoint("BOTTOMLEFT", 3+i, 3+i)
+	tinsert(leaveBu.pixels, tex)
+end
+
+for i = 1, 18 do
+	local tex = leaveBu:CreateTexture()
+	tex:SetTexture(1, 1, 1)
+	tex:SetSize(1, 1)
+	tex:SetPoint("TOPLEFT", 3+i, -3-i)
+	tinsert(leaveBu.pixels, tex)
+end
+
+local r, g, b = unpack(C.class)
+
+leaveBu:SetScript("OnEnter", function(self)
+	if self:IsEnabled() then
+		for _, pixel in pairs(self.pixels) do
+			pixel:SetVertexColor(r, g, b)
+		end
+	end
+end)
+
+leaveBu:SetScript("OnLeave", function(self)
+	for _, pixel in pairs(self.pixels) do
+		pixel:SetVertexColor(1, 1, 1)
+	end
+end)
+
+RegisterStateDriver(leaveBu, "visibility", "[petbattle][vehicleui][overridebar] hide; [@vehicle,exists][possessbar] show; hide")
 RegisterStateDriver(leave, "visibility", "[petbattle][vehicleui][overridebar][possessbar,@vehicle,exists] hide; show")
 
 -- [[ Bags ]]

@@ -64,11 +64,17 @@ local function InitStyle()
 	hooksecurefunc(DBM.RangeCheck, "Show", function()
 		if firstRange then
 			DBMRangeCheck:SetBackdrop(nil)
-			local bd = CreateFrame("Frame", nil, DBMRangeCheck)
-			bd:SetPoint("TOPLEFT")
-			bd:SetPoint("BOTTOMRIGHT")
-			bd:SetFrameLevel(DBMRangeCheck:GetFrameLevel()-1)
-			F.CreateBD(bd)
+			F.CreateBDFrame(DBMRangeCheck)
+
+			DBMRangeCheckRadar.background:SetTexture("")
+			F.CreateBDFrame(DBMRangeCheckRadar)
+
+			DBMRangeCheckRadar.text:SetFont(C.media.font, 8, "OUTLINEMONOCHROME")
+			DBMRangeCheckRadar.text:SetTextColor(1, 1, 1)
+			DBMRangeCheckRadar.text:SetShadowOffset(0, 0)
+			DBMRangeCheckRadar.inRangeText:SetFont(C.media.font, 8, "OUTLINEMONOCHROME")
+			DBMRangeCheckRadar.inRangeText:SetTextColor(1, 1, 1)
+			DBMRangeCheckRadar.inRangeText:SetShadowOffset(0, 0)
 
 			firstRange = false
 		end
@@ -120,6 +126,32 @@ local function InitStyle()
 
 	hooksecurefunc(DBM.BossHealth, "AddBoss", styleBar)
 	hooksecurefunc(DBM.BossHealth, "UpdateSettings", styleBar)
+
+	hooksecurefunc(DBM, "ShowUpdateReminder", function()
+		-- no name or anything
+		-- reverse loop because it's most likely to be somewhere at the end
+		for i = UIParent:GetNumChildren(), 1, -1 do
+			local frame = select(i, UIParent:GetChildren())
+
+			local editBox = frame:GetChildren()
+			if editBox and editBox:GetObjectType() == "EditBox" and editBox:GetText() == "http://www.deadlybossmods.com" and not frame.styled then
+				F.CreateBD(frame)
+				F.CreateSD(frame)
+
+				select(6, editBox:GetRegions()):Hide()
+				select(7, editBox:GetRegions()):Hide()
+				select(8, editBox:GetRegions()):Hide()
+
+				local bg = F.CreateBDFrame(editBox, .25)
+				bg:SetPoint("TOPLEFT", -2, -6)
+				bg:SetPoint("BOTTOMRIGHT", 2, 8)
+
+				F.Reskin(select(2, frame:GetChildren()))
+
+				frame.styled = true
+			end
+		end
+	end)
 end
 
 if IsAddOnLoaded("DBM-Core") then

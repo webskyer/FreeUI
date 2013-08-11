@@ -36,6 +36,11 @@ mail:SetScript("OnEvent", function(self)
 	end
 end)
 
+MiniMapMailFrame:HookScript("OnMouseUp", function(self)
+	self:Hide()
+	mail:Hide()
+end)
+
 local mt = F.CreateFS(mail, 8)
 mt:SetText("Mail")
 mt:SetPoint("BOTTOM", Minimap, 0, 6)
@@ -129,14 +134,14 @@ for i = 1, 8 do
 	dots[i] = F.CreateFS(QueueStatusMinimapButton, 16)
 	dots[i]:SetText(".")
 end
-dots[1]:SetPoint("TOP", 2, 3)
-dots[2]:SetPoint("TOPRIGHT", -6, 0)
-dots[3]:SetPoint("RIGHT", -3, 3)
+dots[1]:SetPoint("TOP", 2, 2)
+dots[2]:SetPoint("TOPRIGHT", -6, -1)
+dots[3]:SetPoint("RIGHT", -3, 2)
 dots[4]:SetPoint("BOTTOMRIGHT", -6, 5)
 dots[5]:SetPoint("BOTTOM", 2, 2)
 dots[6]:SetPoint("BOTTOMLEFT", 9, 5)
-dots[7]:SetPoint("LEFT", 6, 3)
-dots[8]:SetPoint("TOPLEFT", 9, 0)
+dots[7]:SetPoint("LEFT", 6, 2)
+dots[8]:SetPoint("TOPLEFT", 9, -1)
 
 local counter = 0
 local last = 0
@@ -233,32 +238,40 @@ rd:SetScript("OnEvent", function()
 	end
 end)
 
-HelpOpenTicketButton:SetParent(Minimap)
-HelpOpenTicketButton:ClearAllPoints()
-HelpOpenTicketButton:SetPoint("TOP", Minimap, "TOP", 0, 7)
-
 HelpOpenTicketButtonTutorial:Hide()
 HelpOpenTicketButtonTutorial.Show = F.dummy
 
-HelpOpenTicketButton:SetNormalTexture("")
-HelpOpenTicketButton:SetHighlightTexture("")
-HelpOpenTicketButton:SetPushedTexture("")
+local function positionTicketButtons()
+	if HelpOpenTicketButton:IsShown() then
+		if HelpOpenWebTicketButton:IsShown() then
+			HelpOpenTicketButton:ClearAllPoints()
+			HelpOpenTicketButton:SetPoint("TOP", Minimap, "TOP", -17, -5)
+			HelpOpenWebTicketButton:ClearAllPoints()
+			HelpOpenWebTicketButton:SetPoint("TOP", Minimap, "TOP", 17, -5)
+		else
+			HelpOpenTicketButton:ClearAllPoints()
+			HelpOpenTicketButton:SetPoint("TOP", Minimap, "TOP", 0, -5)
+		end
+	elseif HelpOpenWebTicketButton:IsShown() then
+		HelpOpenWebTicketButton:ClearAllPoints()
+		HelpOpenWebTicketButton:SetPoint("TOP", Minimap, "TOP", 0, -5)
+	end
+end
 
-local gmtext = F.CreateFS(HelpOpenTicketButton, 8)
-gmtext:SetPoint("CENTER")
-gmtext:SetText(gsub(CHAT_FLAG_GM, "[<>]", "")) -- magic!
+for _, ticketButton in pairs({HelpOpenTicketButton, HelpOpenWebTicketButton}) do
+	ticketButton:SetParent(Minimap)
+	ticketButton:SetHeight(8)
+	ticketButton:SetHitRectInsets(0, 0, 0, 0)
+	ticketButton:ClearAllPoints()
 
-HelpOpenWebTicketButton:SetParent(Minimap)
-HelpOpenWebTicketButton:ClearAllPoints()
-HelpOpenWebTicketButton:SetPoint("TOP", HelpOpenTicketButton, "BOTTOM", 0, -3)
+	ticketButton:SetNormalTexture("")
+	ticketButton:SetHighlightTexture("")
+	ticketButton:SetPushedTexture("")
 
-HelpOpenTicketButtonTutorial:Hide()
-HelpOpenTicketButtonTutorial.Show = F.dummy
+	local gmtext = F.CreateFS(ticketButton, 8)
+	gmtext:SetPoint("CENTER", 2, 0)
+	gmtext:SetText(gsub(CHAT_FLAG_GM, "[<>]", "")) -- magic!
 
-HelpOpenWebTicketButton:SetNormalTexture("")
-HelpOpenWebTicketButton:SetHighlightTexture("")
-HelpOpenWebTicketButton:SetPushedTexture("")
-
-local gmtext = F.CreateFS(HelpOpenWebTicketButton, 8)
-gmtext:SetPoint("CENTER")
-gmtext:SetText(gsub(CHAT_FLAG_GM, "[<>]", "")) -- magic!
+	ticketButton:HookScript("OnShow", positionTicketButtons)
+	ticketButton:HookScript("OnHide", positionTicketButtons)
+end

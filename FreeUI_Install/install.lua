@@ -74,7 +74,7 @@ body:SetPoint("TOPLEFT", f, "TOPLEFT", 20, -60)
 
 local credits = f:CreateFontString(nil, "OVERLAY")
 credits:SetFont(C.media.font2, 9, "THINOUTLINE")
-credits:SetText("FreeUI by Freethinker @ Steamwheedle Cartel - EU / Haleth on wowinterface.com")
+credits:SetText("FreeUI by Lightsword @ Argent Dawn - EU / Haleth on wowinterface.com")
 credits:SetPoint("BOTTOM", f, "BOTTOM", 0, 4)
 
 local sbt = sb:CreateFontString(nil, "OVERLAY")
@@ -116,6 +116,7 @@ local function Setup()
 	SetCVar("cameraDistanceMaxFactor", 3.4)
 	SetCVar("nameplateShowFriends", 0)
 	SetCVar("nameplateShowEnemies", 1)
+	SetCVar("ShowClassColorInNameplate", 1)
 	SetCVar("bloatThreat", 0)
 	SetCVar("miniWorldMap", 1)
 end

@@ -494,24 +494,27 @@ local Shared = function(self, unit, isSingle)
 		ohpb:SetTexture(C.media.texture)
 		ohpb:SetVertexColor(.5, 0, 1)
 
-		local absorbBar = self:CreateTexture()
-		absorbBar:SetTexture(C.media.texture)
-		absorbBar:SetVertexColor(.8, .34, .8)
-
-		local overAbsorbGlow = self:CreateTexture(nil, "OVERLAY")
-		overAbsorbGlow:SetWidth(16)
-		overAbsorbGlow:SetBlendMode("ADD")
-		overAbsorbGlow:SetPoint("TOPLEFT", self.Health, "TOPRIGHT", -7, 0)
-		overAbsorbGlow:SetPoint("BOTTOMLEFT", self.Health, "BOTTOMRIGHT", -7, 0)
-
 		self.HealPrediction = {
 			-- status bar to show my incoming heals
 			myBar = mhpb,
 			otherBar = ohpb,
-			absorbBar = absorbBar,
-			overAbsorbGlow = overAbsorbGlow,
 			maxOverflow = 1,
 		}
+
+		if C.unitframes.absorb then
+			local absorbBar = self:CreateTexture()
+			absorbBar:SetTexture(C.media.texture)
+			absorbBar:SetVertexColor(.8, .34, .8)
+
+			local overAbsorbGlow = self:CreateTexture(nil, "OVERLAY")
+			overAbsorbGlow:SetWidth(16)
+			overAbsorbGlow:SetBlendMode("ADD")
+			overAbsorbGlow:SetPoint("TOPLEFT", self.Health, "TOPRIGHT", -7, 0)
+			overAbsorbGlow:SetPoint("BOTTOMLEFT", self.Health, "BOTTOMRIGHT", -7, 0)
+
+			self.HealPrediction["absorbBar"] = absorbBar
+			self.HealPrediction["overAbsorbGlow"] = overAbsorbGlow
+		end
 	end
 
 	-- [[ Raid target icons ]]
@@ -650,9 +653,8 @@ local UnitSpecific = {
 
 		if C.unitframes.pvp then
 			local PvP = F.CreateFS(self, 8)
-			PvP:SetPoint("RIGHT", self.MaxHealthPoints, "LEFT", -3, 0)
+			PvP:SetPoint("BOTTOMRIGHT", Health, "TOPRIGHT", -50, 3)
 			PvP:SetText("P")
-			PvP:SetTextColor(1, 0, 0)
 
 			local UpdatePvP = function(self, event, unit)
 				if(unit ~= self.unit) then return end
@@ -661,6 +663,12 @@ local UnitSpecific = {
 
 				local factionGroup = UnitFactionGroup(unit)
 				if(UnitIsPVPFreeForAll(unit) or (factionGroup and factionGroup ~= "Neutral" and UnitIsPVP(unit))) then
+					if factionGroup == "Alliance" then
+						PvP:SetTextColor(0, 0.68, 0.94)
+					else
+						PvP:SetTextColor(1, 0, 0)
+					end
+
 					pvp:Show()
 				else
 					pvp:Hide()
