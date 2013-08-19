@@ -5962,9 +5962,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 	elseif addon == "Blizzard_InspectUI" then
 		InspectModelFrame:DisableDrawLayer("OVERLAY")
-		InspectPVPTeam1:DisableDrawLayer("BACKGROUND")
-		InspectPVPTeam2:DisableDrawLayer("BACKGROUND")
-		InspectPVPTeam3:DisableDrawLayer("BACKGROUND")
 
 		InspectTalentFrame:GetRegions():Hide()
 		select(2, InspectTalentFrame:GetRegions()):Hide()
@@ -5972,8 +5969,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, 5 do
 			select(i, InspectModelFrame:GetRegions()):Hide()
 		end
-		InspectPVPFrameBG:SetAlpha(0)
-		InspectPVPFrameBottom:SetAlpha(0)
 		select(9, InspectMainHandSlot:GetRegions()):Hide()
 
 		local slots = {
