@@ -4127,7 +4127,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				F.CreateBG(it)
 
 				_G["BrowseButton"..i.."Left"]:Hide()
-				select(6, _G["BrowseButton"..i]:GetRegions()):Hide()
+				select(5, _G["BrowseButton"..i]:GetRegions()):Hide()
 				_G["BrowseButton"..i.."Right"]:Hide()
 
 				local bd = CreateFrame("Frame", nil, bu)
@@ -4188,7 +4188,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.CreateBG(it)
 
 			_G["AuctionsButton"..i.."Left"]:Hide()
-			select(5, _G["AuctionsButton"..i]:GetRegions()):Hide()
+			select(4, _G["AuctionsButton"..i]:GetRegions()):Hide()
 			_G["AuctionsButton"..i.."Right"]:Hide()
 
 			local bd = CreateFrame("Frame", nil, bu)
