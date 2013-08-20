@@ -6929,6 +6929,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		ConquestFrame.RatedBGHeader:Hide()
 		ConquestFrame.ShadowOverlay:Hide()
 
+		F.CreateBD(ConquestTooltip)
+
+		ConquestTooltip:HookScript("OnShow", function(self)
+			self:SetScale(UIParent:GetScale())
+
+			local p1, anchor, p2 = self:GetPoint()
+			self:SetPoint(p1, anchor, p2, 1, 0)
+		end)
+
 		for _, bu in pairs({ConquestFrame.Arena2v2, ConquestFrame.Arena3v3, ConquestFrame.Arena5v5, ConquestFrame.RatedBG}) do
 			F.Reskin(bu, true)
 
