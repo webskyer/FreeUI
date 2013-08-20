@@ -1094,6 +1094,16 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Flexible raid
 
+		FlexRaidFrameBottomInset.Bg:Hide()
+		FlexRaidFrameBottomInset:DisableDrawLayer("BORDER")
+
+		FlexRaidFrameScrollFrameScrollBackground:Hide()
+		FlexRaidFrameScrollFrameBackground:Hide()
+		FlexRaidFrameScrollFrameBackgroundCover:Hide()
+		FlexRaidFrameScrollFrameScrollBackgroundTopLeft:Hide()
+		FlexRaidFrameScrollFrameScrollBackgroundBottomRight:Hide()
+
+		F.Reskin(FlexRaidFrame.StartButton)
 		F.ReskinDropDown(FlexRaidFrameSelectionDropDown)
 
 		-- Scenario finder
