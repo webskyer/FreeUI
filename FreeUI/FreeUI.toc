@@ -21,6 +21,7 @@ core\notifications.lua
 oUF\oUF.xml
 
 scripts\actionbars.lua
+scripts\archaeologybar.lua
 scripts\arena.lua
 scripts\automation.lua
 scripts\bags.lua
