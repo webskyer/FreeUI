@@ -2298,7 +2298,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		-- Achievement popup
+		-- Achievement alert
 
 		local function fixBg(f)
 			if f:GetObjectType() == "AnimationGroup" then
@@ -2606,6 +2606,22 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				end
 			end
 		end)
+
+		-- Digsite completion alert
+
+		do
+			local frame = DigsiteCompleteToastFrame
+			local icon = frame.DigsiteTypeTexture
+
+			F.CreateBD(DigsiteCompleteToastFrame)
+
+			frame:GetRegions():Hide()
+
+			frame.glow:Hide()
+			frame.glow.Show = F.dummy
+			frame.shine:Hide()
+			frame.shine.Show = F.dummy
+		end
 
 		-- Help frame
 
