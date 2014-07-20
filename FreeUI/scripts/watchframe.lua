@@ -1,6 +1,6 @@
 local F, C, L = unpack(select(2, ...))
 
-local wf = WatchFrame
+local wf = ObjectiveTrackerFrame
 
 local function moveTracker()
 	local xCoord, yAnchor
@@ -33,16 +33,17 @@ hooksecurefunc(VehicleSeatIndicator, "SetPoint", function(_, _, anchor)
 	end
 end)
 
-F.ReskinExpandOrCollapse(WatchFrameCollapseExpandButton)
-WatchFrameCollapseExpandButton:SetSize(15, 15)
-WatchFrameCollapseExpandButton:SetPoint("TOPRIGHT", -12, 0)
-WatchFrameCollapseExpandButton.plus:Hide()
+local minimizeButton = wf.HeaderMenu.MinimizeButton
+F.ReskinExpandOrCollapse(minimizeButton)
+minimizeButton:SetSize(15, 15)
+minimizeButton:SetPoint("TOPRIGHT", -12, 0)
+minimizeButton.plus:Hide()
 
 hooksecurefunc("WatchFrame_Collapse", function()
-	WatchFrameCollapseExpandButton.plus:Show()
+	minimizeButton.plus:Show()
 end)
 hooksecurefunc("WatchFrame_Expand", function()
-	WatchFrameCollapseExpandButton.plus:Hide()
+	minimizeButton.plus:Hide()
 end)
 
 F.SetFS(WatchFrameTitle)

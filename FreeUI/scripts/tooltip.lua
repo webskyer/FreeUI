@@ -22,7 +22,6 @@ local tooltips = {
 	"ItemRefShoppingTooltip2",
 	"ShoppingTooltip1",
 	"ShoppingTooltip2",
-	"ShoppingTooltip3",
 	"WorldMapTooltip",
 	"ChatMenu",
 	"EmoteMenu",

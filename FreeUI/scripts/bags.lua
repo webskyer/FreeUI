@@ -306,29 +306,29 @@ for i = 0, 3 do
 	bag:HookScript("OnLeave", hideBags)
 end
 
-for i = 1, 7 do
-	local bag = _G["BankFrameBag"..i]
-	local ic = _G["BankFrameBag"..i.."IconTexture"]
-	_G["BankFrameBag"..i.."HighlightFrame"]:Hide()
+-- for i = 1, 7 do
+	-- local bag = _G["BankFrameBag"..i]
+	-- local ic = _G["BankFrameBag"..i.."IconTexture"]
+	-- _G["BankFrameBag"..i.."HighlightFrame"]:Hide()
 
-	bag:SetParent(bankholder)
-	bag:ClearAllPoints()
+	-- bag:SetParent(bankholder)
+	-- bag:ClearAllPoints()
 
-	if i == 1 then
-		bag:SetPoint("BOTTOM", bankholder, "TOP", -123, 2)
-	else
-		bag:SetPoint("LEFT", _G["BankFrameBag"..i-1], "RIGHT", 4, 0)
-	end
+	-- if i == 1 then
+		-- bag:SetPoint("BOTTOM", bankholder, "TOP", -123, 2)
+	-- else
+		-- bag:SetPoint("LEFT", _G["BankFrameBag"..i-1], "RIGHT", 4, 0)
+	-- end
 
-	bag:SetNormalTexture("")
-	bag:SetPushedTexture("")
+	-- bag:SetNormalTexture("")
+	-- bag:SetPushedTexture("")
 
-	ic:SetTexCoord(.08, .92, .08, .92)
+	-- ic:SetTexCoord(.08, .92, .08, .92)
 
-	bag:SetAlpha(0)
-	bag:HookScript("OnEnter", setBankBagAlpha)
-	bag:HookScript("OnLeave", setBankBagAlpha)
-end
+	-- bag:SetAlpha(0)
+	-- bag:HookScript("OnEnter", setBankBagAlpha)
+	-- bag:HookScript("OnLeave", setBankBagAlpha)
+-- end
 
 local moneytext = {"ContainerFrame1MoneyFrameGoldButtonText", "ContainerFrame1MoneyFrameSilverButtonText", "ContainerFrame1MoneyFrameCopperButtonText", "BankFrameMoneyFrameGoldButtonText", "BankFrameMoneyFrameSilverButtonText", "BankFrameMoneyFrameCopperButtonText", "BackpackTokenFrameToken1Count", "BackpackTokenFrameToken2Count", "BackpackTokenFrameToken3Count"}
 
@@ -410,9 +410,9 @@ end
 BankItemSearchBox:Hide()
 BankItemSearchBox.Show = F.dummy
 
-BagItemSearchBoxLeft:Hide()
-BagItemSearchBoxMiddle:Hide()
-BagItemSearchBoxRight:Hide()
+-- BagItemSearchBoxLeft:Hide()
+-- BagItemSearchBoxMiddle:Hide()
+-- BagItemSearchBoxRight:Hide()
 
 BagItemSearchBox:SetHeight(18)
 BagItemSearchBox:ClearAllPoints()

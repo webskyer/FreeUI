@@ -140,10 +140,6 @@ local SmallerMapSkin = function()
 end
 hooksecurefunc("WorldMap_ToggleSizeDown", function() SmallerMapSkin() end)
 
--- track quest button style
-
-F.ReskinCheck(WorldMapTrackQuest)
-
 -- coordinates
 
 local coords = F.CreateFS(frame)

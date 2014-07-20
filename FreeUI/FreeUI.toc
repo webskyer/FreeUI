@@ -1,4 +1,4 @@
-## Interface: 50400
+## Interface: 60000
 ## Title: FreeUI
 ## Notes: Minimalistic user interface.
 ## Author: Haleth/Freethinker
