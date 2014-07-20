@@ -1,0 +1,76 @@
+## Interface: 50400
+## Title: FreeUI
+## Notes: Minimalistic user interface.
+## Author: Haleth/Freethinker
+## Version: 7.2.3
+## RequiredDeps: Blizzard_CombatText
+## OptionalDeps: Clique, FreeUI_Options, MyRolePlay, oUF
+## SavedVariables: FreeUIGlobalConfig
+## SavedVariablesPerCharacter: FreeUIConfig
+
+core\core.lua
+
+options.lua
+profiles.lua
+
+core\gui.lua
+core\api.lua
+core\slash.lua
+core\notifications.lua
+
+oUF\oUF.xml
+
+scripts\actionbars.lua
+scripts\archaeologybar.lua
+scripts\arena.lua
+scripts\automation.lua
+scripts\bags.lua
+scripts\bubbles.lua
+scripts\buffreminder.lua
+scripts\buffs.lua
+scripts\bufftracker.lua
+scripts\buttons.lua
+scripts\chat.lua
+scripts\chattabs.lua
+scripts\colours.lua
+scripts\combattext.lua
+scripts\combo.lua
+scripts\cooldowns.lua
+scripts\dbm.lua
+scripts\disable.lua
+scripts\durability.lua
+scripts\errors.lua
+scripts\events.lua
+scripts\expbar.lua
+scripts\fonts.lua
+scripts\globals.lua
+scripts\interrupt.lua
+scripts\itemglow.lua
+scripts\loot.lua
+scripts\lootroll.lua
+scripts\mail.lua
+scripts\map.lua
+scripts\marking.lua
+scripts\menubar.lua
+scripts\micromenu.lua
+scripts\minimap.lua
+scripts\mirrorbars.lua
+scripts\nameplates.lua
+scripts\petbattles.lua
+scripts\queuetimer.lua
+scripts\rangecolor.lua
+scripts\rarealert.lua
+scripts\role.lua
+scripts\stats.lua
+scripts\tekkrush.lua
+scripts\theme.lua
+scripts\threatmeter.lua
+scripts\tooltip.lua
+scripts\unitframes.lua
+scripts\variables.lua
+scripts\watchframe.lua
+scripts\worldmarker.lua
+scripts\worldstateframe.lua
+
+class\paladin.lua
+class\shaman.lua
