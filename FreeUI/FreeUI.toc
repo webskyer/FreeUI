@@ -56,6 +56,7 @@ scripts\micromenu.lua
 scripts\minimap.lua
 scripts\mirrorbars.lua
 scripts\nameplates.lua
+scripts\objectivetracker.lua
 scripts\petbattles.lua
 scripts\queuetimer.lua
 scripts\rangecolor.lua
@@ -68,7 +69,6 @@ scripts\threatmeter.lua
 scripts\tooltip.lua
 scripts\unitframes.lua
 scripts\variables.lua
-scripts\watchframe.lua
 scripts\worldmarker.lua
 scripts\worldstateframe.lua
 
