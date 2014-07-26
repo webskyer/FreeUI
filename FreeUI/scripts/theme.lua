@@ -67,29 +67,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Dropdowns ]]
 
-		local dropdowns = {"LFDQueueFrameTypeDropDown", "WhoFrameDropDown", "FriendsFriendsFrameDropDown", "WorldMapLevelDropDown", "RaidFinderQueueFrameSelectionDropDown", "WorldMapShowDropDown", "Advanced_GraphicsAPIDropDown"}
-		for i = 1, #dropdowns do
-			local dropdown = _G[dropdowns[i]]
-			if dropdown then
-				F.ReskinDropDown(dropdown)
-			else
-				print("FreeUI: "..dropdowns[i].." was not found.")
-			end
+		for _, dropdown in pairs({LFDQueueFrameTypeDropDown, WhoFrameDropDown, FriendsFriendsFrameDropDown, WorldMapLevelDropDown, RaidFinderQueueFrameSelectionDropDown, Advanced_GraphicsAPIDropDown}) do
+			F.ReskinDropDown(dropdown)
 		end
 
 		-- [[ Input frames ]]
 
-		local inputs = {"AddFriendNameEditBox", "GearManagerDialogPopupEditBox", "HelpFrameKnowledgebaseSearchBox", "ChannelFrameDaughterFrameChannelName", "ChannelFrameDaughterFrameChannelPassword", "ScrollOfResurrectionSelectionFrameTargetEditBox", "ScrollOfResurrectionFrameNoteFrame", "MapSearchBox"}
-		for i = 1, #inputs do
-			local input = _G[inputs[i]]
-			if input then
-				F.ReskinInput(input)
-			else
-				print("FreeUI: "..inputs[i].." was not found.")
-			end
+		for _, input in pairs({AddFriendNameEditBox, GearManagerDialogPopupEditBox, HelpFrameKnowledgebaseSearchBox, ChannelFrameDaughterFrameChannelName, ChannelFrameDaughterFrameChannelPassword, ScrollOfResurrectionSelectionFrameTargetEditBox, ScrollOfResurrectionFrameNoteFrame, FriendsFrameBroadcastInput--[[, MapSearchBox]]}) do
+			F.ReskinInput(input)
 		end
-
-		F.ReskinInput(FriendsFrameBroadcastInput)
 
 		-- [[ Arrows ]]
 
@@ -7543,7 +7529,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		for i = 1, MAX_NUM_TALENT_TIERS do
+		for i = 1, MAX_TALENT_TIERS do
 			local row = _G["PlayerTalentFrameTalentsTalentRow"..i]
 			_G["PlayerTalentFrameTalentsTalentRow"..i.."Bg"]:Hide()
 			row:DisableDrawLayer("BORDER")
@@ -7575,7 +7561,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		hooksecurefunc("TalentFrame_Update", function()
-			for i = 1, MAX_NUM_TALENT_TIERS do
+			for i = 1, MAX_TALENT_TIERS do
 				for j = 1, NUM_TALENT_COLUMNS do
 					local bu = _G["PlayerTalentFrameTalentsTalentRow"..i.."Talent"..j]
 					if bu.knownSelection:IsShown() then

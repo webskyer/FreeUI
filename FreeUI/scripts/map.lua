@@ -4,10 +4,45 @@ local F, C, L = unpack(select(2, ...))
 
 local r, g, b = unpack(C.class)
 
-WORLDMAP_WINDOWED_SIZE = 0.82
-
 local offset = 1 / WORLDMAP_WINDOWED_SIZE
-local panelHeight = 26
+
+-- restyle map frame
+
+local BorderFrame = WorldMapFrame.BorderFrame
+
+BorderFrame.Bg:Hide()
+select(2, BorderFrame:GetRegions()):Hide()
+BorderFrame.portrait:SetTexture()
+BorderFrame.portraitFrame:SetTexture()
+for i = 5, 7 do
+	select(i, BorderFrame:GetRegions()):Hide()
+end
+BorderFrame.TopTileStreaks:SetTexture("")
+for i = 10, 14 do
+	select(i, BorderFrame:GetRegions()):Hide()
+end
+BorderFrame.ButtonFrameEdge:Hide()
+BorderFrame.InsetBorderTop:Hide()
+BorderFrame.Inset.Bg:Hide()
+BorderFrame.Inset:DisableDrawLayer("BORDER")
+
+F.CreateBD(BorderFrame)
+F.ReskinClose(BorderFrame.CloseButton)
+
+WorldMapFrameTutorialButton.Ring:Hide()
+WorldMapFrameTutorialButton:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -12, 12)
+
+-- nav bar
+
+WorldMapFrameNavBar:GetRegions():Hide()
+WorldMapFrameNavBar:DisableDrawLayer("BORDER")
+WorldMapFrameNavBar.overlay:Hide()
+WorldMapFrameNavBarHomeButtonLeft:Hide()
+F.Reskin(WorldMapFrameNavBar.home)
+
+-- quest frame
+
+F.Reskin(QuestScrollFrame.ViewAll)
 
 -- fix ping
 
@@ -25,77 +60,23 @@ WorldMapPlayerLower:EnableMouse(false)
 
 -- frames
 
-local mapbg = CreateFrame ("Frame", nil, WorldMapDetailFrame)
-mapbg:SetBackdrop({
-	bgFile = C.media.backdrop,
-})
-mapbg:SetBackdropColor(0, 0, 0)
-mapbg:SetPoint("TOPLEFT", WorldMapDetailFrame, -offset, offset)
-mapbg:SetPoint("BOTTOMRIGHT", WorldMapDetailFrame, offset, -offset)
-mapbg:SetFrameLevel(WorldMapDetailFrame:GetFrameLevel()-1)
-
 local frame = CreateFrame ("Frame", nil, WorldMapButton)
 frame:SetScale(offset)
 frame:SetFrameStrata("HIGH")
 
--- bottom panel
-
-local panelHolder = CreateFrame("ScrollFrame", nil, WorldMapButton)
-panelHolder:SetFrameStrata("LOW")
-panelHolder:SetScale(offset)
-panelHolder:SetPoint("TOPLEFT", WorldMapDetailFrame, "BOTTOMLEFT", -1, 0)
-panelHolder:SetPoint("TOPRIGHT", WorldMapDetailFrame, "BOTTOMRIGHT", 1, 0)
-panelHolder:SetHeight(panelHeight)
-
-local panel = CreateFrame("Frame", nil, panelHolder)
-panel:EnableMouse(true)
-panel:SetWidth(panelHolder:GetWidth())
-panel:SetHeight(panelHeight)
-F.CreateBD(panel)
-
-panelHolder:SetScrollChild(panel)
-panelHolder:SetVerticalScroll(panelHeight)
-
-local button = CreateFrame("Frame", nil, WorldMapButton)
-button:EnableMouse(true)
-button:SetSize(16, 16)
-button:SetScale(offset)
-button:SetPoint("BOTTOM", WorldMapDetailFrame)
-
-local text = F.CreateFS(button)
-text:SetPoint("CENTER")
-text:SetText("+")
-
-local function colourText()
-	text:SetTextColor(r, g, b)
-end
-
-local function clearText()
-	text:SetTextColor(1, 1, 1)
-end
-
-button:SetScript("OnEnter", colourText)
-button:SetScript("OnLeave", clearText)
 
 -- map style function
 
 local SmallerMapSkin = function()
 	local fontsize = C.appearance.fontSizeNormal / WORLDMAP_WINDOWED_SIZE
 
-	WorldMapFrame:SetFrameStrata("MEDIUM")
-	WorldMapDetailFrame:SetFrameStrata("MEDIUM")
-	WorldMapDetailFrame:ClearAllPoints()
-	WorldMapDetailFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-	WorldMapTitleButton:Show()
+	WorldMapFrame:ClearAllPoints()
+	WorldMapFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+	-- WorldMapTitleButton:Show()
 
 	WorldMapLevelDropDown:ClearAllPoints()
 	WorldMapLevelDropDown:SetPoint("RIGHT", panel, "RIGHT", 0, -2)
 	WorldMapLevelDropDown:SetParent(panel)
-
-	WorldMapFrameCloseButton:SetAlpha(0)
-	WorldMapFrameCloseButton:EnableMouse(nil)
-	WorldMapFrameSizeUpButton:SetAlpha(0)
-	WorldMapFrameSizeUpButton:EnableMouse(nil)
 
 	MapBarFrame.Description:SetFont(C.media.font, fontsize, "OUTLINEMONOCHROME")
 	MapBarFrame.Description:SetShadowOffset(0, 0)
@@ -120,9 +101,9 @@ hooksecurefunc("WorldMap_ToggleSizeDown", function() SmallerMapSkin() end)
 -- coordinates
 
 local coords = F.CreateFS(frame)
-coords:SetPoint("LEFT", WorldMapFrameTitle, "RIGHT")
+coords:SetPoint("BOTTOMLEFT", WorldMapDetailFrame, 8, 4)
 local cursorcoords = F.CreateFS(frame)
-cursorcoords:SetPoint("BOTTOMLEFT", WorldMapFrameTitle, "TOPLEFT", 0, 4)
+cursorcoords:SetPoint("BOTTOMLEFT", coords, "TOPLEFT", 0, 4)
 
 local freq = C.performance.mapcoords
 local last = 0
@@ -134,7 +115,7 @@ WorldMapDetailFrame:HookScript("OnUpdate", function(self, elapsed)
 		x = math.floor(100 * x)
 		y = math.floor(100 * y)
 		if x ~= 0 and y ~= 0 then
-			coords:SetText("("..x..", "..y..")")
+			coords:SetText(PLAYER..": "..x..", "..y)
 		else
 			coords:SetText("")
 		end
@@ -196,43 +177,3 @@ end)
 		-- end
 	-- end
 -- end)
-
--- bottom panel
-
-local y = panelHeight
-local opened = false
-
-local open = function(self, elapsed)
-	y = y - (elapsed * 100)
-
-	if y <= 0 then
-		y = 0
-		panel:SetScript("OnUpdate", nil)
-	end
-
-	panelHolder:SetVerticalScroll(y)
-end
-
-local close = function(self, elapsed)
-	y = y + (elapsed * 100)
-
-	if y >= panelHeight then
-		y = panelHeight
-		panel:SetScript("OnUpdate", nil)
-	end
-
-	panelHolder:SetVerticalScroll(y)
-end
-
-panel.toggle = function()
-	if opened then
-		opened = false
-		DropDownList1:Hide()
-		panel:SetScript("OnUpdate", close)
-	else
-		opened = true
-		panel:SetScript("OnUpdate", open)
-	end
-end
-
-button:HookScript("OnMouseDown", panel.toggle)
