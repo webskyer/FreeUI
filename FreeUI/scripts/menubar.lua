@@ -221,10 +221,14 @@ specButton:RegisterEvent("PLAYER_LOGIN")
 specButton:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 specButton:SetScript("OnEvent", function(self)
 	if GetNumSpecGroups() >= 2 then
-		local _, name = GetSpecializationInfo(GetSpecialization())
-		if name then
-			self.Text:SetText(format("%d - %s", GetActiveSpecGroup(), name))
-			self:Show()
+		local currentSpec = GetSpecialization()
+
+		if currentSpec then
+			local _, name = GetSpecializationInfo(currentSpec)
+			if name then
+				self.Text:SetText(format("%d - %s", GetActiveSpecGroup(), name))
+				self:Show()
+			end
 		end
 	else
 		self:Hide()

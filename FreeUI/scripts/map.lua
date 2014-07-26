@@ -92,33 +92,10 @@ local SmallerMapSkin = function()
 	WorldMapLevelDropDown:SetPoint("RIGHT", panel, "RIGHT", 0, -2)
 	WorldMapLevelDropDown:SetParent(panel)
 
-	WorldMapFrameMiniBorderLeft:Hide()
-	WorldMapFrameMiniBorderRight:Hide()
-
-	WorldMapFrameTitle:ClearAllPoints()
-	WorldMapFrameTitle:SetPoint("BOTTOMLEFT", WorldMapDetailFrame, 8, 4);
-	F.SetFS(WorldMapFrameTitle)
-	WorldMapFrameTitle:SetTextColor(1, 1, 1)
-	WorldMapFrameTitle:SetShadowColor(0, 0, 0, 0)
-	WorldMapFrameTitle:SetParent(frame)
-
-	WorldMapTrackQuest:SetParent(frame)
-	WorldMapTrackQuest:ClearAllPoints()
-	WorldMapTrackQuest:SetPoint("BOTTOMRIGHT", WorldMapDetailFrame, "BOTTOMRIGHT")
-	WorldMapTrackQuestText:ClearAllPoints()
-	WorldMapTrackQuestText:SetPoint("RIGHT", WorldMapTrackQuest, "LEFT", -2, 0)
-	F.SetFS(WorldMapTrackQuestText)
-	WorldMapTrackQuestText:SetTextColor(1, 1, 1)
-	WorldMapTrackQuestText:SetShadowColor(0, 0, 0, 0)
-
 	WorldMapFrameCloseButton:SetAlpha(0)
 	WorldMapFrameCloseButton:EnableMouse(nil)
 	WorldMapFrameSizeUpButton:SetAlpha(0)
 	WorldMapFrameSizeUpButton:EnableMouse(nil)
-
-	WorldMapShowDropDown:ClearAllPoints()
-	WorldMapShowDropDown:SetPoint("LEFT", panel, "LEFT", 0, -2)
-	WorldMapShowDropDown:SetParent(panel)
 
 	MapBarFrame.Description:SetFont(C.media.font, fontsize, "OUTLINEMONOCHROME")
 	MapBarFrame.Description:SetShadowOffset(0, 0)
@@ -184,41 +161,41 @@ end)
 
 -- map search
 
-local editbox = CreateFrame("EditBox", "MapSearchBox", WorldMapFrame, "SearchBoxTemplate")
-editbox:SetAutoFocus(false)
-editbox:SetSize(150, 20)
-editbox:SetPoint("CENTER", panel)
-F.SetFS(editbox)
-editbox:SetShadowOffset(0, 0)
-editbox:SetParent(panel)
+-- local editbox = CreateFrame("EditBox", "MapSearchBox", WorldMapFrame, "SearchBoxTemplate")
+-- editbox:SetAutoFocus(false)
+-- editbox:SetSize(150, 20)
+-- editbox:SetPoint("CENTER", panel)
+-- F.SetFS(editbox)
+-- editbox:SetShadowOffset(0, 0)
+-- editbox:SetParent(panel)
 
-editbox.db = {}
-for i=1, select("#", GetMapContinents()), 1 do
-	local zonesdb = {}
-	for j=1, select("#", GetMapZones(i)), 1 do
-		tinsert(zonesdb, {id=j, name=select(j, GetMapZones(i))})
-	end
-	tinsert(editbox.db, {id=i, name=select(i, GetMapContinents()), zones = zonesdb })
-end
+-- editbox.db = {}
+-- for i=1, select("#", GetMapContinents()), 1 do
+	-- local zonesdb = {}
+	-- for j=1, select("#", GetMapZones(i)), 1 do
+		-- tinsert(zonesdb, {id=j, name=select(j, GetMapZones(i))})
+	-- end
+	-- tinsert(editbox.db, {id=i, name=select(i, GetMapContinents()), zones = zonesdb })
+-- end
 
-editbox:SetScript("OnHide", BagSearch_OnHide)
+-- editbox:SetScript("OnHide", BagSearch_OnHide)
 
-editbox:SetScript("OnTextChanged", function(self)
-	local searchdata = self:GetText()
-	if searchdata == "" then return end
-	for i, v in pairs(self.db) do
-		if v.name:lower():find(searchdata:lower()) then
-			SetMapZoom(v.id)
-			return
-		end
-		for j, k in pairs(v.zones) do
-			if k.name:lower():find(searchdata:lower()) then
-				SetMapZoom(v.id, k.id)
-				return
-			end
-		end
-	end
-end)
+-- editbox:SetScript("OnTextChanged", function(self)
+	-- local searchdata = self:GetText()
+	-- if searchdata == "" then return end
+	-- for i, v in pairs(self.db) do
+		-- if v.name:lower():find(searchdata:lower()) then
+			-- SetMapZoom(v.id)
+			-- return
+		-- end
+		-- for j, k in pairs(v.zones) do
+			-- if k.name:lower():find(searchdata:lower()) then
+				-- SetMapZoom(v.id, k.id)
+				-- return
+			-- end
+		-- end
+	-- end
+-- end)
 
 -- bottom panel
 

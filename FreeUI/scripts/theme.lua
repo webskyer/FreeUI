@@ -1135,20 +1135,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.ReskinScroll(RaidFinderQueueFrameScrollFrameScrollBar)
 
-		-- Flexible raid
-
-		FlexRaidFrameBottomInset.Bg:Hide()
-		FlexRaidFrameBottomInset:DisableDrawLayer("BORDER")
-
-		FlexRaidFrameScrollFrameScrollBackground:Hide()
-		FlexRaidFrameScrollFrameBackground:Hide()
-		FlexRaidFrameScrollFrameBackgroundCover:Hide()
-		FlexRaidFrameScrollFrameScrollBackgroundTopLeft:Hide()
-		FlexRaidFrameScrollFrameScrollBackgroundBottomRight:Hide()
-
-		F.Reskin(FlexRaidFrame.StartButton)
-		F.ReskinDropDown(FlexRaidFrameSelectionDropDown)
-
 		-- Scenario finder
 
 		ScenarioFinderFrameInset:DisableDrawLayer("BORDER")
@@ -1403,16 +1389,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					end
 					bu.reskinned = true
 				end
-			end
-		end)
-
-		hooksecurefunc("SpellBook_UpdateWhatHasChangedTab", function()
-			for i = 1, #SpellBookWhatHasChanged.ChangedItems do
-				local bu = SpellBook_GetWhatChangedItem(i)
-				bu.Ring:Hide()
-				select(2, bu:GetRegions()):Hide()
-				bu:SetTextColor(.9, .9, .9)
-				bu.Title:SetTextColor(1, 1, 1)
 			end
 		end)
 
@@ -2029,32 +2005,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Quest Frame
 
-		F.ReskinPortraitFrame(QuestLogFrame, true)
-		F.ReskinPortraitFrame(QuestLogDetailFrame, true)
 		F.ReskinPortraitFrame(QuestFrame, true)
-
-		F.CreateBD(QuestLogCount, .25)
 
 		QuestFrameDetailPanel:DisableDrawLayer("BACKGROUND")
 		QuestFrameProgressPanel:DisableDrawLayer("BACKGROUND")
 		QuestFrameRewardPanel:DisableDrawLayer("BACKGROUND")
 		QuestFrameGreetingPanel:DisableDrawLayer("BACKGROUND")
-		EmptyQuestLogFrame:DisableDrawLayer("BACKGROUND")
 		QuestFrameDetailPanel:DisableDrawLayer("BORDER")
 		QuestFrameRewardPanel:DisableDrawLayer("BORDER")
 
-		select(18, QuestLogFrame:GetRegions()):Hide()
-		select(18, QuestLogDetailFrame:GetRegions()):Hide()
-
-		QuestLogFramePageBg:Hide()
-		QuestLogFrameBookBg:Hide()
-		QuestLogDetailFramePageBg:Hide()
-		QuestLogScrollFrameTop:Hide()
-		QuestLogScrollFrameBottom:Hide()
-		QuestLogScrollFrameMiddle:Hide()
-		QuestLogDetailScrollFrameTop:Hide()
-		QuestLogDetailScrollFrameBottom:Hide()
-		QuestLogDetailScrollFrameMiddle:Hide()
 		QuestDetailScrollFrameTop:Hide()
 		QuestDetailScrollFrameBottom:Hide()
 		QuestDetailScrollFrameMiddle:Hide()
@@ -2067,9 +2026,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		QuestGreetingScrollFrameTop:Hide()
 		QuestGreetingScrollFrameBottom:Hide()
 		QuestGreetingScrollFrameMiddle:Hide()
-		QuestDetailLeftBorder:Hide()
-		QuestDetailBotLeftCorner:Hide()
-		QuestDetailTopLeftCorner:Hide()
 
 		QuestNPCModelShadowOverlay:Hide()
 		QuestNPCModelBg:Hide()
@@ -2078,30 +2034,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		QuestNPCModelTextFrameBg:Hide()
 		QuestNPCModelTextFrame:DisableDrawLayer("OVERLAY")
 
-		for i = 1, 9 do
-			select(i, QuestLogCount:GetRegions()):Hide()
-		end
-
-		QuestLogDetailTitleText:SetDrawLayer("OVERLAY")
 		QuestInfoItemHighlight:GetRegions():Hide()
 		QuestInfoSpellObjectiveFrameNameFrame:Hide()
 		QuestFrameProgressPanelMaterialTopLeft:SetAlpha(0)
 		QuestFrameProgressPanelMaterialTopRight:SetAlpha(0)
 		QuestFrameProgressPanelMaterialBotLeft:SetAlpha(0)
 		QuestFrameProgressPanelMaterialBotRight:SetAlpha(0)
-
-		QuestLogFramePushQuestButton:ClearAllPoints()
-		QuestLogFramePushQuestButton:SetPoint("LEFT", QuestLogFrameAbandonButton, "RIGHT", 1, 0)
-		QuestLogFramePushQuestButton:SetWidth(100)
-		QuestLogFrameTrackButton:ClearAllPoints()
-		QuestLogFrameTrackButton:SetPoint("LEFT", QuestLogFramePushQuestButton, "RIGHT", 1, 0)
-
-		QuestLogFrameShowMapButton.texture:Hide()
-		QuestLogFrameShowMapButtonHighlight:SetAlpha(0)
-		QuestLogFrameShowMapButton:SetSize(QuestLogFrameShowMapButton.text:GetStringWidth() + 14, 22)
-		QuestLogFrameShowMapButton.text:ClearAllPoints()
-		QuestLogFrameShowMapButton.text:SetPoint("CENTER", 1, 0)
-		F.Reskin(QuestLogFrameShowMapButton)
 
 		local line = QuestFrameGreetingPanel:CreateTexture()
 		line:SetTexture(1, 1, 1, .2)
@@ -2118,14 +2056,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		npcbd:SetPoint("TOPLEFT", -1, 1)
 		npcbd:SetPoint("RIGHT", 1, 0)
 		npcbd:SetPoint("BOTTOM", QuestNPCModelTextScrollFrame)
-		npcbd:SetFrameLevel(QuestNPCModel:GetFrameLevel()-1)
+		npcbd:SetFrameLevel(0)
 		F.CreateBD(npcbd)
 
 		local npcLine = CreateFrame("Frame", nil, QuestNPCModel)
-		npcLine:SetPoint("BOTTOMLEFT", 0, -1)
-		npcLine:SetPoint("BOTTOMRIGHT", 0, -1)
+		npcLine:SetPoint("BOTTOMLEFT", 0, -2)
+		npcLine:SetPoint("BOTTOMRIGHT", 0, -2)
 		npcLine:SetHeight(1)
-		npcLine:SetFrameLevel(QuestNPCModel:GetFrameLevel()-1)
+		npcLine:SetFrameLevel(0)
 		F.CreateBD(npcLine, 0)
 
 		QuestInfoSkillPointFrameIconTexture:SetSize(40, 40)
@@ -2140,9 +2078,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		QuestInfoSkillPointFrameNameFrame:Hide()
 		QuestInfoSkillPointFrameName:SetParent(bg)
 		QuestInfoSkillPointFrameIconTexture:SetParent(bg)
-		QuestInfoSkillPointFrameSkillPointBg:SetParent(bg)
-		QuestInfoSkillPointFrameSkillPointBgGlow:SetParent(bg)
-		QuestInfoSkillPointFramePoints:SetParent(bg)
 
 		local skillPointLine = QuestInfoSkillPointFrame:CreateTexture(nil, "BACKGROUND")
 		skillPointLine:SetSize(1, 40)
@@ -2211,97 +2146,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		QuestDetailScrollFrame:SetWidth(302) -- else these buttons get cut off
 
-		for i = 1, MAX_NUM_ITEMS do
-			local bu = _G["QuestInfoItem"..i]
-			local ic = _G["QuestInfoItem"..i.."IconTexture"]
-			local na = _G["QuestInfoItem"..i.."NameFrame"]
-			local co = _G["QuestInfoItem"..i.."Count"]
-
-			ic:SetPoint("TOPLEFT", 1, -1)
-			ic:SetSize(39, 39)
-			ic:SetTexCoord(.08, .92, .08, .92)
-			ic:SetDrawLayer("OVERLAY")
-
-			F.CreateBD(bu, .25)
-
-			na:Hide()
-			co:SetDrawLayer("OVERLAY")
-
-			local line = CreateFrame("Frame", nil, bu)
-			line:SetSize(1, 40)
-			line:SetPoint("RIGHT", ic, 1, 0)
-			F.CreateBD(line)
-		end
-
-		local function updateQuest()
-			local numEntries = GetNumQuestLogEntries()
-
-			local buttons = QuestLogScrollFrame.buttons
-			local numButtons = #buttons
-			local scrollOffset = HybridScrollFrame_GetOffset(QuestLogScrollFrame)
-			local questLogTitle, questIndex
-			local isHeader, isCollapsed
-
-			for i = 1, numButtons do
-				questLogTitle = buttons[i]
-				questIndex = i + scrollOffset
-
-				if not questLogTitle.reskinned then
-					questLogTitle.reskinned = true
-
-					questLogTitle:SetNormalTexture("")
-					questLogTitle.SetNormalTexture = F.dummy
-					questLogTitle:SetPushedTexture("")
-					questLogTitle:SetHighlightTexture("")
-					questLogTitle.SetHighlightTexture = F.dummy
-
-					questLogTitle.bg = CreateFrame("Frame", nil, questLogTitle)
-					questLogTitle.bg:SetSize(13, 13)
-					questLogTitle.bg:SetPoint("LEFT", 4, 0)
-					questLogTitle.bg:SetFrameLevel(questLogTitle:GetFrameLevel()-1)
-					F.CreateBD(questLogTitle.bg, 0)
-
-					questLogTitle.tex = F.CreateGradient(questLogTitle)
-					questLogTitle.tex:SetAllPoints(questLogTitle.bg)
-
-					questLogTitle.minus = questLogTitle:CreateTexture(nil, "OVERLAY")
-					questLogTitle.minus:SetSize(7, 1)
-					questLogTitle.minus:SetPoint("CENTER", questLogTitle.bg)
-					questLogTitle.minus:SetTexture(C.media.backdrop)
-					questLogTitle.minus:SetVertexColor(1, 1, 1)
-
-					questLogTitle.plus = questLogTitle:CreateTexture(nil, "OVERLAY")
-					questLogTitle.plus:SetSize(1, 7)
-					questLogTitle.plus:SetPoint("CENTER", questLogTitle.bg)
-					questLogTitle.plus:SetTexture(C.media.backdrop)
-					questLogTitle.plus:SetVertexColor(1, 1, 1)
-				end
-
-				if questIndex <= numEntries then
-					_, _, _, _, isHeader, isCollapsed = GetQuestLogTitle(questIndex)
-					if isHeader then
-						questLogTitle.bg:Show()
-						questLogTitle.tex:Show()
-						questLogTitle.minus:Show()
-						if isCollapsed then
-							questLogTitle.plus:Show()
-						else
-							questLogTitle.plus:Hide()
-						end
-					else
-						questLogTitle.bg:Hide()
-						questLogTitle.tex:Hide()
-						questLogTitle.minus:Hide()
-						questLogTitle.plus:Hide()
-					end
-				end
-			end
-		end
-
-		hooksecurefunc("QuestLog_Update", updateQuest)
-		QuestLogScrollFrame:HookScript("OnVerticalScroll", updateQuest)
-		QuestLogScrollFrame:HookScript("OnMouseWheel", updateQuest)
-
 		hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, _, _, _, _, y)
 			QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", 2, y)
 		end)
@@ -2322,13 +2166,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		local questButtons = {"QuestLogFrameAbandonButton", "QuestLogFramePushQuestButton", "QuestLogFrameTrackButton", "QuestLogFrameCancelButton", "QuestFrameAcceptButton", "QuestFrameDeclineButton", "QuestFrameCompleteQuestButton", "QuestFrameCompleteButton", "QuestFrameGoodbyeButton", "QuestFrameGreetingGoodbyeButton", "QuestLogFrameCompleteButton"}
-		for i = 1, #questButtons do
-			F.Reskin(_G[questButtons[i]])
+		for _, questButton in pairs({QuestFrameAcceptButton, QuestFrameDeclineButton, QuestFrameCompleteQuestButton, QuestFrameCompleteButton, QuestFrameGoodbyeButton, QuestFrameGreetingGoodbyeButton}) do
+			F.Reskin(questButton)
 		end
 
-		F.ReskinScroll(QuestLogScrollFrameScrollBar)
-		F.ReskinScroll(QuestLogDetailScrollFrameScrollBar)
 		F.ReskinScroll(QuestProgressScrollFrameScrollBar)
 		F.ReskinScroll(QuestRewardScrollFrameScrollBar)
 		F.ReskinScroll(QuestDetailScrollFrameScrollBar)
@@ -4032,7 +3873,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		SpellBookPageText:SetTextColor(.8, .8, .8)
 		QuestProgressRequiredItemsText:SetTextColor(1, 1, 1)
 		QuestProgressRequiredItemsText:SetShadowColor(0, 0, 0)
-		QuestInfoRewardsHeader:SetShadowColor(0, 0, 0)
 		QuestProgressTitleText:SetShadowColor(0, 0, 0)
 		QuestInfoTitleHeader:SetShadowColor(0, 0, 0)
 		AvailableServicesText:SetTextColor(1, 1, 1)
@@ -4051,8 +3891,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		QuestInfoObjectivesHeader:SetTextColor(1, 1, 1)
 		QuestInfoObjectivesHeader.SetTextColor = F.dummy
 		QuestInfoObjectivesHeader:SetShadowColor(0, 0, 0)
-		QuestInfoRewardsHeader:SetTextColor(1, 1, 1)
-		QuestInfoRewardsHeader.SetTextColor = F.dummy
 		QuestInfoDescriptionText:SetTextColor(1, 1, 1)
 		QuestInfoDescriptionText.SetTextColor = F.dummy
 		QuestInfoObjectivesText:SetTextColor(1, 1, 1)
@@ -4061,14 +3899,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		QuestInfoGroupSize.SetTextColor = F.dummy
 		QuestInfoRewardText:SetTextColor(1, 1, 1)
 		QuestInfoRewardText.SetTextColor = F.dummy
-		QuestInfoItemChooseText:SetTextColor(1, 1, 1)
-		QuestInfoItemChooseText.SetTextColor = F.dummy
-		QuestInfoItemReceiveText:SetTextColor(1, 1, 1)
-		QuestInfoItemReceiveText.SetTextColor = F.dummy
-		QuestInfoSpellLearnText:SetTextColor(1, 1, 1)
-		QuestInfoSpellLearnText.SetTextColor = F.dummy
-		QuestInfoXPFrameReceiveText:SetTextColor(1, 1, 1)
-		QuestInfoXPFrameReceiveText.SetTextColor = F.dummy
 		QuestProgressTitleText:SetTextColor(1, 1, 1)
 		QuestProgressTitleText.SetTextColor = F.dummy
 		QuestProgressText:SetTextColor(1, 1, 1)
@@ -4086,12 +3916,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		CurrentQuestsText.SetTextColor = F.dummy
 		CurrentQuestsText:SetShadowColor(0, 0, 0)
 		CoreAbilityFont:SetTextColor(1, 1, 1)
-
-		for i = 1, MAX_OBJECTIVES do
-			local objective = _G["QuestInfoObjective"..i]
-			objective:SetTextColor(1, 1, 1)
-			objective.SetTextColor = F.dummy
-		end
 
 		hooksecurefunc("UpdateProfessionButton", function(self)
 			self.spellString:SetTextColor(1, 1, 1);
