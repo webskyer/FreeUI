@@ -185,7 +185,7 @@ tinsert(ns.buttons, menuButton)
 
 GameMenuFrame:HookScript("OnShow", function(self)
 	GameMenuButtonStore:Hide()
-	GameMenuButtonOptions:SetPoint("TOP", GameMenuButtonHelp, "BOTTOM", 0, -16)
+	GameMenuButtonWhatsNew:SetPoint("TOP", GameMenuButtonHelp, "BOTTOM", 0, -1)
 end)
 
 GameMenuButtonKeybindings:ClearAllPoints()

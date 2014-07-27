@@ -3,8 +3,10 @@
 local F, C, L = unpack(select(2, ...))
 
 local function UpdateGlow(button, id)
+	if not _G[button:GetName()] then return end
+
 	local quality, texture, _
-	local quest = _G[button:GetName().."IconQuestTexture"]
+	local quest = button.IconQuestTexture or _G[button:GetName().."IconQuestTexture"]
 
 	if id then
 		quality, _, _, _, _, _, _, texture = select(3, GetItemInfo(id))
