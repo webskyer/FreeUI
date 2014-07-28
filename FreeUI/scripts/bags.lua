@@ -35,6 +35,7 @@ end
 
 local RestyleButton = function(buName, gridFrame)
 	local bu = _G[buName]
+	local border = bu.IconBorder
 
 	bu:SetSize(C.bags.size, C.bags.size)
 
@@ -52,6 +53,11 @@ local RestyleButton = function(buName, gridFrame)
 	co:SetPoint("TOP", bu, 1, -2)
 
 	bu.icon:SetTexCoord(.08, .92, .08, .92)
+
+	border:SetTexture(C.media.backdrop)
+	border:SetPoint("TOPLEFT", -1, 1)
+	border:SetPoint("BOTTOMRIGHT", 1, -1)
+	border:SetDrawLayer("BACKGROUND")
 
 	if _G[buName.."IconQuestTexture"] then
 		_G[buName.."IconQuestTexture"]:SetAlpha(0)

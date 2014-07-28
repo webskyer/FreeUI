@@ -1784,7 +1784,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		local function colourPopout(self)
 			local aR, aG, aB
-			local glow = self:GetParent().glow
+			local glow = self:GetParent().IconBorder
 
 			if glow:IsShown() then
 				aR, aG, aB = glow:GetVertexColor()
@@ -1808,11 +1808,18 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, #slots do
 			local slot = _G["Character"..slots[i].."Slot"]
 			local ic = _G["Character"..slots[i].."SlotIconTexture"]
+			local border = slot.IconBorder
+
 			_G["Character"..slots[i].."SlotFrame"]:Hide()
 
 			slot:SetNormalTexture("")
 			slot:SetPushedTexture("")
 			ic:SetTexCoord(.08, .92, .08, .92)
+
+			border:SetTexture(C.media.backdrop)
+			border:SetPoint("TOPLEFT", -1, 1)
+			border:SetPoint("BOTTOMRIGHT", 1, -1)
+			border:SetDrawLayer("BACKGROUND")
 
 			local popout = slot.popoutButton
 
@@ -6040,10 +6047,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		for i = 1, #slots do
 			local slot = _G["Inspect"..slots[i].."Slot"]
+			local border = slot.IconBorder
+
 			_G["Inspect"..slots[i].."SlotFrame"]:Hide()
 
 			slot:SetNormalTexture("")
 			slot:SetPushedTexture("")
+
+			border:SetTexture(C.media.backdrop)
+			border:SetPoint("TOPLEFT", -1, 1)
+			border:SetPoint("BOTTOMRIGHT", 1, -1)
+			border:SetDrawLayer("BACKGROUND")
 
 			slot.icon:SetTexCoord(.08, .92, .08, .92)
 		end
@@ -6620,6 +6634,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(PetJournalFilterButton)
 		F.ReskinTab(PetJournalParentTab1)
 		F.ReskinTab(PetJournalParentTab2)
+		F.ReskinTab(PetJournalParentTab3)
 		F.ReskinClose(PetJournalParentCloseButton)
 		F.ReskinScroll(MountJournalListScrollFrameScrollBar)
 		F.ReskinScroll(PetJournalListScrollFrameScrollBar)
@@ -6631,11 +6646,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		PetJournalTutorialButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -14, 14)
 
 		PetJournalParentTab2:SetPoint("LEFT", PetJournalParentTab1, "RIGHT", -15, 0)
-
-		PetJournalHealPetButtonBorder:Hide()
-		PetJournalHealPetButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
-		PetJournal.HealPetButton:SetPushedTexture("")
-		F.CreateBG(PetJournal.HealPetButton)
+		PetJournalParentTab3:SetPoint("LEFT", PetJournalParentTab2, "RIGHT", -15, 0)
 
 		local scrollFrames = {MountJournal.ListScrollFrame.buttons, PetJournal.listScroll.buttons}
 		for _, scrollFrame in pairs(scrollFrames) do
@@ -6699,6 +6710,16 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		hooksecurefunc("MountJournal_UpdateMountList", updateScroll)
 		hooksecurefunc(MountJournalListScrollFrame, "update", updateScroll)
 
+		PetJournalHealPetButtonBorder:Hide()
+		PetJournalHealPetButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
+		PetJournal.HealPetButton:SetPushedTexture("")
+		F.CreateBG(PetJournal.HealPetButton)
+
+		MountJournalSummonRandomFavoriteButtonBorder:Hide()
+		MountJournalSummonRandomFavoriteButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
+		MountJournalSummonRandomFavoriteButton:SetPushedTexture("")
+		F.CreateBG(MountJournalSummonRandomFavoriteButton)
+
 		local tooltips = {PetJournalPrimaryAbilityTooltip, PetJournalSecondaryAbilityTooltip}
 		for _, f in pairs(tooltips) do
 			f:DisableDrawLayer("BACKGROUND")
@@ -6714,7 +6735,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local card = PetJournalPetCard
 
 		PetJournalPetCardBG:Hide()
-		card.AbilitiesBG:SetAlpha(0)
 		card.PetInfo.levelBG:SetAlpha(0)
 		card.PetInfo.qualityBorder:SetAlpha(0)
 
@@ -6952,7 +6972,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.Reskin(BonusFrame.DiceButton)
 
-		for _, bu in pairs({BonusFrame.RandomBGButton, BonusFrame.CallToArmsButton, BonusFrame.WorldPVP1Button, BonusFrame.WorldPVP2Button}) do
+		for _, bu in pairs({BonusFrame.RandomBGButton, BonusFrame.Arena1Button, BonusFrame.Arena2Button}) do
 			F.Reskin(bu, true)
 
 			bu.SelectedTexture:SetDrawLayer("BACKGROUND")
@@ -7222,6 +7242,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			hooksecurefunc(header, "SetNormalTexture", onSetNormalTexture)
 		end
 
+		F.ReskinCheck(WarGameTournamentModeCheckButton)
+
 		-- Main style
 
 		F.Reskin(HonorFrame.SoloQueueButton)
@@ -7264,59 +7286,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(QuestChoiceFrame.Option1.OptionButton)
 		F.Reskin(QuestChoiceFrame.Option2.OptionButton)
 		F.ReskinClose(QuestChoiceFrame.CloseButton)
-	elseif addon == "Blizzard_ReforgingUI" then
-		for i = 15, 25 do
-			select(i, ReforgingFrame:GetRegions()):Hide()
-		end
-		ReforgingFrame.Lines:SetAlpha(0)
-		ReforgingFrame.ReceiptBG:SetAlpha(0)
-		ReforgingFrame.MissingFadeOut:SetAlpha(0)
-		ReforgingFrame.ButtonFrame:GetRegions():Hide()
-		ReforgingFrame.ButtonFrame.ButtonBorder:Hide()
-		ReforgingFrame.ButtonFrame.ButtonBottomBorder:Hide()
-		ReforgingFrame.ButtonFrame.MoneyLeft:Hide()
-		ReforgingFrame.ButtonFrame.MoneyRight:Hide()
-		ReforgingFrame.ButtonFrame.MoneyMiddle:Hide()
-		ReforgingFrame.ItemButton.Frame:Hide()
-		ReforgingFrame.ItemButton.Grabber:Hide()
-		ReforgingFrame.ItemButton.TextFrame:Hide()
-		ReforgingFrame.ItemButton.TextGrabber:Hide()
-
-		F.CreateBD(ReforgingFrame.ItemButton, .25)
-		ReforgingFrame.ItemButton:SetHighlightTexture("")
-		ReforgingFrame.ItemButton:SetPushedTexture("")
-		ReforgingFrame.ItemButton.IconTexture:SetPoint("TOPLEFT", 1, -1)
-		ReforgingFrame.ItemButton.IconTexture:SetPoint("BOTTOMRIGHT", -1, 1)
-
-		ReforgingFrame.ItemButton:HookScript("OnEnter", function(self)
-			self:SetBackdropBorderColor(1, .56, .85)
-		end)
-		ReforgingFrame.ItemButton:HookScript("OnLeave", function(self)
-			self:SetBackdropBorderColor(0, 0, 0)
-		end)
-
-		local bg = CreateFrame("Frame", nil, ReforgingFrame.ItemButton)
-		bg:SetSize(341, 50)
-		bg:SetPoint("LEFT", ReforgingFrame.ItemButton, "RIGHT", -1, 0)
-		bg:SetFrameLevel(ReforgingFrame.ItemButton:GetFrameLevel()-1)
-		F.CreateBD(bg, .25)
-
-		ReforgingFrame.RestoreMessage:SetTextColor(.9, .9, .9)
-
-		hooksecurefunc("ReforgingFrame_Update", function()
-			local _, icon = GetReforgeItemInfo()
-			if not icon then
-				ReforgingFrame.ItemButton.IconTexture:SetTexture("")
-			else
-				ReforgingFrame.ItemButton.IconTexture:SetTexCoord(.08, .92, .08, .92)
-			end
-		end)
-
-		ReforgingFrameRestoreButton:SetPoint("LEFT", ReforgingFrameMoneyFrame, "RIGHT", 0, 1)
-
-		F.ReskinPortraitFrame(ReforgingFrame)
-		F.Reskin(ReforgingFrameRestoreButton)
-		F.Reskin(ReforgingFrameReforgeButton)
 	elseif addon == "Blizzard_TalentUI" then
 		PlayerTalentFrameTalents:DisableDrawLayer("BORDER")
 		PlayerTalentFrameTalentsBg:Hide()
