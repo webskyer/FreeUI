@@ -6,19 +6,21 @@ if not C.bags.enable then return end
 
 local _G = _G
 
-local grid
-local bankGrid
 local r, g, b = unpack(C.class)
 
 --[[ Get the number of bag and bank container slots used ]]
 
 local function CheckSlots()
-	for i = 4, 1, -1 do
-		if GetContainerNumSlots(i) ~= 0 then
-			return i + 1
+	local numBags = 1
+
+	for i = 1, NUM_BAG_FRAMES do
+		local bagName = "ContainerFrame"..i+1
+		if _G[bagName]:IsShown() and not _G[bagName.."BackgroundTop"]:GetTexture():find("Bank") then
+			numBags = numBags + 1
 		end
 	end
-	return 1
+
+	return numBags
 end
 
 -- [[ Fancy borders when dragging items ]]
@@ -33,7 +35,7 @@ end
 
 -- [[ Function to reskin buttons and hide default bags]]
 
-local RestyleButton = function(buName, gridFrame)
+local RestyleButton = function(buName)
 	local bu = _G[buName]
 	local border = bu.IconBorder
 
@@ -63,9 +65,10 @@ local RestyleButton = function(buName, gridFrame)
 		_G[buName.."IconQuestTexture"]:SetAlpha(0)
 	end
 
-	local bg = CreateFrame("Frame", nil, gridFrame)
+	local bg = CreateFrame("Frame", nil, bu)
 	bg:SetPoint("TOPLEFT", bu, -1, 1)
 	bg:SetPoint("BOTTOMRIGHT", bu, 1, -1)
+	bg:SetShown(C.bags.slotsShowAlways)
 	F.CreateBD(bg, 0)
 	bu.bg = bg
 
@@ -81,6 +84,7 @@ local HideBag = function(bagName)
 	if bag.restyled then return end
 
 	bag:EnableMouse(false)
+	bag.ClickableTitleFrame:EnableMouse(false)
 	_G[bagName.."CloseButton"]:Hide()
 	_G[bagName.."PortraitButton"]:EnableMouse(false)
 	for i = 1, 7 do
@@ -128,17 +132,15 @@ holder:SetFrameStrata("HIGH")
 holder:Hide()
 F.CreateBD(holder, .6)
 
-grid = CreateFrame("Frame", nil, holder)
-
 local ReanchorButtons = function()
 	table.wipe(buttons)
 	for f = 1, CheckSlots() do
 		con = "ContainerFrame"..f
 		HideBag(con)
 
-		for i = GetContainerNumSlots(f-1), 1, -1  do
+		for i = GetContainerNumSlots(_G[con]:GetID()), 1, -1  do
 			bu = con.."Item"..i
-			RestyleButton(bu, grid)
+			RestyleButton(bu)
 			tinsert(buttons, bu)
 		end
 	end
@@ -161,29 +163,6 @@ bankholder:SetFrameStrata("HIGH")
 bankholder:Hide()
 F.CreateBD(bankholder, .6)
 
-bankGrid = CreateFrame("Frame", nil, bankholder)
-
-for _, gridFrame in pairs({grid, bankGrid}) do
-	gridFrame:SetShown(C.bags.slotsShowAlways)
-	gridFrame:SetFrameLevel(0)
-	if not C.bags.slotsShowAlways then
-		gridFrame:RegisterEvent("CURSOR_UPDATE")
-	end
-	gridFrame:SetScript("OnEvent", function(self)
-		self:SetShown(GetCursorInfo() == "item")
-	end)
-
-	F.AddOptionsCallback("bags", "slotsShowAlways", function()
-		if C.bags.slotsShowAlways then
-			gridFrame:UnregisterEvent("CURSOR_UPDATE")
-			gridFrame:Show()
-		else
-			gridFrame:RegisterEvent("CURSOR_UPDATE")
-			gridFrame:Hide()
-		end
-	end)
-end
-
 local purchase = F.CreateFS(bankholder)
 purchase:SetPoint("BOTTOMLEFT", bankholder, "BOTTOMLEFT", 4, 4)
 purchase:SetText("Buy new slots: Click here.")
@@ -199,7 +178,7 @@ local ReanchorBankButtons = function()
 	table.wipe(bankbuttons)
 	for i = 1, 28 do
 		bu = "BankFrameItem"..i
-		RestyleButton(bu, bankGrid)
+		RestyleButton(bu)
 		tinsert(bankbuttons, bu)
 	end
 
@@ -216,7 +195,7 @@ local ReanchorBankButtons = function()
 
 		for i = GetContainerNumSlots(f), 1, -1  do
 			bu = con.."Item"..i
-			RestyleButton(bu, bankGrid)
+			RestyleButton(bu)
 			tinsert(bankbuttons, bu)
 		end
 	end
@@ -234,6 +213,37 @@ local money = _G["BankFrameMoneyFrame"]
 money:SetFrameStrata("DIALOG")
 money:ClearAllPoints()
 money:SetPoint("BOTTOMRIGHT", bankholder, "BOTTOMRIGHT", 12, 2)
+
+-- [[ Button slot outline ]]
+
+local moveHandler = CreateFrame("Frame")
+
+local function toggleButtonBackdrops(show)
+	for _, button in pairs(buttons) do
+		_G[button].bg:SetShown(show)
+	end
+	for _, button in pairs(bankbuttons) do
+		_G[button].bg:SetShown(show)
+	end
+end
+
+if not C.bags.slotsShowAlways then
+	moveHandler:RegisterEvent("CURSOR_UPDATE")
+end
+
+F.AddOptionsCallback("bags", "slotsShowAlways", function()
+	if C.bags.slotsShowAlways then
+		moveHandler:UnregisterEvent("CURSOR_UPDATE")
+		toggleButtonBackdrops(true)
+	else
+		moveHandler:RegisterEvent("CURSOR_UPDATE")
+		toggleButtonBackdrops(false)
+	end
+end)
+
+moveHandler:SetScript("OnEvent", function()
+	toggleButtonBackdrops(GetCursorInfo() == "item")
+end)
 
 --[[ Misc. frames ]]
 
@@ -255,19 +265,24 @@ F.CreateBD(bankbagholder, .6)
 bankbagholder:SetAlpha(0)
 
 local bagholder = CreateFrame("Frame", nil, ContainerFrame1)
-bagholder:SetSize(130, 35)
+bagholder:SetSize(32 * 5 + 4, 35)
 bagholder:SetPoint("BOTTOM", holder, "TOP", 0, -1)
+
+-- need to define this now. Used later as a dummy for default bag
+local mainBag
 
 local showBags = function()
 	for i = 0, 3 do
 		_G["CharacterBag"..i.."Slot"]:SetAlpha(1)
 	end
+	mainBag:SetAlpha(1)
 end
 
 local hideBags = function()
 	for i = 0, 3 do
 		_G["CharacterBag"..i.."Slot"]:SetAlpha(0)
 	end
+	mainBag:SetAlpha(0)
 end
 
 local bankBagAlpha = 0
@@ -286,9 +301,104 @@ bagholder:SetScript("OnLeave", hideBags)
 bankbagholder:SetScript("OnEnter", setBankBagAlpha)
 bankbagholder:SetScript("OnLeave", setBankBagAlpha)
 
+local function showContainerDropdown(self)
+	local id = self.ID - CharacterBag0Slot:GetID() + 1
+
+	for i = 1, NUM_CONTAINER_FRAMES do
+		local frame = _G["ContainerFrame"..i]
+		if frame:GetID() == id then
+			ToggleDropDownMenu(1, nil, frame.FilterDropDown, self, 0, 0)
+			return
+		end
+	end
+end
+
+local function configOnEnter(self)
+	showBags()
+	GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+	GameTooltip:AddLine(CLICK_BAG_SETTINGS)
+	GameTooltip:Show()
+end
+
+local function configOnLeave()
+	GameTooltip:Hide()
+	hideBags()
+end
+
+local function addConfigIcon(bag, dropdownFunction)
+	local bu = CreateFrame("Button", nil, bag)
+	bu:SetSize(16, 16)
+	bu:SetPoint("BOTTOMRIGHT", 2, -2)
+
+	bu.ID = bag:GetID()
+
+	local ic = bu:CreateTexture()
+	ic:SetTexture("Interface\\WorldMap\\GEAR_64GREY")
+	ic:SetAllPoints()
+
+	bu:SetScript("OnClick", dropdownFunction or showContainerDropdown)
+	bu:SetScript("OnEnter", configOnEnter)
+	bu:SetScript("OnLeave", configOnLeave)
+end
+
+local function bagOnEnter(self)
+	showBags()
+
+	if self.isMainBag then
+		for j = 1, GetContainerNumSlots(0) do
+			local bu = _G["ContainerFrame1Item"..j]
+			bu.bg:SetBackdropBorderColor(r, g, b)
+			bu.bg:Show()
+		end
+	else
+		local id = self:GetID() - CharacterBag0Slot:GetID() + 1
+
+		for i = 1, NUM_CONTAINER_FRAMES do
+			local frame = _G["ContainerFrame"..i]
+			if frame:GetID() == id then
+				for j = 1, GetContainerNumSlots(frame:GetID()) do
+					local bu = _G["ContainerFrame"..i.."Item"..j]
+					bu.bg:SetBackdropBorderColor(r, g, b)
+					bu.bg:Show()
+				end
+
+				break
+			end
+		end
+	end
+end
+
+local function bagOnLeave(self)
+	if self.isMainBag then
+		for j = 1, GetContainerNumSlots(0) do
+			local bu = _G["ContainerFrame1Item"..j]
+			bu.bg:Hide()
+			bu.bg:SetBackdropBorderColor(0, 0, 0)
+		end
+	else
+		local id = self:GetID() - CharacterBag0Slot:GetID() + 1
+
+		for i = 1, NUM_CONTAINER_FRAMES do
+			local frame = _G["ContainerFrame"..i]
+			if frame:GetID() == id then
+				for j = 1, GetContainerNumSlots(frame:GetID()) do
+					local bu =_G["ContainerFrame"..i.."Item"..j]
+					bu.bg:Hide()
+					bu.bg:SetBackdropBorderColor(0, 0, 0)
+				end
+
+				break
+			end
+		end
+	end
+
+	hideBags()
+end
+
 for i = 0, 3 do
 	local bag = _G["CharacterBag"..i.."Slot"]
 	local ic = _G["CharacterBag"..i.."SlotIconTexture"]
+	local border = bag.IconBorder
 
 	bag:UnregisterEvent("ITEM_PUSH") -- gets rid of the animation
 
@@ -296,9 +406,9 @@ for i = 0, 3 do
 	bag:ClearAllPoints()
 
 	if i == 0 then
-		bag:SetPoint("BOTTOM", holder, "TOP", -46, 1)
+		bag:SetPoint("LEFT", bagholder, 1, 0)
 	else
-		bag:SetPoint("LEFT", _G["CharacterBag"..(i-1).."Slot"], "RIGHT", 1, 0)
+		bag:SetPoint("LEFT", _G["CharacterBag"..(i-1).."Slot"], "RIGHT", 3, 0)
 	end
 
 	bag:SetNormalTexture("")
@@ -306,13 +416,43 @@ for i = 0, 3 do
 	bag:SetPushedTexture("")
 
 	ic:SetTexCoord(.08, .92, .08, .92)
-	ic:SetPoint("TOPLEFT", 1, -1)
-	ic:SetPoint("BOTTOMRIGHT", -1, 1)
-	F.CreateBD(bag)
+	F.CreateBG(ic)
+
+	border:SetTexture(C.media.backdrop)
+	border:SetPoint("TOPLEFT", -1, 1)
+	border:SetPoint("BOTTOMRIGHT", 1, -1)
+	border:SetDrawLayer("BACKGROUND", 1)
 
 	bag:SetAlpha(0)
-	bag:HookScript("OnEnter", showBags)
-	bag:HookScript("OnLeave", hideBags)
+	bag:HookScript("OnEnter", bagOnEnter)
+	bag:HookScript("OnLeave", bagOnLeave)
+	bag:SetScript("OnClick", nil)
+
+	addConfigIcon(bag)
+end
+
+-- add extra button for default bag
+do
+	mainBag = CreateFrame("Frame", nil, holder)
+	mainBag:SetSize(30, 30)
+	mainBag:SetPoint("LEFT", CharacterBag3Slot, "RIGHT", 3, 0)
+	mainBag:SetAlpha(0)
+
+	local icon = mainBag:CreateTexture(nil, "OVERLAY")
+	icon:SetAllPoints()
+	icon:SetTexture("Interface\\Buttons\\Button-Backpack-Up")
+	icon:SetTexCoord(.08, .92, .08, .92)
+
+	addConfigIcon(mainBag, function(self)
+		ToggleDropDownMenu(1, nil, ContainerFrame1.FilterDropDown, self, 0, 0)
+	end)
+
+	F.CreateBG(mainBag)
+
+	mainBag.isMainBag = true
+
+	mainBag:SetScript("OnEnter", bagOnEnter)
+	mainBag:SetScript("OnLeave", bagOnLeave)
 end
 
 for i = 1, 7 do
