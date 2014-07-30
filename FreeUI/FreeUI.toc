@@ -45,7 +45,6 @@ scripts\expbar.lua
 scripts\fonts.lua
 scripts\globals.lua
 scripts\interrupt.lua
-scripts\itemglow.lua
 scripts\loot.lua
 scripts\lootroll.lua
 scripts\mail.lua
