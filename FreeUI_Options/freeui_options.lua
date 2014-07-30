@@ -79,7 +79,7 @@ local function toggleChildren(self, checked)
 end
 
 local function toggle(self)
-	local checked = self:GetChecked() == 1
+	local checked = self:GetChecked()
 
 	if checked then
 		PlaySound("igMainMenuOptionCheckBoxOn")
@@ -521,7 +521,7 @@ init:SetScript("OnEvent", function()
 
 	FreeUIOptionsPanel.ProfileBox:SetChecked(FreeUIOptionsGlobal[C.myRealm][C.myName])
 	FreeUIOptionsPanel.ProfileBox:SetScript("OnClick", function(self)
-		FreeUIOptionsGlobal[C.myRealm][C.myName] = self:GetChecked() == 1
+		FreeUIOptionsGlobal[C.myRealm][C.myName] = self:GetChecked()
 		changeProfile()
 		displaySettings()
 	end)

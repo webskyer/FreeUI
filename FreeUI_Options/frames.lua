@@ -393,7 +393,7 @@ hotKey:SetPoint("TOPLEFT", rightBarsMouseover, "BOTTOMLEFT", 0, -8)
 enableStyle.children = {hotKey}
 
 local function toggleActionBarsOptions()
-	local shown = enable:GetChecked() == 1
+	local shown = enable:GetChecked()
 	enableStyle:SetShown(shown)
 	rightBarsMouseover:SetShown(shown)
 	hotKey:SetShown(shown)
@@ -417,7 +417,7 @@ local size = ns.CreateNumberSlider(bags, "size", SMALL, LARGE, 8, 100, 1)
 size:SetPoint("TOPLEFT", slotsShowAlways, "BOTTOMLEFT", 8, -42)
 
 local function toggleBagsOptions()
-	local shown = enable:GetChecked() == 1
+	local shown = enable:GetChecked()
 	slotsShowAlways:SetShown(shown)
 	size:SetShown(shown)
 end
@@ -466,7 +466,7 @@ local timeShown = ns.CreateNumberSlider(notifications, "timeShown", "1 sec", "10
 timeShown:SetPoint("TOPLEFT", animations, "BOTTOMLEFT", 8, -30)
 
 local function toggleNotificationsOptions()
-	local shown = enable:GetChecked() == 1
+	local shown = enable:GetChecked()
 	checkMail:SetShown(shown)
 	checkEvents:SetShown(shown)
 	checkGuildEvents:SetShown(shown)
@@ -545,7 +545,7 @@ unitframes.Layout:SetSize(128, 25)
 tinsert(ns.buttons, unitframes.Layout)
 
 local function toggleUFOptions()
-	local shown = enable:GetChecked() == 1
+	local shown = enable:GetChecked()
 
 	autoPosition:SetShown(shown)
 	enableGroup:SetShown(shown)
