@@ -61,9 +61,8 @@ local RestyleButton = function(buName)
 	border:SetPoint("BOTTOMRIGHT", 1, -1)
 	border:SetDrawLayer("BACKGROUND")
 
-	if _G[buName.."IconQuestTexture"] then
-		_G[buName.."IconQuestTexture"]:SetAlpha(0)
-	end
+	local questTexture = _G[buName.."IconQuestTexture"] or bu.IconQuestTexture
+	questTexture:SetAlpha(0)
 
 	local bg = CreateFrame("Frame", nil, bu)
 	bg:SetPoint("TOPLEFT", bu, -1, 1)
