@@ -56,6 +56,8 @@ local Update = function(self, event, unit)
 		t = self.colors.tapped
 	elseif(power.colorDisconnected and not UnitIsConnected(unit)) then
 		t = self.colors.disconnected
+	elseif(displayType == ALTERNATE_POWER_INDEX and power.altPowerColor) then
+		t = power.altPowerColor
 	elseif(power.colorPower) then
 		local ptype, ptoken, altR, altG, altB = UnitPowerType(unit)
 
