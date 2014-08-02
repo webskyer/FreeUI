@@ -5598,36 +5598,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			nt:SetAlpha(0)
 		end
 
-		local function updateFilter()
-			if GuildBankFrame.mode == "bank" then
-				local tab = GetCurrentGuildBankTab()
-
-				for i = 1, MAX_GUILDBANK_SLOTS_PER_TAB do
-					local index = mod(i, NUM_SLOTS_PER_GUILDBANK_GROUP)
-					if index == 0 then
-						index = NUM_SLOTS_PER_GUILDBANK_GROUP
-					end
-
-					local column = ceil((i-0.5)/NUM_SLOTS_PER_GUILDBANK_GROUP)
-
-					local button = _G["GuildBankColumn"..column.."Button"..index]
-					local _, _, _, isFiltered = GetGuildBankItemInfo(tab, i)
-					local isShown = button.icon:IsShown()
-
-					if button.glow then
-						if isShown and not isFiltered then
-							button.glow:SetAlpha(1)
-						elseif isFiltered or not isShown then
-							button.glow:SetAlpha(0)
-						end
-					end
-				end
-			end
-		end
-
-		hooksecurefunc("GuildBankFrame_UpdateFiltered", updateFilter)
-		hooksecurefunc("GuildBankFrame_Update", updateFilter)
-
 		for i = 1, NUM_GUILDBANK_ICONS_PER_ROW * NUM_GUILDBANK_ICON_ROWS do
 			local bu = _G["GuildBankPopupButton"..i]
 
