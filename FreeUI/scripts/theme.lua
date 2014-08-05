@@ -1444,6 +1444,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			bu.icon:SetAlpha(1)
 			bu.icon:SetTexCoord(.08, .92, .08, .92)
+			bu.icon:SetDesaturated(false)
 			F.CreateBG(bu.icon)
 
 			local bg = CreateFrame("Frame", nil, bu)

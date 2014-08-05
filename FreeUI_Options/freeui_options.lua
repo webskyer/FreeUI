@@ -134,7 +134,11 @@ local function onValueChanged(self, value)
 	if userChangedSlider then
 		SaveValue(self, value)
 
-		setReloadNeeded(true)
+		if self.needsReload then
+			-- if not true, don't set to false - something else might have changed it
+			setReloadNeeded(true)
+		end
+
 		overrideReload = true
 	end
 end
@@ -185,10 +189,10 @@ local function onSliderEnterPressed(self)
 	self:ClearFocus()
 end
 
-ns.CreateNumberSlider = function(parent, option, lowText, highText, low, high, step, alignRight, needsReload)
+ns.CreateNumberSlider = function(parent, option, lowText, highText, low, high, step, needsReload)
 	local slider = createSlider(parent, option, lowText, highText, low, high, step, needsReload)
 
-	local f = CreateFrame("EditBox", baseName..option.."TextInput", slider)
+	local f = CreateFrame("EditBox", baseName..option.."TextInput", slider, "InputBoxTemplate")
 	f:SetAutoFocus(false)
 	f:SetWidth(60)
 	f:SetHeight(20)
@@ -199,6 +203,7 @@ ns.CreateNumberSlider = function(parent, option, lowText, highText, low, high, s
 
 	f:SetScript("OnEscapePressed", onSliderEscapePressed)
 	f:SetScript("OnEnterPressed", onSliderEnterPressed)
+	f:SetScript("OnEditFocusGained", nil)
 	f:SetScript("OnEditFocusLost", onSliderEnterPressed)
 
 	slider.textInput = f

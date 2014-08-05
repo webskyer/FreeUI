@@ -292,13 +292,13 @@ fonts:SetPoint("TOPLEFT", useCustomColour, "BOTTOMLEFT", 0, -30)
 local fontUseAlternativeFont = ns.CreateCheckBox(appearance, "fontUseAlternativeFont", true, true)
 fontUseAlternativeFont:SetPoint("TOPLEFT", fonts, "BOTTOMLEFT", 0, -20)
 
-local fontSizeNormal = ns.CreateNumberSlider(appearance, "fontSizeNormal", 5, 32, 5, 32, 1)
+local fontSizeNormal = ns.CreateNumberSlider(appearance, "fontSizeNormal", 5, 32, 5, 32, 1, true)
 fontSizeNormal:SetPoint("TOPLEFT", fontUseAlternativeFont, "BOTTOMLEFT", 16, -26)
 
 appearance.normalSample = appearance:CreateFontString()
 appearance.normalSample:SetPoint("TOPLEFT", fontSizeNormal, "BOTTOMLEFT", 0, -16)
 
-local fontSizeLarge = ns.CreateNumberSlider(appearance, "fontSizeLarge", 5, 32, 5, 32, 1)
+local fontSizeLarge = ns.CreateNumberSlider(appearance, "fontSizeLarge", 5, 32, 5, 32, 1, true)
 fontSizeLarge:SetPoint("TOPLEFT", appearance.normalSample, "BOTTOMLEFT", 0, -26)
 
 appearance.largeSample = appearance:CreateFontString()
