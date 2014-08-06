@@ -2,6 +2,8 @@ local F, C, L = unpack(FreeUI)
 
 local addon = ...
 
+local playerName = UnitName("player")
+
 -- Smooth bars
 
 local smoothing = {}
@@ -97,7 +99,7 @@ close:SetScript("OnClick", function()
 		finishedFunc = function(f) f:SetAlpha(1); f:Hide() end,
 		finishedArg1 = f,
 	})
-	DisableAddOn(addon)
+	DisableAddOn(addon, playerName)
 end)
 
 F.Reskin(option1)
@@ -223,7 +225,7 @@ local step4 = function()
 	option2:SetText("Finish")
 
 	option2:SetScript("OnClick", function()
-		DisableAddOn(addon)
+		DisableAddOn(addon, playerName)
 		ReloadUI()
 	end)
 end
@@ -295,7 +297,7 @@ local tut6 = function()
 			finishedFunc = function(f) f:Hide() end,
 			finishedArg1 = f,
 		})
-		DisableAddOn(addon)
+		DisableAddOn(addon, playerName)
 	end)
 	option2:SetScript("OnClick", step1)
 end
