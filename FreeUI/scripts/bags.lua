@@ -301,7 +301,13 @@ bankbagholder:SetScript("OnEnter", setBankBagAlpha)
 bankbagholder:SetScript("OnLeave", setBankBagAlpha)
 
 local function showContainerDropdown(self)
-	local id = self.ID - CharacterBag0Slot:GetID() + 1
+	local id
+
+	if self.isBankBag then
+		id = self.ID
+	else
+		id = self.ID - CharacterBag0Slot:GetID() + 1
+	end
 
 	for i = 1, NUM_CONTAINER_FRAMES do
 		local frame = _G["ContainerFrame"..i]
@@ -313,23 +319,34 @@ local function showContainerDropdown(self)
 end
 
 local function configOnEnter(self)
-	showBags()
+	if self.isBankBag then
+		setBankBagAlpha()
+	else
+		showBags()
+	end
+
 	GameTooltip:SetOwner(self, "ANCHOR_LEFT")
 	GameTooltip:AddLine(CLICK_BAG_SETTINGS)
 	GameTooltip:Show()
 end
 
-local function configOnLeave()
+local function configOnLeave(self)
 	GameTooltip:Hide()
-	hideBags()
+
+	if self.isBankBag then
+		setBankBagAlpha()
+	else
+		hideBags()
+	end
 end
 
-local function addConfigIcon(bag, dropdownFunction)
+local function addConfigIcon(bag, id, dropdownFunction, isBankBag)
 	local bu = CreateFrame("Button", nil, bag)
 	bu:SetSize(16, 16)
 	bu:SetPoint("BOTTOMRIGHT", 2, -2)
 
-	bu.ID = bag:GetID()
+	bu.isBankBag = isBankBag
+	bu.ID = id
 
 	local ic = bu:CreateTexture()
 	ic:SetTexture("Interface\\WorldMap\\GEAR_64GREY")
@@ -340,14 +357,22 @@ local function addConfigIcon(bag, dropdownFunction)
 	bu:SetScript("OnLeave", configOnLeave)
 end
 
-local function bagOnEnter(self)
-	showBags()
+local function bagOnMouseover(self, isEnter)
+	local bgR, bgG, bgB
+
+	if isEnter then
+		showBags()
+		bgR, bgG, bgB = r, g, b
+	else
+		hideBags()
+		bgR, bgG, bgB = 0, 0, 0
+	end
 
 	if self.isMainBag then
 		for j = 1, GetContainerNumSlots(0) do
 			local bu = _G["ContainerFrame1Item"..j]
-			bu.bg:SetBackdropBorderColor(r, g, b)
-			bu.bg:Show()
+			bu.bg:SetBackdropBorderColor(bgR, bgG, bgB)
+			bu.bg:SetShown(isEnter)
 		end
 	else
 		local id = self:GetID() - CharacterBag0Slot:GetID() + 1
@@ -357,8 +382,8 @@ local function bagOnEnter(self)
 			if frame:GetID() == id then
 				for j = 1, GetContainerNumSlots(frame:GetID()) do
 					local bu = _G["ContainerFrame"..i.."Item"..j]
-					bu.bg:SetBackdropBorderColor(r, g, b)
-					bu.bg:Show()
+					bu.bg:SetBackdropBorderColor(bgR, bgG, bgB)
+					bu.bg:SetShown(isEnter)
 				end
 
 				break
@@ -367,31 +392,12 @@ local function bagOnEnter(self)
 	end
 end
 
+local function bagOnEnter(self)
+	bagOnMouseover(self, true)
+end
+
 local function bagOnLeave(self)
-	if self.isMainBag then
-		for j = 1, GetContainerNumSlots(0) do
-			local bu = _G["ContainerFrame1Item"..j]
-			bu.bg:Hide()
-			bu.bg:SetBackdropBorderColor(0, 0, 0)
-		end
-	else
-		local id = self:GetID() - CharacterBag0Slot:GetID() + 1
-
-		for i = 1, NUM_CONTAINER_FRAMES do
-			local frame = _G["ContainerFrame"..i]
-			if frame:GetID() == id then
-				for j = 1, GetContainerNumSlots(frame:GetID()) do
-					local bu =_G["ContainerFrame"..i.."Item"..j]
-					bu.bg:Hide()
-					bu.bg:SetBackdropBorderColor(0, 0, 0)
-				end
-
-				break
-			end
-		end
-	end
-
-	hideBags()
+	bagOnMouseover(self, false)
 end
 
 for i = 0, 3 do
@@ -427,7 +433,7 @@ for i = 0, 3 do
 	bag:HookScript("OnLeave", bagOnLeave)
 	bag:SetScript("OnClick", nil)
 
-	addConfigIcon(bag)
+	addConfigIcon(bag, bag:GetID())
 end
 
 -- add extra button for default bag
@@ -442,7 +448,7 @@ do
 	icon:SetTexture("Interface\\Buttons\\Button-Backpack-Up")
 	icon:SetTexCoord(.08, .92, .08, .92)
 
-	addConfigIcon(mainBag, function(self)
+	addConfigIcon(mainBag, nil, function(self)
 		ToggleDropDownMenu(1, nil, ContainerFrame1.FilterDropDown, self, 0, 0)
 	end)
 
@@ -454,8 +460,44 @@ do
 	mainBag:SetScript("OnLeave", bagOnLeave)
 end
 
+local function bankBagOnMouseover(self, isEnter)
+	local bgR, bgG, bgB
+
+	setBankBagAlpha()
+
+	if isEnter then
+		bgR, bgG, bgB = r, g, b
+	else
+		bgR, bgG, bgB = 0, 0, 0
+	end
+
+	local id = self:GetID() + NUM_BAG_SLOTS
+
+	for i = 1, NUM_CONTAINER_FRAMES do
+		local frame = _G["ContainerFrame"..i]
+		if frame:GetID() == id then
+			for j = 1, GetContainerNumSlots(frame:GetID()) do
+				local bu = _G["ContainerFrame"..i.."Item"..j]
+				bu.bg:SetBackdropBorderColor(bgR, bgG, bgB)
+				bu.bg:SetShown(isEnter)
+			end
+
+			break
+		end
+	end
+end
+
+local function bankBagOnEnter(self)
+	bankBagOnMouseover(self, true)
+end
+
+local function bankBagOnLeave(self)
+	bankBagOnMouseover(self, false)
+end
+
 for i = 1, 7 do
 	local bag = BankSlotsFrame["Bag"..i]
+	local border = bag.IconBorder
 
 	bag:SetParent(bankholder)
 	bag:ClearAllPoints()
@@ -471,9 +513,16 @@ for i = 1, 7 do
 
 	bag.icon:SetTexCoord(.08, .92, .08, .92)
 
+	border:SetTexture(C.media.backdrop)
+	border:SetPoint("TOPLEFT", -1, 1)
+	border:SetPoint("BOTTOMRIGHT", 1, -1)
+	border:SetDrawLayer("BACKGROUND", 1)
+
 	bag:SetAlpha(0)
-	bag:HookScript("OnEnter", setBankBagAlpha)
-	bag:HookScript("OnLeave", setBankBagAlpha)
+	bag:HookScript("OnEnter", bankBagOnEnter)
+	bag:HookScript("OnLeave", bankBagOnLeave)
+
+	addConfigIcon(bag, bag:GetID() + NUM_BAG_SLOTS, nil, true)
 end
 
 local moneytext = {"ContainerFrame1MoneyFrameGoldButtonText", "ContainerFrame1MoneyFrameSilverButtonText", "ContainerFrame1MoneyFrameCopperButtonText", "BankFrameMoneyFrameGoldButtonText", "BankFrameMoneyFrameSilverButtonText", "BankFrameMoneyFrameCopperButtonText", "BackpackTokenFrameToken1Count", "BackpackTokenFrameToken2Count", "BackpackTokenFrameToken3Count"}
