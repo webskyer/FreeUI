@@ -1862,8 +1862,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			popout:HookScript("OnLeave", colourPopout)
 		end
 
-		select(10, CharacterMainHandSlot:GetRegions()):Hide()
-		select(10, CharacterSecondaryHandSlot:GetRegions()):Hide()
+		select(11, CharacterMainHandSlot:GetRegions()):Hide()
+		select(11, CharacterSecondaryHandSlot:GetRegions()):Hide()
 
 		local updateChar = function(self)
 			if not PaperDollFrame:IsShown() then return end
