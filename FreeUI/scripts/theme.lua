@@ -3734,6 +3734,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.ReskinCheck(_G["AddonListEntry"..i.."Enabled"])
 		end
 
+		-- Splash frame
+
+		F.Reskin(SplashFrame.BottomCloseButton)
+		F.ReskinClose(SplashFrame.TopCloseButton)
+
+		SplashFrame.TopCloseButton:ClearAllPoints()
+
+		SplashFrame.TopCloseButton:SetPoint("TOPRIGHT", SplashFrame, "TOPRIGHT", -18, -18)
+
 		-- [[ Hide regions ]]
 
 		local bglayers = {"LFDParentFrame", "LFDParentFrameInset", "WhoFrameColumnHeader1", "WhoFrameColumnHeader2", "WhoFrameColumnHeader3", "WhoFrameColumnHeader4", "RaidInfoInstanceLabel", "RaidInfoIDLabel", "CharacterFrameInsetRight", "HelpFrameMainInset", "CharacterModelFrame", "HelpFrame", "HelpFrameLeftInset", "VideoOptionsFrameCategoryFrame", "InterfaceOptionsFrameCategories", "InterfaceOptionsFrameAddOns", "RaidParentFrame"}
