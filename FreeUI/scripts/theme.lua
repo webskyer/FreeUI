@@ -3956,22 +3956,22 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			self.subSpellString:SetTextColor(1, 1, 1)
 		end)
 
-		function PaperDollFrame_SetLevel()
+		hooksecurefunc("PaperDollFrame_SetLevel", function()
 			local primaryTalentTree = GetSpecialization()
 			local classDisplayName, class = UnitClass("player")
 			local classColorString = format("ff%.2x%.2x%.2x", r * 255, g * 255, b * 255)
-			local specName
+			local specName, _
 
-			if (primaryTalentTree) then
-				_, specName = GetSpecializationInfo(primaryTalentTree);
+			if primaryTalentTree then
+				_, specName = GetSpecializationInfo(primaryTalentTree, nil, nil, nil, UnitSex("player"))
 			end
 
-			if (specName and specName ~= "") then
-				CharacterLevelText:SetFormattedText(PLAYER_LEVEL, UnitLevel("player"), classColorString, specName, classDisplayName);
+			if specName and specName ~= "" then
+				CharacterLevelText:SetFormattedText(PLAYER_LEVEL, UnitLevel("player"), classColorString, specName, classDisplayName)
 			else
-				CharacterLevelText:SetFormattedText(PLAYER_LEVEL_NO_SPEC, UnitLevel("player"), classColorString, classDisplayName);
+				CharacterLevelText:SetFormattedText(PLAYER_LEVEL_NO_SPEC, UnitLevel("player"), classColorString, classDisplayName)
 			end
-		end
+		end)
 
 		-- [[ Change positions ]]
 
