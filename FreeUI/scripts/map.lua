@@ -1,53 +1,8 @@
--- Map search function by Wildbreath
+-- Map search function is by Wildbreath
 
 local F, C, L = unpack(select(2, ...))
 
-local r, g, b = unpack(C.class)
-
-local offset = 1 / WORLDMAP_WINDOWED_SIZE
-
--- restyle map frame
-
-local BorderFrame = WorldMapFrame.BorderFrame
-
-BorderFrame.Bg:Hide()
-select(2, BorderFrame:GetRegions()):Hide()
-BorderFrame.portrait:SetTexture()
-BorderFrame.portraitFrame:SetTexture()
-for i = 5, 7 do
-	select(i, BorderFrame:GetRegions()):Hide()
-end
-BorderFrame.TopTileStreaks:SetTexture("")
-for i = 10, 14 do
-	select(i, BorderFrame:GetRegions()):Hide()
-end
-BorderFrame.ButtonFrameEdge:Hide()
-BorderFrame.InsetBorderTop:Hide()
-BorderFrame.Inset.Bg:Hide()
-BorderFrame.Inset:DisableDrawLayer("BORDER")
-
-F.CreateBD(BorderFrame)
-F.ReskinClose(BorderFrame.CloseButton)
-
-WorldMapFrameTutorialButton.Ring:Hide()
-WorldMapFrameTutorialButton:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -12, 12)
-
--- nav bar
-
-WorldMapFrameNavBar:GetRegions():Hide()
-WorldMapFrameNavBar:DisableDrawLayer("BORDER")
-WorldMapFrameNavBar.overlay:Hide()
-WorldMapFrameNavBarHomeButtonLeft:Hide()
-F.Reskin(WorldMapFrameNavBar.home)
-
--- quest frame
-
-F.Reskin(QuestScrollFrame.ViewAll)
-
--- fix ping
-
-select(2, WorldMapPing.Ping:GetAnimations()):SetScale(1.62, 1.62)
-
+-- twice is enough
 WorldMapPing.Ping:SetScript("OnLoop", function(self, loopState)
 	self.loopCount = self.loopCount + 1
 	if self.loopCount >= 2 then
@@ -55,15 +10,9 @@ WorldMapPing.Ping:SetScript("OnLoop", function(self, loopState)
 	end
 end)
 
+-- don't need this
 WorldMapPlayerUpper:EnableMouse(false)
 WorldMapPlayerLower:EnableMouse(false)
-
--- frames
-
-local frame = CreateFrame ("Frame", nil, WorldMapButton)
-frame:SetScale(offset)
-frame:SetFrameStrata("HIGH")
-
 
 -- map style function
 
@@ -72,37 +21,21 @@ local SmallerMapSkin = function()
 
 	WorldMapFrame:ClearAllPoints()
 	WorldMapFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-	-- WorldMapTitleButton:Show()
-
-	WorldMapLevelDropDown:ClearAllPoints()
-	WorldMapLevelDropDown:SetPoint("RIGHT", panel, "RIGHT", 0, -2)
-	WorldMapLevelDropDown:SetParent(panel)
 
 	MapBarFrame.Description:SetFont(C.media.font, fontsize, "OUTLINEMONOCHROME")
 	MapBarFrame.Description:SetShadowOffset(0, 0)
 	MapBarFrame.Title:SetFont(C.media.font, fontsize, "OUTLINEMONOCHROME")
 	MapBarFrame.Title:SetShadowOffset(0, 0)
-
-	WorldMapPing:SetSize(64 / offset, 64 / offset)
-	WorldMapPing.centerRing:SetSize(32 / offset, 32 / offset)
-	WorldMapPing.rotatingRing:SetSize(48 / offset, 48 / offset)
-	WorldMapPing.expandingRing:SetSize(32 / offset, 32 / offset)
-
-	WorldMapPlayerLower:SetSize(32 / offset, 32 / offset)
-	WorldMapPlayerLower.icon:SetPoint("TOPLEFT", -4, 4)
-	WorldMapPlayerLower.icon:SetPoint("BOTTOMRIGHT", 4, -4)
-
-	WorldMapPlayerUpper:SetSize(32 / offset, 32 / offset)
-	WorldMapPlayerUpper.icon:SetPoint("TOPLEFT", -4, 4)
-	WorldMapPlayerUpper.icon:SetPoint("BOTTOMRIGHT", 4, -4)
 end
 hooksecurefunc("WorldMap_ToggleSizeDown", function() SmallerMapSkin() end)
 
 -- coordinates
 
-local coords = F.CreateFS(frame)
-coords:SetPoint("BOTTOMLEFT", WorldMapDetailFrame, 8, 4)
-local cursorcoords = F.CreateFS(frame)
+local UIFrame = WorldMapFrame.UIElementsFrame
+
+local coords = F.CreateFS(UIFrame, C.FONT_SIZE_NORMAL, "LEFT")
+coords:SetPoint("BOTTOMLEFT", WorldMapDetailFrame, 5, 5)
+local cursorcoords = F.CreateFS(UIFrame, C.FONT_SIZE_NORMAL, "LEFT")
 cursorcoords:SetPoint("BOTTOMLEFT", coords, "TOPLEFT", 0, 4)
 
 local freq = C.performance.mapcoords

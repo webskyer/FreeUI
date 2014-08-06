@@ -111,3 +111,4 @@ Tooltip_Small:SetShadowOffset(1, -1)
 
 -- Why?
 HelpFrameKnowledgebaseNavBarHomeButtonText:SetFont(font, 12)
+WorldMapFrameNavBarHomeButtonText:SetFont(font, 12)
