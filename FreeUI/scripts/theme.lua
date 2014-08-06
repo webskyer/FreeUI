@@ -435,7 +435,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		for i = 1, ATTACHMENTS_MAX_SEND do
 			local bu = _G["SendMailAttachment"..i]
+			local border = bu.IconBorder
+
 			bu:GetRegions():Hide()
+
+			border:SetTexture(C.media.backdrop)
+			border:SetPoint("TOPLEFT", -1, 1)
+			border:SetPoint("BOTTOMRIGHT", 1, -1)
+			border:SetDrawLayer("BACKGROUND")
 
 			local bg = CreateFrame("Frame", nil, bu)
 			bg:SetPoint("TOPLEFT", -1, 1)
@@ -444,13 +451,31 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.CreateBD(bg, .25)
 		end
 
+		-- sigh
+		-- we mess with quality colour numbers, so we have to fix this
+		hooksecurefunc("SendMailFrame_Update", function()
+			for i = 1, ATTACHMENTS_MAX_SEND do
+				local bu = _G["SendMailAttachment"..i]
+
+				if bu:GetNormalTexture() == nil and bu.IconBorder:IsShown() then
+					bu.IconBorder:Hide()
+				end
+			end
+		end)
+
 		for i = 1, ATTACHMENTS_MAX_RECEIVE do
 			local bu = _G["OpenMailAttachmentButton"..i]
 			local ic = _G["OpenMailAttachmentButton"..i.."IconTexture"]
+			local border = bu.IconBorder
 
 			bu:SetNormalTexture("")
 			bu:SetPushedTexture("")
 			ic:SetTexCoord(.08, .92, .08, .92)
+
+			border:SetTexture(C.media.backdrop)
+			border:SetPoint("TOPLEFT", -1, 1)
+			border:SetPoint("BOTTOMRIGHT", 1, -1)
+			border:SetDrawLayer("BACKGROUND")
 
 			local bg = CreateFrame("Frame", nil, bu)
 			bg:SetPoint("TOPLEFT", -1, 1)
@@ -6138,7 +6163,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Character
 
-		select(9, InspectMainHandSlot:GetRegions()):Hide()
+		select(10, InspectMainHandSlot:GetRegions()):Hide()
 
 		local slots = {
 			"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
@@ -6180,7 +6205,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		inspectSpec.ring:Hide()
 
-		for i = 1, 6 do
+		for i = 1, 7 do
 			local row = InspectTalentFrame.InspectTalents["tier"..i]
 			for j = 1, 3 do
 				local bu = row["talent"..j]
