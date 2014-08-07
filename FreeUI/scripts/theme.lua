@@ -6753,9 +6753,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		MountJournal.MountDisplay.YesMountsTex:SetAlpha(0)
 		MountJournal.MountDisplay.NoMountsTex:SetAlpha(0)
 		MountJournal.MountDisplay.ShadowOverlay:Hide()
-		PetJournalFilterButtonLeft:Hide()
-		PetJournalFilterButtonRight:Hide()
-		PetJournalFilterButtonMiddle:Hide()
 		PetJournalTutorialButton.Ring:Hide()
 
 		F.CreateBD(PetJournalParent)
@@ -6766,7 +6763,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(MountJournalMountButton)
 		F.Reskin(PetJournalSummonButton)
 		F.Reskin(PetJournalFindBattle)
-		F.Reskin(PetJournalFilterButton)
 		F.ReskinTab(PetJournalParentTab1)
 		F.ReskinTab(PetJournalParentTab2)
 		F.ReskinTab(PetJournalParentTab3)
@@ -6777,6 +6773,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinInput(PetJournalSearchBox)
 		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateLeftButton, "left")
 		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
+		F.ReskinFilterButton(PetJournalFilterButton)
+		F.ReskinFilterButton(MountJournalFilterButton)
 
 		PetJournalTutorialButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -14, 14)
 
@@ -7756,7 +7754,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		select(22, TradeSkillFrame:GetRegions()):Hide()
 		for i = 1, 3 do
 			select(i, TradeSkillExpandButtonFrame:GetRegions()):SetAlpha(0)
-			select(i, TradeSkillFilterButton:GetRegions()):Hide()
 		end
 		for i = 1, 9 do
 			select(i, TradeSkillGuildFrame:GetRegions()):Hide()
@@ -7783,7 +7780,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(TradeSkillCreateAllButton)
 		F.Reskin(TradeSkillCancelButton)
 		F.Reskin(TradeSkillViewGuildCraftersButton)
-		F.Reskin(TradeSkillFilterButton)
+		F.ReskinFilterButton(TradeSkillFilterButton)
 
 		TradeSkillRankFrame:SetStatusBarTexture(C.media.backdrop)
 		TradeSkillRankFrame.SetStatusBarColor = F.dummy

@@ -658,3 +658,12 @@ F.ReskinColourSwatch = function(f)
 	bg:SetPoint("TOPLEFT", 2, -2)
 	bg:SetPoint("BOTTOMRIGHT", -2, 2)
 end
+
+F.ReskinFilterButton = function(f)
+	F.Reskin(f)
+	f.Icon:SetTexture(C.media.arrowRight)
+
+	f.Text:SetPoint("CENTER")
+	f.Icon:SetPoint("RIGHT", f, "RIGHT", -5, 0)
+	f.Icon:SetSize(8, 8)
+end
