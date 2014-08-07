@@ -4887,12 +4887,21 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinScroll(AchievementFrameComparisonContainerScrollBar)
 		F.ReskinDropDown(AchievementFrameFilterDropDown)
 	elseif addon == "Blizzard_BarbershopUI" then
-		F.SetBD(BarberShopFrame, 44, -75, -40, 44)
 		BarberShopFrameBackground:Hide()
 		BarberShopFrameMoneyFrame:GetRegions():Hide()
+		BarberShopAltFormFrameBackground:Hide()
+		BarberShopAltFormFrameBorder:Hide()
+
+		BarberShopAltFormFrame:ClearAllPoints()
+		BarberShopAltFormFrame:SetPoint("BOTTOM", BarberShopFrame, "TOP", 0, -74)
+
+		F.SetBD(BarberShopFrame, 44, -75, -40, 44)
+		F.SetBD(BarberShopAltFormFrame, 0, 0, 2, -2)
+
 		F.Reskin(BarberShopFrameOkayButton)
 		F.Reskin(BarberShopFrameCancelButton)
 		F.Reskin(BarberShopFrameResetButton)
+
 		F.ReskinArrow(BarberShopFrameSelector1Prev, "left")
 		F.ReskinArrow(BarberShopFrameSelector1Next, "right")
 		F.ReskinArrow(BarberShopFrameSelector2Prev, "left")
