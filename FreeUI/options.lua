@@ -77,9 +77,10 @@ C["notifications"] = {
 	["animations"] = true,
 	["timeShown"] = 5,
 
-	["checkMail"] = true,
+	["checkBagsFull"] = true,
 	["checkEvents"] = true,
 	["checkGuildEvents"] = true,
+	["checkMail"] = true,
 }
 
 C["tooltip"] = {

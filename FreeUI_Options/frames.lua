@@ -447,17 +447,20 @@ notifications.tab.Icon:SetTexture("Interface\\Icons\\inv_misc_enggizmos_27")
 local enable = ns.CreateCheckBox(notifications, "enable", true, true)
 enable:SetPoint("TOPLEFT", notifications.subText, "BOTTOMLEFT", 0, -8)
 
-local checkMail = ns.CreateCheckBox(notifications, "checkMail", true)
-checkMail:SetPoint("TOPLEFT", enable, "BOTTOMLEFT", 0, -16)
+local checkBagsFull = ns.CreateCheckBox(notifications, "checkBagsFull", true)
+checkBagsFull:SetPoint("TOPLEFT", enable, "BOTTOMLEFT", 0, -16)
 
 local checkEvents = ns.CreateCheckBox(notifications, "checkEvents", true)
-checkEvents:SetPoint("TOPLEFT", checkMail, "BOTTOMLEFT", 0, -8)
+checkEvents:SetPoint("TOPLEFT", checkBagsFull, "BOTTOMLEFT", 0, -8)
 
 local checkGuildEvents = ns.CreateCheckBox(notifications, "checkGuildEvents", true)
 checkGuildEvents:SetPoint("TOPLEFT", checkEvents, "BOTTOMLEFT", 0, -8)
 
+local checkMail = ns.CreateCheckBox(notifications, "checkMail", true)
+checkMail:SetPoint("TOPLEFT", checkGuildEvents, "BOTTOMLEFT", 0, -8)
+
 local playSounds = ns.CreateCheckBox(notifications, "playSounds", true)
-playSounds:SetPoint("LEFT", enable, "RIGHT", 240, 0)
+playSounds:SetPoint("LEFT", checkBagsFull, "RIGHT", 240, 0)
 
 local animations = ns.CreateCheckBox(notifications, "animations", true)
 animations:SetPoint("TOPLEFT", playSounds, "BOTTOMLEFT", 0, -8)
@@ -467,6 +470,7 @@ timeShown:SetPoint("TOPLEFT", animations, "BOTTOMLEFT", 8, -30)
 
 local function toggleNotificationsOptions()
 	local shown = enable:GetChecked()
+	checkBagsFull:SetShown(shown)
 	checkMail:SetShown(shown)
 	checkEvents:SetShown(shown)
 	checkGuildEvents:SetShown(shown)
