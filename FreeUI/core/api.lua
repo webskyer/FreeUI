@@ -58,6 +58,8 @@ else
 	C.class = {C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b}
 end
 
+C.r, C.g, C.b = unpack(C.class)
+
 C.reactioncolours = {
 	[1] = {1, .12, .24},
 	[2] = {1, .12, .24},
@@ -557,6 +559,9 @@ local function clearExpandOrCollapse(f)
 	f.plus:SetVertexColor(1, 1, 1)
 	f.minus:SetVertexColor(1, 1, 1)
 end
+
+F.colourExpandOrCollapse = colourExpandOrCollapse
+F.clearExpandOrCollapse = clearExpandOrCollapse
 
 F.ReskinExpandOrCollapse = function(f)
 	f:SetSize(13, 13)
