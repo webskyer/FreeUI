@@ -1,5 +1,8 @@
 local F, C, L = unpack(select(2, ...))
 
+C.themes = {}
+C.themes["FreeUI"] = {}
+
 if IsAddOnLoaded("Aurora") then
 	print("FreeUI includes an efficient built-in version of Aurora.")
 	print("It's highly recommended that you disable Aurora.")
@@ -8,9 +11,6 @@ end
 
 local r, g, b = unpack(C.class)
 local _, class = UnitClass("player")
-
-C.themes = {}
-C.themes["FreeUI"] = {}
 
 local Skin = CreateFrame("Frame", nil, UIParent)
 Skin:RegisterEvent("ADDON_LOADED")
