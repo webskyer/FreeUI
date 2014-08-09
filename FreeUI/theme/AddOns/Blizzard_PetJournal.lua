@@ -57,9 +57,11 @@ C.themes["Blizzard_PetJournal"] = function()
 	for _, scrollFrame in pairs(scrollFrames) do
 		for i = 1, #scrollFrame do
 			local bu = scrollFrame[i]
+			local ic = bu.icon
 
 			bu:GetRegions():Hide()
 			bu:SetHighlightTexture("")
+			bu.iconBorder:SetTexture("")
 
 			bu.selectedTexture:SetPoint("TOPLEFT", 0, -1)
 			bu.selectedTexture:SetPoint("BOTTOMRIGHT", 0, 1)
@@ -73,9 +75,8 @@ C.themes["Blizzard_PetJournal"] = function()
 			F.CreateBD(bg, .25)
 			bu.bg = bg
 
-			bu.icon:SetTexCoord(.08, .92, .08, .92)
-			bu.icon:SetDrawLayer("OVERLAY")
-			bu.icon.bg = F.CreateBG(bu.icon)
+			ic:SetTexCoord(.08, .92, .08, .92)
+			ic.bg = F.CreateBG(ic)
 
 			bu.name:SetParent(bg)
 
