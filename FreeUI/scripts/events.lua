@@ -30,10 +30,9 @@ local function alertBagsFull(self)
 
 	if totalFree == 0 then
 		F.Notification("Bags", "Your bags are full.", ToggleBackpack, "Interface\\Icons\\inv_misc_bag_08")
+		self:UnregisterEvent("BAG_UPDATE")
+		self:SetScript("OnUpdate", delay)
 	end
-
-	self:UnregisterEvent("BAG_UPDATE")
-	self:SetScript("OnUpdate", delay)
 end
 
 -- Mail
