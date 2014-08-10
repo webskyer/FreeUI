@@ -1326,8 +1326,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		QuestNPCModelTextFrameBg:Hide()
 		QuestNPCModelTextFrame:DisableDrawLayer("OVERLAY")
 
-		QuestInfoItemHighlight:GetRegions():Hide()
-		QuestInfoSpellObjectiveFrameNameFrame:Hide()
 		QuestFrameProgressPanelMaterialTopLeft:SetAlpha(0)
 		QuestFrameProgressPanelMaterialTopRight:SetAlpha(0)
 		QuestFrameProgressPanelMaterialBotLeft:SetAlpha(0)
@@ -1358,63 +1356,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		npcLine:SetFrameLevel(0)
 		F.CreateBD(npcLine, 0)
 
-		QuestInfoSkillPointFrameIconTexture:SetSize(40, 40)
-		QuestInfoSkillPointFrameIconTexture:SetTexCoord(.08, .92, .08, .92)
-
-		local bg = CreateFrame("Frame", nil, QuestInfoSkillPointFrame)
-		bg:SetPoint("TOPLEFT", -3, 0)
-		bg:SetPoint("BOTTOMRIGHT", -3, 0)
-		bg:Lower()
-		F.CreateBD(bg, .25)
-
-		QuestInfoSkillPointFrameNameFrame:Hide()
-		QuestInfoSkillPointFrameName:SetParent(bg)
-		QuestInfoSkillPointFrameIconTexture:SetParent(bg)
-
-		local skillPointLine = QuestInfoSkillPointFrame:CreateTexture(nil, "BACKGROUND")
-		skillPointLine:SetSize(1, 40)
-		skillPointLine:SetPoint("RIGHT", QuestInfoSkillPointFrameIconTexture, 1, 0)
-		skillPointLine:SetTexture(C.media.backdrop)
-		skillPointLine:SetVertexColor(0, 0, 0)
-
-		QuestInfoRewardSpellIconTexture:SetSize(40, 40)
-		QuestInfoRewardSpellIconTexture:SetTexCoord(.08, .92, .08, .92)
-		QuestInfoRewardSpellIconTexture:SetDrawLayer("OVERLAY")
-
-		local bg = CreateFrame("Frame", nil, QuestInfoRewardSpell)
-		bg:SetPoint("TOPLEFT", 9, -1)
-		bg:SetPoint("BOTTOMRIGHT", -10, 13)
-		bg:Lower()
-		F.CreateBD(bg, .25)
-
-		QuestInfoRewardSpellNameFrame:Hide()
-		QuestInfoRewardSpellSpellBorder:Hide()
-		QuestInfoRewardSpellName:SetParent(bg)
-		QuestInfoRewardSpellIconTexture:SetParent(bg)
-
-		local spellLine = QuestInfoRewardSpell:CreateTexture(nil, "BACKGROUND")
-		spellLine:SetSize(1, 40)
-		spellLine:SetPoint("RIGHT", QuestInfoRewardSpellIconTexture, 1, 0)
-		spellLine:SetTexture(C.media.backdrop)
-		spellLine:SetVertexColor(0, 0, 0)
-
-		local function clearHighlight()
-			for i = 1, MAX_NUM_ITEMS do
-				_G["QuestInfoItem"..i]:SetBackdropColor(0, 0, 0, .25)
-			end
-		end
-
-		local function setHighlight(self)
-			clearHighlight()
-
-			local _, point = self:GetPoint()
-			point:SetBackdropColor(r, g, b, .2)
-		end
-
-		hooksecurefunc(QuestInfoItemHighlight, "SetPoint", setHighlight)
-		QuestInfoItemHighlight:HookScript("OnShow", setHighlight)
-		QuestInfoItemHighlight:HookScript("OnHide", clearHighlight)
-
 		for i = 1, MAX_REQUIRED_ITEMS do
 			local bu = _G["QuestProgressItem"..i]
 			local ic = _G["QuestProgressItem"..i.."IconTexture"]
@@ -1443,14 +1384,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 
 		hooksecurefunc(QuestProgressRequiredMoneyText, "SetTextColor", function(self, r, g, b)
-			if r == 0 then
-				self:SetTextColor(.8, .8, .8)
-			elseif r == .2 then
-				self:SetTextColor(1, 1, 1)
-			end
-		end)
-
-		hooksecurefunc(QuestInfoRequiredMoneyText, "SetTextColor", function(self, r, g, b)
 			if r == 0 then
 				self:SetTextColor(.8, .8, .8)
 			elseif r == .2 then
@@ -2275,126 +2208,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		LossOfControlFrame.Icon:SetTexCoord(.08, .92, .08, .92)
 		F.CreateBG(LossOfControlFrame.Icon)
 
-		-- [[ World map frame / quest log ]]
-
-		local WorldMapFrame = WorldMapFrame
-		local BorderFrame = WorldMapFrame.BorderFrame
-
-		WorldMapFrame.UIElementsFrame.CloseQuestPanelButton:GetRegions():Hide()
-		WorldMapFrame.UIElementsFrame.OpenQuestPanelButton:GetRegions():Hide()
-		BorderFrame.Bg:Hide()
-		select(2, BorderFrame:GetRegions()):Hide()
-		BorderFrame.portrait:SetTexture("")
-		BorderFrame.portraitFrame:SetTexture("")
-		for i = 5, 7 do
-			select(i, BorderFrame:GetRegions()):Hide()
-		end
-		BorderFrame.TopTileStreaks:SetTexture("")
-		for i = 10, 14 do
-			select(i, BorderFrame:GetRegions()):Hide()
-		end
-		BorderFrame.ButtonFrameEdge:Hide()
-		BorderFrame.InsetBorderTop:Hide()
-		BorderFrame.Inset.Bg:Hide()
-		BorderFrame.Inset:DisableDrawLayer("BORDER")
-
-		F.SetBD(BorderFrame, 1, 0, -3, 2)
-		F.ReskinClose(BorderFrame.CloseButton)
-		F.Reskin(WorldMapFrameSizeUpButton)
-		F.ReskinArrow(WorldMapFrame.UIElementsFrame.CloseQuestPanelButton, "left")
-		F.ReskinArrow(WorldMapFrame.UIElementsFrame.OpenQuestPanelButton, "right")
-		F.ReskinDropDown(WorldMapLevelDropDown)
-
-		BorderFrame.CloseButton:SetPoint("TOPRIGHT", -9, -6)
-
-		local WorldMapFrameSizeUpButton = WorldMapFrameSizeUpButton
-		WorldMapFrameSizeUpButton:SetSize(17, 17)
-		WorldMapFrameSizeUpButton:ClearAllPoints()
-		WorldMapFrameSizeUpButton:SetPoint("RIGHT", BorderFrame.CloseButton, "LEFT", -1, 0)
-
-		do
-			local function colourClose(f)
-				if f:IsEnabled() then
-					for _, pixel in pairs(f.pixels) do
-						pixel:SetVertexColor(r, g, b)
-					end
-				end
-			end
-
-			local function clearClose(f)
-				for _, pixel in pairs(f.pixels) do
-					pixel:SetVertexColor(1, 1, 1)
-				end
-			end
-
-			WorldMapFrameSizeUpButton.pixels = {}
-
-			for i = 1, 8 do
-				local tex = WorldMapFrameSizeUpButton:CreateTexture()
-				tex:SetTexture(1, 1, 1)
-				tex:SetSize(1, 1)
-				tex:SetPoint("BOTTOMLEFT", 3+i, 3+i)
-				tinsert(WorldMapFrameSizeUpButton.pixels, tex)
-			end
-
-			local topLine = WorldMapFrameSizeUpButton:CreateTexture()
-			topLine:SetTexture(1, 1, 1)
-			topLine:SetSize(7, 1)
-			topLine:SetPoint("TOP", 1, -4)
-			tinsert(WorldMapFrameSizeUpButton.pixels, topLine)
-
-			local rightLine = WorldMapFrameSizeUpButton:CreateTexture()
-			rightLine:SetTexture(1, 1, 1)
-			rightLine:SetSize(1, 7)
-			rightLine:SetPoint("RIGHT", -4, 1)
-			tinsert(WorldMapFrameSizeUpButton.pixels, rightLine)
-
-			WorldMapFrameSizeUpButton:SetScript("OnEnter", colourClose)
-			WorldMapFrameSizeUpButton:SetScript("OnLeave", clearClose)
-		end
-
-		WorldMapFrameTutorialButton.Ring:Hide()
-		WorldMapFrameTutorialButton:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -12, 12)
-
-		do
-			local topLine = WorldMapFrame.UIElementsFrame:CreateTexture()
-			topLine:SetTexture(0, 0, 0)
-			topLine:SetHeight(1)
-			topLine:SetPoint("TOPLEFT", 0, 1)
-			topLine:SetPoint("TOPRIGHT", 1, 1)
-
-			local rightLine = WorldMapFrame.UIElementsFrame:CreateTexture()
-			rightLine:SetTexture(0, 0, 0)
-			rightLine:SetWidth(1)
-			rightLine:SetPoint("BOTTOMRIGHT", 1, 0)
-			rightLine:SetPoint("TOPRIGHT", 1, 1)
-		end
-
-		local TrackingOptions = WorldMapFrame.UIElementsFrame.TrackingOptionsButton
-
-		TrackingOptions:GetRegions():Hide()
-		TrackingOptions.Background:Hide()
-		TrackingOptions.IconOverlay:SetTexture("")
-		TrackingOptions.Button.Border:Hide()
-
-		-- nav bar
-
-		WorldMapFrameNavBar:GetRegions():Hide()
-		WorldMapFrameNavBar:DisableDrawLayer("BORDER")
-		WorldMapFrameNavBar.overlay:Hide()
-		WorldMapFrameNavBarHomeButtonLeft:Hide()
-		F.Reskin(WorldMapFrameNavBar.home)
-
-		-- quest frame
-
-		local QuestScrollFrame = QuestScrollFrame
-
-		QuestMapFrame.VerticalSeparator:Hide()
-		QuestScrollFrame.Background:Hide()
-
-		F.Reskin(QuestScrollFrame.ViewAll)
-		F.ReskinScroll(QuestScrollFrame.ScrollBar)
-
 		-- [[ Hide regions ]]
 
 		local bglayers = {"LFDParentFrame", "LFDParentFrameInset", "WhoFrameColumnHeader1", "WhoFrameColumnHeader2", "WhoFrameColumnHeader3", "WhoFrameColumnHeader4", "RaidInfoInstanceLabel", "RaidInfoIDLabel", "CharacterFrameInsetRight", "HelpFrameMainInset", "CharacterModelFrame", "HelpFrame", "HelpFrameLeftInset", "VideoOptionsFrameCategoryFrame", "InterfaceOptionsFrameCategories", "InterfaceOptionsFrameAddOns", "RaidParentFrame"}
@@ -2560,7 +2373,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		QuestProgressRequiredItemsText:SetTextColor(1, 1, 1)
 		QuestProgressRequiredItemsText:SetShadowColor(0, 0, 0)
 		QuestProgressTitleText:SetShadowColor(0, 0, 0)
-		QuestInfoTitleHeader:SetShadowColor(0, 0, 0)
 		AvailableServicesText:SetTextColor(1, 1, 1)
 		AvailableServicesText:SetShadowColor(0, 0, 0)
 		PetitionFrameCharterTitle:SetTextColor(1, 1, 1)
@@ -2569,22 +2381,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		PetitionFrameMasterTitle:SetShadowColor(0, 0, 0)
 		PetitionFrameMemberTitle:SetTextColor(1, 1, 1)
 		PetitionFrameMemberTitle:SetShadowColor(0, 0, 0)
-		QuestInfoTitleHeader:SetTextColor(1, 1, 1)
-		QuestInfoTitleHeader.SetTextColor = F.dummy
-		QuestInfoDescriptionHeader:SetTextColor(1, 1, 1)
-		QuestInfoDescriptionHeader.SetTextColor = F.dummy
-		QuestInfoDescriptionHeader:SetShadowColor(0, 0, 0)
-		QuestInfoObjectivesHeader:SetTextColor(1, 1, 1)
-		QuestInfoObjectivesHeader.SetTextColor = F.dummy
-		QuestInfoObjectivesHeader:SetShadowColor(0, 0, 0)
-		QuestInfoDescriptionText:SetTextColor(1, 1, 1)
-		QuestInfoDescriptionText.SetTextColor = F.dummy
-		QuestInfoObjectivesText:SetTextColor(1, 1, 1)
-		QuestInfoObjectivesText.SetTextColor = F.dummy
-		QuestInfoGroupSize:SetTextColor(1, 1, 1)
-		QuestInfoGroupSize.SetTextColor = F.dummy
-		QuestInfoRewardText:SetTextColor(1, 1, 1)
-		QuestInfoRewardText.SetTextColor = F.dummy
 		QuestProgressTitleText:SetTextColor(1, 1, 1)
 		QuestProgressTitleText.SetTextColor = F.dummy
 		QuestProgressText:SetTextColor(1, 1, 1)
@@ -2596,8 +2392,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		AvailableQuestsText:SetTextColor(1, 1, 1)
 		AvailableQuestsText.SetTextColor = F.dummy
 		AvailableQuestsText:SetShadowColor(0, 0, 0)
-		QuestInfoSpellObjectiveLearnLabel:SetTextColor(1, 1, 1)
-		QuestInfoSpellObjectiveLearnLabel.SetTextColor = F.dummy
 		CurrentQuestsText:SetTextColor(1, 1, 1)
 		CurrentQuestsText.SetTextColor = F.dummy
 		CurrentQuestsText:SetShadowColor(0, 0, 0)

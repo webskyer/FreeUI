@@ -116,6 +116,8 @@ theme\FrameXML\LootHistory.lua
 theme\FrameXML\ModelPreviewFrame.lua
 theme\FrameXML\ProductChoiceFrame.lua
 theme\FrameXML\PVEFrame.lua
+theme\FrameXML\QuestInfo.lua
+theme\FrameXML\QuestMapFrame.lua
 theme\FrameXML\QueueStatusFrame.lua
 theme\FrameXML\RaidFinder.lua
 theme\FrameXML\RecruitAFriendFrame.lua
@@ -125,6 +127,7 @@ theme\FrameXML\SpellBookFrame.lua
 theme\FrameXML\SplashFrame.lua
 theme\FrameXML\StaticPopup.lua
 theme\FrameXML\TaxiFrame.lua
+theme\FrameXML\WorldMapFrame.lua
 theme\FrameXML\WorldStateFrame.lua
 
 theme\SharedXML\AddonList.lua
