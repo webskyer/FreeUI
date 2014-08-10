@@ -102,9 +102,6 @@ end
 local f = CreateFrame("Frame", nil, frame)
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-if C.notifications.checkBagsFull then
-	f:RegisterEvent("BAG_UPDATE")
-end
 if C.notifications.checkGuildEvents then
 	f:RegisterEvent("CALENDAR_UPDATE_GUILD_EVENTS")
 end
@@ -171,6 +168,11 @@ f:SetScript("OnEvent", function(self, event)
 	elseif event == "CALENDAR_UPDATE_GUILD_EVENTS" then
 		alertGuildEvents()
 	else -- PLAYER_ENTERING_WORLD
+		if C.notifications.checkBagsFull then
+			-- need to delay this, bag events are unreliable on login
+			f:SetScript("OnUpdate", delayBagCheck)
+		end
+
 		if C.notifications.checkEvents or C.notifications.checkGuildEvents then
 			OpenCalendar()
 			f:RegisterEvent("CALENDAR_UPDATE_PENDING_INVITES")
@@ -179,6 +181,7 @@ f:SetScript("OnEvent", function(self, event)
 		if C.notifications.checkEvents then
 			alertEvents()
 		end
+
 		if C.notifications.checkGuildEvents then
 			alertGuildEvents()
 		end
