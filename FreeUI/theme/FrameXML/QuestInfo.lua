@@ -110,4 +110,22 @@ tinsert(C.themes["FreeUI"], function()
 			end
 		end
 	end)
+
+	hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
+		local bu = rewardsFrame.RewardButtons[index]
+
+		if not bu.restyled then
+			bu.NameFrame:Hide()
+
+			if rewardsFrame == MapQuestInfoRewardsFrame then
+				bu.Icon:SetSize(29, 29)
+			end
+
+			bu.Icon:SetTexCoord(.08, .92, .08, .92)
+			bu.Icon:SetDrawLayer("BACKGROUND", 1)
+			F.CreateBG(bu.Icon, 1)
+
+			bu.restyled = true
+		end
+	end)
 end)
