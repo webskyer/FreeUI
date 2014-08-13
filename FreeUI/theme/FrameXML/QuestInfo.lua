@@ -91,30 +91,23 @@ tinsert(C.themes["FreeUI"], function()
 		end
 	end)
 
-	-- for i = 1, MAX_OBJECTIVES do
-		-- local objective = _G["QuestInfoObjective"..i]
-		-- objective:SetTextColor(1, 1, 1)
-		-- objective.SetTextColor = F.dummy
-	-- end
+	hooksecurefunc("QuestMapFrame_ShowQuestDetails", function()
+		local objectivesTable = QuestInfoObjectivesFrame.Objectives
+		local numVisibleObjectives = 0
 
-	-- hooksecurefunc("QuestInfo_ShowObjectives", function()
-		-- print("wat")
-		-- local objectivesTable = QuestInfoObjectivesFrame.Objectives
-		-- local numVisibleObjectives = 0
+		for i = 1, GetNumQuestLeaderBoards() do
+			local text, type, finished = GetQuestLogLeaderBoard(i)
 
-		-- for i = 1, GetNumQuestLeaderBoards() do
-			-- local text, type, finished = GetQuestLogLeaderBoard(i)
+			if (type ~= "spell" and type ~= "log" and numVisibleObjectives < MAX_OBJECTIVES) then
+				numVisibleObjectives = numVisibleObjectives + 1
+				local objective = objectivesTable[numVisibleObjectives]
 
-			-- if (type ~= "spell" and type ~= "log" and numVisibleObjectives < MAX_OBJECTIVES) then
-				-- numVisibleObjectives = numVisibleObjectives + 1
-				-- local objective = objectivesTable[numVisibleObjectives]
-
-				-- if finished then
-					-- objective:SetTextColor(.7, .7, .7)
-				-- else
-					-- objective:SetTextColor(1, 1, 1)
-				-- end
-			-- end
-		-- end
-	-- end)
+				if finished then
+					objective:SetTextColor(.7, .7, .7)
+				else
+					objective:SetTextColor(1, 1, 1)
+				end
+			end
+		end
+	end)
 end)
