@@ -3,25 +3,7 @@ local F, C = unpack(select(2, ...))
 tinsert(C.themes["FreeUI"], function()
 	local r, g, b = C.r, C.g, C.b
 
-	QuestInfoTitleHeader:SetShadowColor(0, 0, 0)
-	QuestInfoTitleHeader:SetTextColor(1, 1, 1)
-	QuestInfoTitleHeader.SetTextColor = F.dummy
-	QuestInfoDescriptionHeader:SetTextColor(1, 1, 1)
-	QuestInfoDescriptionHeader.SetTextColor = F.dummy
-	QuestInfoDescriptionHeader:SetShadowColor(0, 0, 0)
-	QuestInfoObjectivesHeader:SetTextColor(1, 1, 1)
-	QuestInfoObjectivesHeader.SetTextColor = F.dummy
-	QuestInfoObjectivesHeader:SetShadowColor(0, 0, 0)
-	QuestInfoDescriptionText:SetTextColor(1, 1, 1)
-	QuestInfoDescriptionText.SetTextColor = F.dummy
-	QuestInfoObjectivesText:SetTextColor(1, 1, 1)
-	QuestInfoObjectivesText.SetTextColor = F.dummy
-	QuestInfoGroupSize:SetTextColor(1, 1, 1)
-	QuestInfoGroupSize.SetTextColor = F.dummy
-	QuestInfoRewardText:SetTextColor(1, 1, 1)
-	QuestInfoRewardText.SetTextColor = F.dummy
-	QuestInfoSpellObjectiveLearnLabel:SetTextColor(1, 1, 1)
-	QuestInfoSpellObjectiveLearnLabel.SetTextColor = F.dummy
+	-- [[ Quest info rewards ]]
 
 	QuestInfoItemHighlight:GetRegions():Hide()
 	QuestInfoSpellObjectiveFrameNameFrame:Hide()
@@ -91,7 +73,9 @@ tinsert(C.themes["FreeUI"], function()
 		end
 	end)
 
-	hooksecurefunc("QuestMapFrame_ShowQuestDetails", function()
+	-- [[ Objectives ]]
+
+	local function colourObjectivesText()
 		local objectivesTable = QuestInfoObjectivesFrame.Objectives
 		local numVisibleObjectives = 0
 
@@ -109,23 +93,86 @@ tinsert(C.themes["FreeUI"], function()
 				end
 			end
 		end
-	end)
+	end
+
+	hooksecurefunc("QuestMapFrame_ShowQuestDetails", colourObjectivesText)
+	hooksecurefunc("QuestInfo_Display", colourObjectivesText)
+
+	-- [[ Quest rewards ]]
+
+	local function restyleRewardButton(bu)
+		bu.NameFrame:Hide()
+		bu.Icon:SetTexCoord(.08, .92, .08, .92)
+		bu.Icon:SetDrawLayer("BACKGROUND", 1)
+		F.CreateBG(bu.Icon, 1)
+	end
 
 	hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
 		local bu = rewardsFrame.RewardButtons[index]
 
 		if not bu.restyled then
-			bu.NameFrame:Hide()
-
 			if rewardsFrame == MapQuestInfoRewardsFrame then
 				bu.Icon:SetSize(29, 29)
 			end
 
-			bu.Icon:SetTexCoord(.08, .92, .08, .92)
-			bu.Icon:SetDrawLayer("BACKGROUND", 1)
-			F.CreateBG(bu.Icon, 1)
+			restyleRewardButton(bu)
 
 			bu.restyled = true
 		end
 	end)
+
+	restyleRewardButton(MapQuestInfoRewardsFrame.SpellFrame)
+	restyleRewardButton(MapQuestInfoRewardsFrame.XPFrame)
+	restyleRewardButton(MapQuestInfoRewardsFrame.MoneyFrame)
+	restyleRewardButton(MapQuestInfoRewardsFrame.SkillPointFrame)
+
+	MapQuestInfoRewardsFrame.XPFrame.Name:SetShadowOffset(0, 0)
+
+	-- [[ Change text colours ]]
+
+	QuestInfoTitleHeader:SetTextColor(1, 1, 1)
+	QuestInfoTitleHeader.SetTextColor = F.dummy
+	QuestInfoTitleHeader:SetShadowColor(0, 0, 0)
+
+	QuestInfoDescriptionHeader:SetTextColor(1, 1, 1)
+	QuestInfoDescriptionHeader.SetTextColor = F.dummy
+	QuestInfoDescriptionHeader:SetShadowColor(0, 0, 0)
+
+	QuestInfoObjectivesHeader:SetTextColor(1, 1, 1)
+	QuestInfoObjectivesHeader.SetTextColor = F.dummy
+	QuestInfoObjectivesHeader:SetShadowColor(0, 0, 0)
+
+	QuestInfoRewardsFrame.Header:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.Header.SetTextColor = F.dummy
+	QuestInfoRewardsFrame.Header:SetShadowColor(0, 0, 0)
+
+	QuestInfoDescriptionText:SetTextColor(1, 1, 1)
+	QuestInfoDescriptionText.SetTextColor = F.dummy
+
+	QuestInfoObjectivesText:SetTextColor(1, 1, 1)
+	QuestInfoObjectivesText.SetTextColor = F.dummy
+
+	QuestInfoGroupSize:SetTextColor(1, 1, 1)
+	QuestInfoGroupSize.SetTextColor = F.dummy
+
+	QuestInfoRewardText:SetTextColor(1, 1, 1)
+	QuestInfoRewardText.SetTextColor = F.dummy
+
+	QuestInfoSpellObjectiveLearnLabel:SetTextColor(1, 1, 1)
+	QuestInfoSpellObjectiveLearnLabel.SetTextColor = F.dummy
+
+	QuestInfoRewardsFrame.ItemChooseText:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.ItemChooseText.SetTextColor = F.dummy
+
+	QuestInfoRewardsFrame.ItemReceiveText:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.ItemReceiveText.SetTextColor = F.dummy
+
+	QuestInfoRewardsFrame.SpellLearnText:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.SpellLearnText.SetTextColor = F.dummy
+
+	QuestInfoRewardsFrame.PlayerTitleText:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.PlayerTitleText.SetTextColor = F.dummy
+
+	QuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.XPFrame.ReceiveText.SetTextColor = F.dummy
 end)
