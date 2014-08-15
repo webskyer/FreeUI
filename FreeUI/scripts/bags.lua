@@ -93,6 +93,26 @@ local HideBag = function(bagName)
 	bag.restyled = true
 end
 
+-- Quest texture stuff
+
+hooksecurefunc("ContainerFrame_Update", function(frame)
+	local name = frame:GetName()
+
+	for i = 1, frame.size do
+		local itemButton = _G[name.."Item"..i]
+
+		if _G[name.."Item"..i.."IconQuestTexture"]:IsShown() then
+			itemButton.IconBorder:SetVertexColor(1, 1, 0)
+		end
+	end
+end)
+
+hooksecurefunc("BankFrameItemButton_Update", function(button)
+	if not button.isBag and button.IconQuestTexture:IsShown() then
+		button.IconBorder:SetVertexColor(1, 1, 0)
+	end
+end)
+
 -- [[ Local stuff ]]
 
 local Spacing = 4
@@ -137,7 +157,7 @@ local ReanchorButtons = function()
 		con = "ContainerFrame"..f
 		HideBag(con)
 
-		for i = GetContainerNumSlots(_G[con]:GetID()), 1, -1  do
+		for i = 1, GetContainerNumSlots(_G[con]:GetID()) do
 			bu = con.."Item"..i
 			RestyleButton(bu)
 			tinsert(buttons, bu)
@@ -253,6 +273,7 @@ BankFrameCloseButton:Hide()
 BankFrame:DisableDrawLayer("BACKGROUND")
 BankFrame:DisableDrawLayer("BORDER")
 BankFrame:DisableDrawLayer("OVERLAY")
+BankSlotsFrame:DisableDrawLayer("BORDER")
 BankPortraitTexture:Hide()
 BankFrameMoneyFrameInset:Hide()
 BankFrameMoneyFrameBorder:Hide()
@@ -400,6 +421,30 @@ local function bagOnLeave(self)
 	bagOnMouseover(self, false)
 end
 
+-- add extra button for default bag
+do
+	mainBag = CreateFrame("Frame", nil, holder)
+	mainBag:SetSize(30, 30)
+	mainBag:SetPoint("RIGHT", bagholder)
+	mainBag:SetAlpha(0)
+
+	local icon = mainBag:CreateTexture(nil, "OVERLAY")
+	icon:SetAllPoints()
+	icon:SetTexture("Interface\\Buttons\\Button-Backpack-Up")
+	icon:SetTexCoord(.08, .92, .08, .92)
+
+	addConfigIcon(mainBag, nil, function(self)
+		ToggleDropDownMenu(1, nil, ContainerFrame1.FilterDropDown, self, 0, 0)
+	end)
+
+	F.CreateBG(mainBag)
+
+	mainBag.isMainBag = true
+
+	mainBag:SetScript("OnEnter", bagOnEnter)
+	mainBag:SetScript("OnLeave", bagOnLeave)
+end
+
 for i = 0, 3 do
 	local bag = _G["CharacterBag"..i.."Slot"]
 	local ic = _G["CharacterBag"..i.."SlotIconTexture"]
@@ -411,9 +456,9 @@ for i = 0, 3 do
 	bag:ClearAllPoints()
 
 	if i == 0 then
-		bag:SetPoint("LEFT", bagholder, 1, 0)
+		bag:SetPoint("RIGHT", mainBag, "LEFT", -3, 0)
 	else
-		bag:SetPoint("LEFT", _G["CharacterBag"..(i-1).."Slot"], "RIGHT", 3, 0)
+		bag:SetPoint("RIGHT", _G["CharacterBag"..(i-1).."Slot"], "LEFT", -3, 0)
 	end
 
 	bag:SetNormalTexture("")
@@ -434,30 +479,6 @@ for i = 0, 3 do
 	bag:SetScript("OnClick", nil)
 
 	addConfigIcon(bag, bag:GetID())
-end
-
--- add extra button for default bag
-do
-	mainBag = CreateFrame("Frame", nil, holder)
-	mainBag:SetSize(30, 30)
-	mainBag:SetPoint("LEFT", CharacterBag3Slot, "RIGHT", 3, 0)
-	mainBag:SetAlpha(0)
-
-	local icon = mainBag:CreateTexture(nil, "OVERLAY")
-	icon:SetAllPoints()
-	icon:SetTexture("Interface\\Buttons\\Button-Backpack-Up")
-	icon:SetTexCoord(.08, .92, .08, .92)
-
-	addConfigIcon(mainBag, nil, function(self)
-		ToggleDropDownMenu(1, nil, ContainerFrame1.FilterDropDown, self, 0, 0)
-	end)
-
-	F.CreateBG(mainBag)
-
-	mainBag.isMainBag = true
-
-	mainBag:SetScript("OnEnter", bagOnEnter)
-	mainBag:SetScript("OnLeave", bagOnLeave)
 end
 
 local function bankBagOnMouseover(self, isEnter)
@@ -505,7 +526,7 @@ for i = 1, 7 do
 	if i == 1 then
 		bag:SetPoint("BOTTOM", bankholder, "TOP", -123, 2)
 	else
-		bag:SetPoint("LEFT", _G["BankFrameBag"..i-1], "RIGHT", 4, 0)
+		bag:SetPoint("LEFT", BankSlotsFrame["Bag"..i-1], "RIGHT", 4, 0)
 	end
 
 	bag:SetNormalTexture("")
@@ -646,28 +667,6 @@ BagItemSearchBox:HookScript("OnEnter", function(self)
 	self:SetAlpha(1)
 end)
 BagItemSearchBox:HookScript("OnLeave", HideSearch)
-
-local function updateFilter(frame)
-	local id = frame:GetID();
-	local name = frame:GetName().."Item";
-	local itemButton;
-	local _, isFiltered;
-
-	for i=1, frame.size, 1 do
-		itemButton = _G[name..i];
-		_, _, _, _, _, _, _, isFiltered = GetContainerItemInfo(id, itemButton:GetID());
-		if itemButton.glow then
-			if ( isFiltered ) then
-				itemButton.glow:SetAlpha(0);
-			else
-				itemButton.glow:SetAlpha(1);
-			end
-		end
-	end
-end
-
-hooksecurefunc("ContainerFrame_UpdateSearchResults", updateFilter)
-hooksecurefunc("ContainerFrame_Update", updateFilter)
 
 -- [[ Money ]]
 
