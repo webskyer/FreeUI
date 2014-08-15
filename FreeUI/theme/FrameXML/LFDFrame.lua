@@ -1,6 +1,12 @@
 local F, C = unpack(select(2, ...))
 
 tinsert(C.themes["FreeUI"], function()
+	LFDParentFrame:DisableDrawLayer("BACKGROUND")
+	LFDParentFrameInset:DisableDrawLayer("BACKGROUND")
+	LFDParentFrame:DisableDrawLayer("BORDER")
+	LFDParentFrameInset:DisableDrawLayer("BORDER")
+	LFDParentFrame:DisableDrawLayer("OVERLAY")
+
 	LFDQueueFrameRandomScrollFrameScrollBackgroundTopLeft:Hide()
 	LFDQueueFrameRandomScrollFrameScrollBackgroundBottomRight:Hide()
 

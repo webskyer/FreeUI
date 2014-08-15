@@ -109,11 +109,14 @@ theme\AddOns\DBM-GUI.lua
 theme\AddOns\KayrChat.lua
 
 theme\FrameXML\AlertFrames.lua
+theme\FrameXML\CharacterFrame.lua
+theme\FrameXML\EquipmentFlyout.lua
 theme\FrameXML\LFDFrame.lua
 theme\FrameXML\LFGFrame.lua
 theme\FrameXML\LFRFrame.lua
 theme\FrameXML\LootHistory.lua
 theme\FrameXML\ModelPreviewFrame.lua
+theme\FrameXML\PaperDollFrame.lua
 theme\FrameXML\ProductChoiceFrame.lua
 theme\FrameXML\PVEFrame.lua
 theme\FrameXML\QuestInfo.lua

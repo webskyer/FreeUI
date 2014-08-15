@@ -101,17 +101,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinArrow(InboxNextPageButton, "right")
 		F.ReskinArrow(MerchantPrevPageButton, "left")
 		F.ReskinArrow(MerchantNextPageButton, "right")
-		F.ReskinArrow(CharacterFrameExpandButton, "left")
 		F.ReskinArrow(TabardCharacterModelRotateLeftButton, "left")
 		F.ReskinArrow(TabardCharacterModelRotateRightButton, "right")
-
-		hooksecurefunc("CharacterFrame_Expand", function()
-			CharacterFrameExpandButton.tex:SetTexture(C.media.arrowLeft)
-		end)
-
-		hooksecurefunc("CharacterFrame_Collapse", function()
-			CharacterFrameExpandButton.tex:SetTexture(C.media.arrowRight)
-		end)
 
 		-- [[ Radio buttons ]]
 
@@ -1067,234 +1058,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			moveNavButtons(self)
 		end)
 
-		-- Character frame
-
-		do
-			local i = 1
-			while _G["CharacterFrameTab"..i] do
-				F.ReskinTab(_G["CharacterFrameTab"..i])
-				i = i + 1
-			end
-		end
-
-		F.ReskinPortraitFrame(CharacterFrame, true)
-
-		local function colourPopout(self)
-			local aR, aG, aB
-			local glow = self:GetParent().IconBorder
-
-			if glow:IsShown() then
-				aR, aG, aB = glow:GetVertexColor()
-			else
-				aR, aG, aB = r, g, b
-			end
-
-			self.arrow:SetVertexColor(aR, aG, aB)
-		end
-
-		local function clearPopout(self)
-			self.arrow:SetVertexColor(1, 1, 1)
-		end
-
-		local slots = {
-			"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
-			"Hands", "Finger0", "Finger1", "Trinket0", "Trinket1", "Back", "MainHand",
-			"SecondaryHand", "Tabard",
-		}
-
-		for i = 1, #slots do
-			local slot = _G["Character"..slots[i].."Slot"]
-			local ic = _G["Character"..slots[i].."SlotIconTexture"]
-			local border = slot.IconBorder
-
-			_G["Character"..slots[i].."SlotFrame"]:Hide()
-
-			slot:SetNormalTexture("")
-			slot:SetPushedTexture("")
-			ic:SetTexCoord(.08, .92, .08, .92)
-
-			border:SetTexture(C.media.backdrop)
-			border:SetPoint("TOPLEFT", -1, 1)
-			border:SetPoint("BOTTOMRIGHT", 1, -1)
-			border:SetDrawLayer("BACKGROUND")
-
-			local popout = slot.popoutButton
-
-			popout:SetNormalTexture("")
-			popout:SetHighlightTexture("")
-
-			local arrow = popout:CreateTexture(nil, "OVERLAY")
-
-			if slot.verticalFlyout then
-				arrow:SetSize(13, 8)
-				arrow:SetTexture(C.media.arrowDown)
-				arrow:SetPoint("TOP", slot, "BOTTOM", 0, 1)
-			else
-				arrow:SetSize(8, 14)
-				arrow:SetTexture(C.media.arrowRight)
-				arrow:SetPoint("LEFT", slot, "RIGHT", -1, 0)
-			end
-
-			popout.arrow = arrow
-
-			popout:HookScript("OnEnter", clearPopout)
-			popout:HookScript("OnLeave", colourPopout)
-		end
-
-		select(11, CharacterMainHandSlot:GetRegions()):Hide()
-		select(11, CharacterSecondaryHandSlot:GetRegions()):Hide()
-
-		local updateChar = function(self)
-			if not PaperDollFrame:IsShown() then return end
-
-			for i, slotName in ipairs(slots) do
-				if i == 18 then i = 19 end
-
-				local slot = _G["Character"..slotName.."Slot"]
-				local slotLink = GetInventoryItemLink("player", i)
-
-				if slotLink then
-					slot.icon:SetAlpha(1)
-				else
-					slot.icon:SetAlpha(0)
-				end
-
-				colourPopout(slot.popoutButton)
-			end
-		end
-
-		do
-			local f = CreateFrame("Frame")
-			f:RegisterEvent("UNIT_INVENTORY_CHANGED")
-			f:SetScript("OnEvent", updateChar)
-			PaperDollFrame:HookScript("OnShow", updateChar)
-		end
-
-		for i = 1, #PAPERDOLL_SIDEBARS do
-			local tab = _G["PaperDollSidebarTab"..i]
-
-			if i == 1 then
-				for i = 1, 4 do
-					local region = select(i, tab:GetRegions())
-					region:SetTexCoord(0.16, 0.86, 0.16, 0.86)
-					region.SetTexCoord = F.dummy
-				end
-			end
-
-			tab.Highlight:SetTexture(r, g, b, .2)
-			tab.Highlight:SetPoint("TOPLEFT", 3, -4)
-			tab.Highlight:SetPoint("BOTTOMRIGHT", -1, 0)
-			tab.Hider:SetTexture(.3, .3, .3, .4)
-			tab.TabBg:SetAlpha(0)
-
-			select(2, tab:GetRegions()):ClearAllPoints()
-			if i == 1 then
-				select(2, tab:GetRegions()):SetPoint("TOPLEFT", 3, -4)
-				select(2, tab:GetRegions()):SetPoint("BOTTOMRIGHT", -1, 0)
-			else
-				select(2, tab:GetRegions()):SetPoint("TOPLEFT", 2, -4)
-				select(2, tab:GetRegions()):SetPoint("BOTTOMRIGHT", -1, -1)
-			end
-
-			tab.bg = CreateFrame("Frame", nil, tab)
-			tab.bg:SetPoint("TOPLEFT", 2, -3)
-			tab.bg:SetPoint("BOTTOMRIGHT", 0, -1)
-			tab.bg:SetFrameLevel(0)
-			F.CreateBD(tab.bg)
-
-			tab.Hider:SetPoint("TOPLEFT", tab.bg, 1, -1)
-			tab.Hider:SetPoint("BOTTOMRIGHT", tab.bg, -1, 1)
-		end
-
-		for i = 1, NUM_GEARSET_ICONS_SHOWN do
-			local bu = _G["GearManagerDialogPopupButton"..i]
-			local ic = _G["GearManagerDialogPopupButton"..i.."Icon"]
-
-			bu:SetCheckedTexture(C.media.checked)
-			select(2, bu:GetRegions()):Hide()
-			ic:SetPoint("TOPLEFT", 1, -1)
-			ic:SetPoint("BOTTOMRIGHT", -1, 1)
-			ic:SetTexCoord(.08, .92, .08, .92)
-
-			F.CreateBD(bu, .25)
-		end
-
-		local sets = false
-		PaperDollSidebarTab3:HookScript("OnClick", function()
-			if sets == false then
-				for i = 1, 9 do
-					local bu = _G["PaperDollEquipmentManagerPaneButton"..i]
-					local bd = _G["PaperDollEquipmentManagerPaneButton"..i.."Stripe"]
-					local ic = _G["PaperDollEquipmentManagerPaneButton"..i.."Icon"]
-					_G["PaperDollEquipmentManagerPaneButton"..i.."BgTop"]:SetAlpha(0)
-					_G["PaperDollEquipmentManagerPaneButton"..i.."BgMiddle"]:Hide()
-					_G["PaperDollEquipmentManagerPaneButton"..i.."BgBottom"]:SetAlpha(0)
-
-					bu.HighlightBar:SetTexture(r, g, b, .1)
-					bu.HighlightBar:SetDrawLayer("BACKGROUND")
-					bu.SelectedBar:SetTexture(r, g, b, .2)
-					bu.SelectedBar:SetDrawLayer("BACKGROUND")
-
-					bd:Hide()
-					bd.Show = F.dummy
-					ic:SetTexCoord(.08, .92, .08, .92)
-
-					F.CreateBG(ic)
-				end
-				sets = true
-			end
-		end)
-
-		-- Equipment flyout
-
-		EquipmentFlyoutFrameHighlight:Hide()
-
-		local border = F.CreateBDFrame(EquipmentFlyoutFrame, 0)
-		border:SetBackdropBorderColor(1, 1, 1)
-		border:SetPoint("TOPLEFT", 2, -2)
-		border:SetPoint("BOTTOMRIGHT", -2, 2)
-
-		local navFrame = EquipmentFlyoutFrame.NavigationFrame
-
-		EquipmentFlyoutFrameButtons.bg1:SetAlpha(0)
-		EquipmentFlyoutFrameButtons:DisableDrawLayer("ARTWORK")
-		Test2:Hide() -- wat
-
-		navFrame:SetWidth(204)
-		navFrame:SetPoint("TOPLEFT", EquipmentFlyoutFrameButtons, "BOTTOMLEFT", 1, 0)
-
-		hooksecurefunc("EquipmentFlyout_DisplayButton", function(button)
-			if not button.styled then
-				button:SetNormalTexture("")
-				button:SetPushedTexture("")
-				button.bg = F.CreateBG(button)
-
-				button.icon:SetTexCoord(.08, .92, .08, .92)
-
-				button.styled = true
-			end
-
-			local location = button.location
-			if not location then return end
-
-			local r, g, b
-
-			if location >= EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION then
-				r, g, b = 0, 0, 0
-			else
-				local _, _, quality = GetItemInfo(EquipmentManager_GetItemInfoByLocation(location))
-				r, g, b = GetItemQualityColor(quality)
-
-				if r == 1 and g == 1 then r, g, b = 0, 0, 0 end
-			end
-
-			button.bg:SetVertexColor(r, g, b)
-		end)
-
-		F.CreateBD(EquipmentFlyoutFrame.NavigationFrame)
-		F.ReskinArrow(EquipmentFlyoutFrame.NavigationFrame.PrevButton, "left")
-		F.ReskinArrow(EquipmentFlyoutFrame.NavigationFrame.NextButton, "right")
-
 		-- Quest Frame
 
 		F.ReskinPortraitFrame(QuestFrame, true)
@@ -2210,17 +1973,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Hide regions ]]
 
-		local bglayers = {"LFDParentFrame", "LFDParentFrameInset", "WhoFrameColumnHeader1", "WhoFrameColumnHeader2", "WhoFrameColumnHeader3", "WhoFrameColumnHeader4", "RaidInfoInstanceLabel", "RaidInfoIDLabel", "CharacterFrameInsetRight", "HelpFrameMainInset", "CharacterModelFrame", "HelpFrame", "HelpFrameLeftInset", "VideoOptionsFrameCategoryFrame", "InterfaceOptionsFrameCategories", "InterfaceOptionsFrameAddOns", "RaidParentFrame"}
+		local bglayers = {"WhoFrameColumnHeader1", "WhoFrameColumnHeader2", "WhoFrameColumnHeader3", "WhoFrameColumnHeader4", "RaidInfoInstanceLabel", "RaidInfoIDLabel", "HelpFrameMainInset", "HelpFrame", "HelpFrameLeftInset", "VideoOptionsFrameCategoryFrame", "InterfaceOptionsFrameCategories", "InterfaceOptionsFrameAddOns", "RaidParentFrame"}
 		for i = 1, #bglayers do
 			_G[bglayers[i]]:DisableDrawLayer("BACKGROUND")
 		end
-		local borderlayers = {"WhoFrameListInset", "WhoFrameEditBoxInset", "ChannelFrameLeftInset", "ChannelFrameRightInset", "LFDParentFrame", "LFDParentFrameInset", "CharacterFrameInsetRight", "HelpFrame", "HelpFrameLeftInset", "HelpFrameMainInset", "CharacterModelFrame", "VideoOptionsFramePanelContainer", "InterfaceOptionsFramePanelContainer", "RaidParentFrame", "RaidParentFrameInset", "RaidFinderFrameRoleInset"}
+		local borderlayers = {"WhoFrameListInset", "WhoFrameEditBoxInset", "ChannelFrameLeftInset", "ChannelFrameRightInset", "HelpFrame", "HelpFrameLeftInset", "HelpFrameMainInset", "VideoOptionsFramePanelContainer", "InterfaceOptionsFramePanelContainer", "RaidParentFrame", "RaidParentFrameInset", "RaidFinderFrameRoleInset"}
 		for i = 1, #borderlayers do
 			_G[borderlayers[i]]:DisableDrawLayer("BORDER")
-		end
-		local overlayers = {"LFDParentFrame", "CharacterModelFrame"}
-		for i = 1, #overlayers do
-			_G[overlayers[i]]:DisableDrawLayer("OVERLAY")
 		end
 		for i = 1, 6 do
 			for j = 1, 3 do
@@ -2280,8 +2039,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, 10 do
 			select(i, GuildInviteFrame:GetRegions()):Hide()
 		end
-		CharacterFrameExpandButton:GetNormalTexture():SetAlpha(0)
-		CharacterFrameExpandButton:GetPushedTexture():SetAlpha(0)
 		InboxPrevPageButton:GetRegions():Hide()
 		InboxNextPageButton:GetRegions():Hide()
 		MerchantPrevPageButton:GetRegions():Hide()
@@ -2437,7 +2194,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		HelpFrameGM_ResponseScrollFrame1ScrollBar:SetPoint("TOPLEFT", HelpFrameGM_ResponseScrollFrame1, "TOPRIGHT", 1, -16)
 		HelpFrameGM_ResponseScrollFrame2ScrollBar:SetPoint("TOPLEFT", HelpFrameGM_ResponseScrollFrame2, "TOPRIGHT", 1, -16)
 		RaidInfoFrame:SetPoint("TOPLEFT", RaidFrame, "TOPRIGHT", 1, -28)
-		CharacterFrameExpandButton:SetPoint("BOTTOMRIGHT", CharacterFrameInset, "BOTTOMRIGHT", -14, 6)
 		TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
 		LFDQueueFrameSpecificListScrollFrameScrollBarScrollDownButton:SetPoint("TOP", LFDQueueFrameSpecificListScrollFrameScrollBar, "BOTTOM", 0, 2)
 		LFDQueueFrameRandomScrollFrameScrollBarScrollDownButton:SetPoint("TOP", LFDQueueFrameRandomScrollFrameScrollBar, "BOTTOM", 0, 2)
