@@ -3,6 +3,8 @@ local F, C = unpack(select(2, ...))
 C.themes["Blizzard_PetJournal"] = function()
 	local r, g, b = C.r, C.g, C.b
 
+	-- [[ Mounts and pets ]]
+
 	local PetJournal = PetJournal
 	local MountJournal = MountJournal
 
@@ -304,4 +306,58 @@ C.themes["Blizzard_PetJournal"] = function()
 
 	hooksecurefunc("PetJournal_UpdatePetList", ColourPetQuality)
 	hooksecurefunc(PetJournalListScrollFrame, "update", ColourPetQuality)
+
+	-- [[ Toy box ]]
+
+	ToyBoxIconsFrame.Bg:Hide()
+	ToyBoxIconsFrameBackgroundTile:Hide()
+	ToyBoxIconsFrame:DisableDrawLayer("BORDER")
+	ToyBoxIconsFrame:DisableDrawLayer("ARTWORK")
+	ToyBoxIconsFrame:DisableDrawLayer("OVERLAY")
+
+	F.ReskinInput(ToyBox.searchBox)
+	F.ReskinFilterButton(ToyBoxFilterButton)
+	F.ReskinArrow(ToyBoxPrevPageButton, "left")
+	F.ReskinArrow(ToyBoxNextPageButton, "right")
+
+	ToyBoxPrevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
+	ToyBoxNextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
+
+	-- Progress bar
+
+	ToyBoxProgressBarBorder:Hide()
+	ToyBoxProgressBarBackground:Hide()
+
+	ToyBoxProgressBar.text:SetPoint("CENTER", 0, 1)
+	ToyBoxProgressBarBar:SetTexture(C.media.backdrop)
+
+	F.CreateBDFrame(ToyBoxProgressBar, .25)
+
+	-- Toys!
+
+	for i = 1, 18 do
+		local bu = _G["ToySpellButton"..i]
+		local ic = _G["ToySpellButton"..i.."IconTexture"]
+
+		bu:SetPushedTexture("")
+		bu:SetHighlightTexture("")
+
+		bu.cooldown:SetAllPoints(ic)
+
+		_G["ToySpellButton"..i.."SlotFrameCollected"]:SetTexture("")
+		_G["ToySpellButton"..i.."SlotFrameUncollected"]:SetTexture("")
+
+		ic:SetTexCoord(.08, .92, .08, .92)
+		F.CreateBG(ic)
+	end
+
+	hooksecurefunc("ToySpellButton_UpdateButton", function(self)
+		local toyString = _G[self:GetName().."ToyName"]
+
+		if PlayerHasToy(self.itemID) then
+			toyString:SetTextColor(1, 1, 1)
+		else
+			toyString:SetTextColor(.5, .5, .5)
+		end
+	end)
 end
