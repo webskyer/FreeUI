@@ -198,10 +198,10 @@ addon.LOOT_OPENED = function(self, event, autoloot)
 				local color = ITEM_QUALITY_COLORS[quality]
 
 				if questId and not isActive then
-					slot.bg:SetBackdropColor(.5, 0, 0, .5)
-					slot.name:SetTextColor(1, 0, 0)
+					slot.bg:SetBackdropColor(.5, .5, 0, .5)
+					slot.name:SetTextColor(1, 1, 0)
 				elseif questId or isQuestItem then
-					slot.bg:SetBackdropColor(.5, 0, 0, .5)
+					slot.bg:SetBackdropColor(.5, .5, 0, .5)
 					slot.name:SetTextColor(color.r, color.g, color.b)
 				else
 					slot.bg:SetBackdropColor(0, 0, 0, .5)
