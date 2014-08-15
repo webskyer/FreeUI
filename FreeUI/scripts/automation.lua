@@ -193,7 +193,6 @@ if C.automation.questRewardHighlight then
 	local maxPriceIndex = 0
 
 	local function onUpdate(self, elapsed)
-		-- print("test")
 		last = last + elapsed
 		if last >= .05 then
 			self:SetScript("OnUpdate", nil)
@@ -227,13 +226,13 @@ if C.automation.questRewardHighlight then
 		end
 
 		if maxPriceIndex > 0 then
-			local infoItem = _G["QuestInfoItem"..maxPriceIndex]
+			local infoItem = _G["QuestInfoRewardsFrameQuestInfoItem"..maxPriceIndex]
 
 			QuestInfoItemHighlight:ClearAllPoints()
 			QuestInfoItemHighlight:SetPoint("TOP", infoItem)
 			QuestInfoItemHighlight:Show()
 
-			infoItem:SetBackdropColor(0.89, 0.88, 0.06, .2)
+			infoItem.bg:SetBackdropColor(0.89, 0.88, 0.06, .2)
 		end
 
 		startIndex = 1
