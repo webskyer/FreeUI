@@ -78,6 +78,8 @@ tinsert(C.themes["FreeUI"], function()
 	-- [[ Objectives ]]
 
 	local function colourObjectivesText()
+		if not QuestInfoFrame.questLog then return end
+
 		local objectivesTable = QuestInfoObjectivesFrame.Objectives
 		local numVisibleObjectives = 0
 
