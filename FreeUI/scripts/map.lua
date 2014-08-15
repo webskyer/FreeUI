@@ -34,7 +34,7 @@ hooksecurefunc("WorldMap_ToggleSizeDown", function() SmallerMapSkin() end)
 local UIFrame = WorldMapFrame.UIElementsFrame
 
 local coords = F.CreateFS(UIFrame, C.FONT_SIZE_NORMAL, "LEFT")
-coords:SetPoint("BOTTOMLEFT", WorldMapDetailFrame, 5, 5)
+coords:SetPoint("BOTTOMLEFT", UIFrame, 5, 5)
 local cursorcoords = F.CreateFS(UIFrame, C.FONT_SIZE_NORMAL, "LEFT")
 cursorcoords:SetPoint("BOTTOMLEFT", coords, "TOPLEFT", 0, 4)
 
