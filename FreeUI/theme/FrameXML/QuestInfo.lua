@@ -49,8 +49,8 @@ tinsert(C.themes["FreeUI"], function()
 	spellLine:SetVertexColor(0, 0, 0)
 
 	local function clearHighlight()
-		for i = 1, MAX_NUM_ITEMS do
-			_G["QuestInfoItem"..i]:SetBackdropColor(0, 0, 0, .25)
+		for _, button in pairs(QuestInfoRewardsFrame.RewardButtons) do
+			button.bg:SetBackdropColor(0, 0, 0, .25)
 		end
 	end
 
@@ -58,7 +58,9 @@ tinsert(C.themes["FreeUI"], function()
 		clearHighlight()
 
 		local _, point = self:GetPoint()
-		point:SetBackdropColor(r, g, b, .2)
+		if point then
+			point.bg:SetBackdropColor(r, g, b, .2)
+		end
 	end
 
 	hooksecurefunc(QuestInfoItemHighlight, "SetPoint", setHighlight)
@@ -87,7 +89,7 @@ tinsert(C.themes["FreeUI"], function()
 				local objective = objectivesTable[numVisibleObjectives]
 
 				if finished then
-					objective:SetTextColor(.7, .7, .7)
+					objective:SetTextColor(.9, .9, .9)
 				else
 					objective:SetTextColor(1, 1, 1)
 				end
@@ -100,31 +102,43 @@ tinsert(C.themes["FreeUI"], function()
 
 	-- [[ Quest rewards ]]
 
-	local function restyleRewardButton(bu)
+	local function restyleRewardButton(bu, isMapQuestInfo)
 		bu.NameFrame:Hide()
+
 		bu.Icon:SetTexCoord(.08, .92, .08, .92)
 		bu.Icon:SetDrawLayer("BACKGROUND", 1)
 		F.CreateBG(bu.Icon, 1)
+
+		local bg = CreateFrame("Frame", nil, bu)
+		bg:SetPoint("TOPLEFT", bu, 1, 1)
+
+		if isMapQuestInfo then
+			bg:SetPoint("BOTTOMRIGHT", bu, -2, 0)
+			bu.Icon:SetSize(29, 29)
+		else
+			bg:SetPoint("BOTTOMRIGHT", bu, -2, 1)
+		end
+
+		bg:SetFrameLevel(0)
+		F.CreateBD(bg, .25)
+
+		bu.bg = bg
 	end
 
 	hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
 		local bu = rewardsFrame.RewardButtons[index]
 
 		if not bu.restyled then
-			if rewardsFrame == MapQuestInfoRewardsFrame then
-				bu.Icon:SetSize(29, 29)
-			end
-
-			restyleRewardButton(bu)
+			restyleRewardButton(bu, rewardsFrame == MapQuestInfoRewardsFrame)
 
 			bu.restyled = true
 		end
 	end)
 
-	restyleRewardButton(MapQuestInfoRewardsFrame.SpellFrame)
-	restyleRewardButton(MapQuestInfoRewardsFrame.XPFrame)
-	restyleRewardButton(MapQuestInfoRewardsFrame.MoneyFrame)
-	restyleRewardButton(MapQuestInfoRewardsFrame.SkillPointFrame)
+	restyleRewardButton(MapQuestInfoRewardsFrame.SpellFrame, true)
+	restyleRewardButton(MapQuestInfoRewardsFrame.XPFrame, true)
+	restyleRewardButton(MapQuestInfoRewardsFrame.MoneyFrame, true)
+	restyleRewardButton(MapQuestInfoRewardsFrame.SkillPointFrame, true)
 
 	MapQuestInfoRewardsFrame.XPFrame.Name:SetShadowOffset(0, 0)
 
