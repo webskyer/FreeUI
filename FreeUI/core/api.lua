@@ -323,6 +323,9 @@ local function clearArrow(f)
 	f.tex:SetVertexColor(1, 1, 1)
 end
 
+F.colourArrow = colourArrow
+F.clearArrow = clearArrow
+
 F.ReskinDropDown = function(f)
 	local frame = f:GetName()
 

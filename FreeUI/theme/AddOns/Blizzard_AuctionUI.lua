@@ -69,8 +69,7 @@ C.themes["Blizzard_AuctionUI"] = function()
 
 	local abuttons = {"BrowseBidButton", "BrowseBuyoutButton", "BrowseCloseButton", "BrowseSearchButton", "BrowseResetButton", "BidBidButton", "BidBuyoutButton", "BidCloseButton", "AuctionsCloseButton", "AuctionsCancelAuctionButton", "AuctionsCreateAuctionButton", "AuctionsNumStacksMaxButton", "AuctionsStackSizeMaxButton"}
 	for i = 1, #abuttons do
-		local reskinbutton = _G[abuttons[i]]
-		F.Reskin(reskinbutton)
+		F.Reskin(_G[abuttons[i]])
 	end
 
 	BrowseCloseButton:ClearAllPoints()
@@ -110,6 +109,7 @@ C.themes["Blizzard_AuctionUI"] = function()
 
 			F.CreateBG(it)
 
+			it.IconBorder:SetTexture("")
 			_G["BrowseButton"..i.."Left"]:Hide()
 			select(5, _G["BrowseButton"..i]:GetRegions()):Hide()
 			_G["BrowseButton"..i.."Right"]:Hide()
@@ -141,6 +141,7 @@ C.themes["Blizzard_AuctionUI"] = function()
 
 		F.CreateBG(it)
 
+		it.IconBorder:SetTexture("")
 		_G["BidButton"..i.."Left"]:Hide()
 		select(6, _G["BidButton"..i]:GetRegions()):Hide()
 		_G["BidButton"..i.."Right"]:Hide()
@@ -171,6 +172,7 @@ C.themes["Blizzard_AuctionUI"] = function()
 
 		F.CreateBG(it)
 
+		it.IconBorder:SetTexture("")
 		_G["AuctionsButton"..i.."Left"]:Hide()
 		select(4, _G["AuctionsButton"..i]:GetRegions()):Hide()
 		_G["AuctionsButton"..i.."Right"]:Hide()
@@ -192,7 +194,7 @@ C.themes["Blizzard_AuctionUI"] = function()
 	local auctionhandler = CreateFrame("Frame")
 	auctionhandler:RegisterEvent("NEW_AUCTION_UPDATE")
 	auctionhandler:SetScript("OnEvent", function()
-		local _, _, _, _, _, _, _, _, _, _, _, _, _, AuctionsItemButtonIconTexture = AuctionsItemButton:GetRegions() -- blizzard, please name your textures
+		local AuctionsItemButtonIconTexture = select(14, AuctionsItemButton:GetRegions())
 		if AuctionsItemButtonIconTexture then
 			AuctionsItemButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
 			AuctionsItemButtonIconTexture:SetPoint("TOPLEFT", 1, -1)
@@ -213,12 +215,14 @@ C.themes["Blizzard_AuctionUI"] = function()
 	F.ReskinInput(BrowseName)
 	F.ReskinArrow(BrowsePrevPageButton, "left")
 	F.ReskinArrow(BrowseNextPageButton, "right")
+	F.ReskinCheck(ExactMatchCheckButton)
 	F.ReskinCheck(IsUsableCheckButton)
 	F.ReskinCheck(ShowOnPlayerCheckButton)
 
+	BrowsePrevPageButton:SetPoint("TOPLEFT", 660, -60)
+	BrowseNextPageButton:SetPoint("TOPRIGHT", 67, -60)
 	BrowsePrevPageButton:GetRegions():SetPoint("LEFT", BrowsePrevPageButton, "RIGHT", 2, 0)
 
-	-- seriously, consistency
 	BrowseDropDownLeft:SetAlpha(0)
 	BrowseDropDownMiddle:SetAlpha(0)
 	BrowseDropDownRight:SetAlpha(0)
@@ -228,25 +232,12 @@ C.themes["Blizzard_AuctionUI"] = function()
 	BrowseDropDownButton:SetSize(16, 16)
 	F.Reskin(BrowseDropDownButton, true)
 
-	local function colourArrow(f)
-		if f:IsEnabled() then
-			f.downtex:SetVertexColor(r, g, b)
-		end
-	end
-
-	local function clearArrow(f)
-		f.downtex:SetVertexColor(1, 1, 1)
-	end
-
-	BrowseDropDownButton:HookScript("OnEnter", colourArrow)
-	BrowseDropDownButton:HookScript("OnLeave", clearArrow)
-
-	local downtex = BrowseDropDownButton:CreateTexture(nil, "OVERLAY")
-	downtex:SetTexture(C.media.arrowDown)
-	downtex:SetSize(8, 8)
-	downtex:SetPoint("CENTER")
-	downtex:SetVertexColor(1, 1, 1)
-	BrowseDropDownButton.downtex = downtex
+	local tex = BrowseDropDownButton:CreateTexture(nil, "OVERLAY")
+	tex:SetTexture(C.media.arrowDown)
+	tex:SetSize(8, 8)
+	tex:SetPoint("CENTER")
+	tex:SetVertexColor(1, 1, 1)
+	BrowseDropDownButton.tex = tex
 
 	local bg = CreateFrame("Frame", nil, BrowseDropDown)
 	bg:SetPoint("TOPLEFT", 16, -5)
@@ -255,6 +246,12 @@ C.themes["Blizzard_AuctionUI"] = function()
 	F.CreateBD(bg, 0)
 
 	F.CreateGradient(bg)
+
+	local colourArrow = F.colourArrow
+	local clearArrow = F.clearArrow
+
+	BrowseDropDownButton:HookScript("OnEnter", colourArrow)
+	BrowseDropDownButton:HookScript("OnLeave", clearArrow)
 
 	local inputs = {"BrowseMinLevel", "BrowseMaxLevel", "BrowseBidPriceGold", "BrowseBidPriceSilver", "BrowseBidPriceCopper", "BidBidPriceGold", "BidBidPriceSilver", "BidBidPriceCopper", "StartPriceGold", "StartPriceSilver", "StartPriceCopper", "BuyoutPriceGold", "BuyoutPriceSilver", "BuyoutPriceCopper", "AuctionsStackSizeEntry", "AuctionsNumStacksEntry"}
 	for i = 1, #inputs do
