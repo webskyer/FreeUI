@@ -180,35 +180,11 @@ addButton("Chat menu", POSITION_LEFT, function()
 	ToggleFrame(ChatMenu)
 end)
 
-local specButton = addButton("No specialization", POSITION_LEFT, function()
-	SetActiveSpecGroup(3 - GetActiveSpecGroup())
-end)
-
-specButton:RegisterEvent("PLAYER_LOGIN")
-specButton:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-specButton:SetScript("OnEvent", function(self)
-	if GetNumSpecGroups() >= 2 then
-		local currentSpec = GetSpecialization()
-
-		if currentSpec then
-			local _, name = GetSpecializationInfo(currentSpec)
-			if name then
-				self.Text:SetText(format("%d - %s", GetActiveSpecGroup(), name))
-				self:Show()
-			end
-		end
-	else
-		self:Hide()
-	end
-end)
-
 FreeUIStatsButton = addButton("", POSITION_MIDDLE, function()
 	TimeManagerClockButton_OnClick(TimeManagerClockButton)
 end)
 
 FreeUIStatsButton:SetWidth(200)
-
-addButton(BAG_CLEANUP_BAGS, POSITION_RIGHT, SortBags)
 
 addButton("Toggle DBM", POSITION_RIGHT, function()
 	if IsAddOnLoaded("DBM-Core") then
@@ -234,5 +210,27 @@ addButton("Toggle damage meter", POSITION_RIGHT, function()
 		else
 			DEFAULT_CHAT_FRAME:AddMessage("FreeUI: |cffffffffalDamageMeter not found!|r", r, g, b)
 		end
+	end
+end)
+
+local specButton = addButton("No specialization", POSITION_RIGHT, function()
+	SetActiveSpecGroup(3 - GetActiveSpecGroup())
+end)
+
+specButton:RegisterEvent("PLAYER_LOGIN")
+specButton:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+specButton:SetScript("OnEvent", function(self)
+	if GetNumSpecGroups() >= 2 then
+		local currentSpec = GetSpecialization()
+
+		if currentSpec then
+			local _, name = GetSpecializationInfo(currentSpec)
+			if name then
+				self.Text:SetText(format("%d - %s", GetActiveSpecGroup(), name))
+				self:Show()
+			end
+		end
+	else
+		self:Hide()
 	end
 end)
