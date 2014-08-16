@@ -138,7 +138,7 @@ local MoveButtons = function(table, frame)
 		end
 	end
 
-	frame:SetHeight((row + (col==0 and 0 or 1)) * (iconSize + Spacing) + 19)
+	frame:SetHeight((row + (col==0 and 0 or 1)) * (iconSize + Spacing) + 36)
 	frame:SetWidth(columns * iconSize + Spacing * (columns - 1) + 6)
 	col, row = 0, 0
 end
@@ -165,6 +165,9 @@ local ReanchorButtons = function()
 	end
 
 	MoveButtons(buttons, holder)
+
+	BagItemSearchBox:SetWidth(floor(holder:GetWidth() * 2 / 3))
+
 	holder:Show()
 end
 
@@ -172,7 +175,7 @@ local money = _G["ContainerFrame1MoneyFrame"]
 money:SetFrameStrata("DIALOG")
 money:SetParent(holder)
 money:ClearAllPoints()
-money:SetPoint("BOTTOMRIGHT", holder, "BOTTOMRIGHT", 12, 2)
+money:SetPoint("BOTTOMRIGHT", holder, "BOTTOMRIGHT", 12, 19)
 
 --[[ Bank ]]
 
@@ -225,13 +228,79 @@ local ReanchorBankButtons = function()
 	end
 
 	MoveButtons(bankbuttons, bankholder)
+
+	bankholder.tabs[1]:SetWidth(floor(bankholder:GetWidth() / 2))
+
 	bankholder:Show()
 end
 
 local money = _G["BankFrameMoneyFrame"]
 money:SetFrameStrata("DIALOG")
 money:ClearAllPoints()
-money:SetPoint("BOTTOMRIGHT", bankholder, "BOTTOMRIGHT", 12, 2)
+money:SetPoint("BOTTOMRIGHT", bankholder, "BOTTOMRIGHT", 12, 19)
+
+-- [[ Reagent bank ]]
+
+bankholder.tabs = {}
+
+local function bankTabOnEnter(self)
+	self:SetBackdropColor(r, g, b, .4)
+end
+
+local function bankTabOnLeave(self)
+	if self.isSelected then
+		self:SetBackdropColor(r, g, b, .2)
+	else
+		self:SetBackdropColor(0, 0, 0, .4)
+	end
+end
+
+local function bankTabOnClick(self)
+	local otherTab = bankholder.tabs[3 - self.index]
+
+	self.isSelected = true
+	self:SetBackdropColor(r, g, b, .2)
+
+	otherTab.isSelected = false
+	otherTab:SetBackdropColor(0, 0, 0, .4)
+
+	_G[self.tabName]:Click()
+end
+
+local index = 1
+for _, tabName in pairs({"BankFrameTab1", "BankFrameTab2"}) do
+	local oldTab = _G[tabName]
+
+	oldTab:EnableMouse(false)
+	oldTab:SetAlpha(0)
+
+	local tab = CreateFrame("Button", nil, bankholder)
+	tab:SetHeight(17)
+	F.CreateBD(tab, .4)
+
+	local text = F.CreateFS(tab, C.FONT_SIZE_NORMAL)
+	text:SetPoint("CENTER", 0, 1)
+	text:SetText(_G[tabName.."Text"]:GetText())
+	text:SetTextColor(.9, .9, .9)
+
+	tab:SetScript("OnClick", bankTabOnClick)
+	tab:SetScript("OnEnter", bankTabOnEnter)
+	tab:SetScript("OnLeave", bankTabOnLeave)
+
+	tab.index = index
+	tab.tabName = tabName
+
+	index = index + 1
+
+	tinsert(bankholder.tabs, tab)
+end
+
+bankholder.tabs[1]:SetPoint("BOTTOMLEFT", bankholder, "BOTTOMLEFT")
+bankholder.tabs[2]:SetPoint("LEFT", bankholder.tabs[1], "RIGHT", -1, 0)
+bankholder.tabs[2]:SetPoint("RIGHT", bankholder, "RIGHT")
+
+bankholder.tabs[1].isSelected = true
+bankholder.tabs[1]:SetBackdropColor(r, g, b, .2)
 
 -- [[ Button slot outline ]]
 
@@ -608,7 +677,7 @@ CloseAllBags = CloseBags
 
 BackpackTokenFrame:GetRegions():Hide()
 BackpackTokenFrameToken1:ClearAllPoints()
-BackpackTokenFrameToken1:SetPoint("BOTTOMLEFT", holder, "BOTTOMLEFT", 0, 2)
+BackpackTokenFrameToken1:SetPoint("BOTTOMLEFT", holder, "BOTTOMLEFT", 0, 19)
 for i = 1, 3 do
 	local bu = _G["BackpackTokenFrameToken"..i]
 	local ic = _G["BackpackTokenFrameToken"..i.."Icon"]
@@ -630,43 +699,30 @@ BagItemSearchBox.Left:Hide()
 BagItemSearchBox.Middle:Hide()
 BagItemSearchBox.Right:Hide()
 
-BagItemSearchBox:SetHeight(17)
+BagItemSearchBox:SetHeight(17) -- width is set in ReanchorButtons
 BagItemSearchBox:ClearAllPoints()
-BagItemSearchBox:SetPoint("TOPLEFT", holder, "BOTTOMLEFT", 0, 1)
-BagItemSearchBox:SetPoint("TOPRIGHT", holder, "BOTTOMRIGHT", 0, 1)
+BagItemSearchBox:SetPoint("BOTTOMLEFT", holder, "BOTTOMLEFT")
 BagItemSearchBox.SetPoint = F.dummy
-BagItemSearchBox:SetWidth(holder:GetWidth())
-F.SetFS(BagItemSearchBox)
+BagItemSearchBox:SetFrameStrata("HIGH")
+BagItemSearchBox:SetFrameLevel(2)
 BagItemSearchBox:SetShadowColor(0, 0, 0, 0)
 BagItemSearchBox:SetJustifyH("CENTER")
-BagItemSearchBox:SetAlpha(0)
-F.CreateBD(BagItemSearchBox, .6)
+F.SetFS(BagItemSearchBox)
+F.CreateBD(BagItemSearchBox, .1)
 
 BagItemSearchBoxSearchIcon:SetPoint("LEFT", BagItemSearchBox, "LEFT", 4, -2)
 
-local HideSearch = function()
-	BagItemSearchBox:SetAlpha(0)
-end
-
 BagItemSearchBox:HookScript("OnEditFocusGained", function(self)
-	self:SetScript("OnLeave", nil)
 	self:SetTextColor(1, 1, 1)
 	BagItemSearchBoxSearchIcon:SetVertexColor(1, 1, 1)
 end)
 
 BagItemSearchBox:HookScript("OnEditFocusLost", function(self)
-	self:SetScript("OnLeave", HideSearch)
 	self.clearButton:Click()
-	HideSearch()
 	self:SetText(SEARCH)
 	self:SetTextColor(.5, .5, .5)
 	BagItemSearchBoxSearchIcon:SetVertexColor(.6, .6, .6)
 end)
-
-BagItemSearchBox:HookScript("OnEnter", function(self)
-	self:SetAlpha(1)
-end)
-BagItemSearchBox:HookScript("OnLeave", HideSearch)
 
 -- [[ Sorting ]]
 
@@ -676,6 +732,30 @@ SetInsertItemsLeftToRight(false)
 
 BagItemAutoSortButton:EnableMouse(false)
 BagItemAutoSortButton:SetAlpha(0)
+BankItemAutoSortButton:EnableMouse(false)
+BankItemAutoSortButton:SetAlpha(0)
+
+do
+	local sortButton = CreateFrame("Button", nil, holder)
+	sortButton:SetHeight(17)
+	sortButton:SetPoint("LEFT", BagItemSearchBox, "RIGHT", -1, 0)
+	sortButton:SetPoint("RIGHT", holder, "RIGHT")
+	F.CreateBD(sortButton, .1)
+
+	local text = F.CreateFS(sortButton, C.FONT_SIZE_NORMAL)
+	text:SetPoint("CENTER", 0, 1)
+	text:SetText(BAG_CLEANUP_BAGS)
+	text:SetTextColor(.9, .9, .9)
+
+	sortButton:SetScript("OnClick", SortBags)
+
+	sortButton:SetScript("OnEnter", function(self)
+		self:SetBackdropColor(r, g, b, .4)
+	end)
+	sortButton:SetScript("OnLeave", function(self)
+		self:SetBackdropColor(0, 0, 0, .1)
+	end)
+end
 
 -- [[ Money ]]
 
