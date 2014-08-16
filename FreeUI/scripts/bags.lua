@@ -8,6 +8,8 @@ local _G = _G
 
 local r, g, b = unpack(C.class)
 
+local sortButton
+
 --[[ Get the number of bag and bank container slots used ]]
 
 local function CheckSlots()
@@ -166,7 +168,7 @@ local ReanchorButtons = function()
 
 	MoveButtons(buttons, holder)
 
-	BagItemSearchBox:SetWidth(floor(holder:GetWidth() * 2 / 3))
+	sortButton:SetWidth(max(floor(holder:GetWidth() *1 / 3), 80))
 
 	holder:Show()
 end
@@ -186,13 +188,13 @@ bankholder:Hide()
 F.CreateBD(bankholder, .6)
 
 local purchase = F.CreateFS(bankholder)
-purchase:SetPoint("BOTTOMLEFT", bankholder, "BOTTOMLEFT", 4, 4)
+purchase:SetPoint("BOTTOMLEFT", bankholder, "BOTTOMLEFT", 3, 22)
 purchase:SetText("Buy new slots: Click here.")
 
-local purchaseButton = CreateFrame("Frame", nil, bankholder)
+local purchaseButton = CreateFrame("Button", nil, bankholder)
 purchaseButton:SetSize(purchase:GetStringWidth(), 8)
-purchaseButton:SetPoint("BOTTOMLEFT", bankholder, "BOTTOMLEFT", 4, 4)
-purchaseButton:SetScript("OnMouseUp", function()
+purchaseButton:SetPoint("BOTTOMLEFT", bankholder, "BOTTOMLEFT", 3, 22)
+purchaseButton:SetScript("OnClick", function()
 	StaticPopup_Show("CONFIRM_BUY_BANK_SLOT")
 end)
 
@@ -690,6 +692,38 @@ for i = 1, 3 do
 	F.CreateBG(ic)
 end
 
+-- [[ Sorting ]]
+
+-- need this
+SetSortBagsRightToLeft(true)
+SetInsertItemsLeftToRight(false)
+
+BagItemAutoSortButton:EnableMouse(false)
+BagItemAutoSortButton:SetAlpha(0)
+BankItemAutoSortButton:EnableMouse(false)
+BankItemAutoSortButton:SetAlpha(0)
+
+do
+	sortButton = CreateFrame("Button", nil, holder)
+	sortButton:SetHeight(17) -- width is set in ReanchorButtons
+	sortButton:SetPoint("BOTTOMRIGHT", holder)
+	F.CreateBD(sortButton, .1)
+
+	local text = F.CreateFS(sortButton, C.FONT_SIZE_NORMAL)
+	text:SetPoint("CENTER", 1, 1)
+	text:SetText(BAG_CLEANUP_BAGS)
+	text:SetTextColor(.9, .9, .9)
+
+	sortButton:SetScript("OnClick", SortBags)
+
+	sortButton:SetScript("OnEnter", function(self)
+		self:SetBackdropColor(r, g, b, .4)
+	end)
+	sortButton:SetScript("OnLeave", function(self)
+		self:SetBackdropColor(0, 0, 0, .1)
+	end)
+end
+
 -- [[ Search ]]
 
 BankItemSearchBox:Hide()
@@ -701,7 +735,8 @@ BagItemSearchBox.Right:Hide()
 
 BagItemSearchBox:SetHeight(17) -- width is set in ReanchorButtons
 BagItemSearchBox:ClearAllPoints()
-BagItemSearchBox:SetPoint("BOTTOMLEFT", holder, "BOTTOMLEFT")
+BagItemSearchBox:SetPoint("BOTTOMLEFT", holder)
+BagItemSearchBox:SetPoint("RIGHT", sortButton, "LEFT", 1, 0)
 BagItemSearchBox.SetPoint = F.dummy
 BagItemSearchBox:SetFrameStrata("HIGH")
 BagItemSearchBox:SetFrameLevel(2)
@@ -723,39 +758,6 @@ BagItemSearchBox:HookScript("OnEditFocusLost", function(self)
 	self:SetTextColor(.5, .5, .5)
 	BagItemSearchBoxSearchIcon:SetVertexColor(.6, .6, .6)
 end)
-
--- [[ Sorting ]]
-
--- need this
-SetSortBagsRightToLeft(true)
-SetInsertItemsLeftToRight(false)
-
-BagItemAutoSortButton:EnableMouse(false)
-BagItemAutoSortButton:SetAlpha(0)
-BankItemAutoSortButton:EnableMouse(false)
-BankItemAutoSortButton:SetAlpha(0)
-
-do
-	local sortButton = CreateFrame("Button", nil, holder)
-	sortButton:SetHeight(17)
-	sortButton:SetPoint("LEFT", BagItemSearchBox, "RIGHT", -1, 0)
-	sortButton:SetPoint("RIGHT", holder, "RIGHT")
-	F.CreateBD(sortButton, .1)
-
-	local text = F.CreateFS(sortButton, C.FONT_SIZE_NORMAL)
-	text:SetPoint("CENTER", 0, 1)
-	text:SetText(BAG_CLEANUP_BAGS)
-	text:SetTextColor(.9, .9, .9)
-
-	sortButton:SetScript("OnClick", SortBags)
-
-	sortButton:SetScript("OnEnter", function(self)
-		self:SetBackdropColor(r, g, b, .4)
-	end)
-	sortButton:SetScript("OnLeave", function(self)
-		self:SetBackdropColor(0, 0, 0, .1)
-	end)
-end
 
 -- [[ Money ]]
 
