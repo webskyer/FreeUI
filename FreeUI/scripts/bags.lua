@@ -153,7 +153,7 @@ F.CreateBD(holder, .6)
 
 local ReanchorButtons = function()
 	table.wipe(buttons)
-	for f = 1, CheckSlots() do
+	for f = CheckSlots(), 1, -1 do
 		con = "ContainerFrame"..f
 		HideBag(con)
 
@@ -630,7 +630,7 @@ BagItemSearchBox.Left:Hide()
 BagItemSearchBox.Middle:Hide()
 BagItemSearchBox.Right:Hide()
 
-BagItemSearchBox:SetHeight(18)
+BagItemSearchBox:SetHeight(17)
 BagItemSearchBox:ClearAllPoints()
 BagItemSearchBox:SetPoint("TOPLEFT", holder, "BOTTOMLEFT", 0, 1)
 BagItemSearchBox:SetPoint("TOPRIGHT", holder, "BOTTOMRIGHT", 0, 1)
@@ -667,6 +667,15 @@ BagItemSearchBox:HookScript("OnEnter", function(self)
 	self:SetAlpha(1)
 end)
 BagItemSearchBox:HookScript("OnLeave", HideSearch)
+
+-- [[ Sorting ]]
+
+-- need this
+SetSortBagsRightToLeft(true)
+SetInsertItemsLeftToRight(false)
+
+BagItemAutoSortButton:EnableMouse(false)
+BagItemAutoSortButton:SetAlpha(0)
 
 -- [[ Money ]]
 
