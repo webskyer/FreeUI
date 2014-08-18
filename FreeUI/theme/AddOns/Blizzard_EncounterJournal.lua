@@ -47,14 +47,16 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	F.SetBD(EncounterJournal)
 	F.CreateBD(EncounterJournalSearchResults, .75)
 
-	EncounterJournalEncounterFrameInfoBossTab:ClearAllPoints()
-	EncounterJournalEncounterFrameInfoBossTab:SetPoint("TOPRIGHT", EncounterJournalEncounterFrame, "TOPRIGHT", 74, 20)
-	EncounterJournalEncounterFrameInfoLootTab:ClearAllPoints()
-	EncounterJournalEncounterFrameInfoLootTab:SetPoint("TOP", EncounterJournalEncounterFrameInfoBossTab, "BOTTOM", 0, -2)
-	EncounterJournalEncounterFrameInfoModelTab:ClearAllPoints()
-	EncounterJournalEncounterFrameInfoModelTab:SetPoint("TOP", EncounterJournalEncounterFrameInfoLootTab, "BOTTOM", 0, -2)
+	-- [[ Tabs ]]
 
-	local tabs = {EncounterJournalEncounterFrameInfoBossTab, EncounterJournalEncounterFrameInfoLootTab, EncounterJournalEncounterFrameInfoModelTab}
+	EncounterJournalEncounterFrameInfoOverviewTab:ClearAllPoints()
+	EncounterJournalEncounterFrameInfoOverviewTab:SetPoint("TOPLEFT", EncounterJournalEncounterFrameInfo, "TOPRIGHT", 9, -35)
+	EncounterJournalEncounterFrameInfoLootTab:ClearAllPoints()
+	EncounterJournalEncounterFrameInfoLootTab:SetPoint("TOP", EncounterJournalEncounterFrameInfoOverviewTab, "BOTTOM", 0, 1)
+	EncounterJournalEncounterFrameInfoBossTab:ClearAllPoints()
+	EncounterJournalEncounterFrameInfoBossTab:SetPoint("TOP", EncounterJournalEncounterFrameInfoLootTab, "BOTTOM", 0, 1)
+
+	local tabs = {EncounterJournalEncounterFrameInfoOverviewTab, EncounterJournalEncounterFrameInfoLootTab, EncounterJournalEncounterFrameInfoBossTab, EncounterJournalEncounterFrameInfoModelTab}
 	for _, tab in pairs(tabs) do
 		tab:SetScale(.75)
 
@@ -73,18 +75,9 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		tab:SetHighlightTexture("")
 	end
 
-	EncounterJournalInstanceSelectScrollFrameScrollChildInstanceButton1:SetNormalTexture("")
-	EncounterJournalInstanceSelectScrollFrameScrollChildInstanceButton1:SetHighlightTexture("")
-	EncounterJournalInstanceSelectScrollFrameScrollChildInstanceButton1:SetPushedTexture("")
+	-- [[ Instance select ]]
 
-	do
-		local bg = CreateFrame("Frame", nil, EncounterJournalInstanceSelectScrollFrameScrollChildInstanceButton1)
-		bg:SetPoint("TOPLEFT", 4, -4)
-		bg:SetPoint("BOTTOMRIGHT", -5, 3)
-		F.CreateBD(bg, 0)
-	end
-
-	local index = 2
+	local index = 1
 
 	local function listInstances()
 		while true do
@@ -95,10 +88,11 @@ C.themes["Blizzard_EncounterJournal"] = function()
 			bu:SetHighlightTexture("")
 			bu:SetPushedTexture("")
 
-			local bg = CreateFrame("Frame", nil, bu)
-			bg:SetPoint("TOPLEFT", 4, -4)
-			bg:SetPoint("BOTTOMRIGHT", -5, 3)
-			F.CreateBD(bg, 0)
+			bu.bgImage:SetDrawLayer("BACKGROUND", 1)
+
+			local bg = F.CreateBG(bu.bgImage)
+			bg:SetPoint("TOPLEFT", 3, -3)
+			bg:SetPoint("BOTTOMRIGHT", -4, 2)
 
 			index = index + 1
 		end
@@ -106,6 +100,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 	hooksecurefunc("EncounterJournal_ListInstances", listInstances)
 	listInstances()
+
+	-- [[ Encounter frame ]]
 
 	EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollChildLore:SetTextColor(1, 1, 1)
 	EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollChildLore:SetShadowOffset(1, -1)
@@ -129,10 +125,13 @@ C.themes["Blizzard_EncounterJournal"] = function()
 				bossButton.text.SetTextColor = F.dummy
 			end
 
-
 			bossIndex = bossIndex + 1
 			name, description, bossID, _, link = EJ_GetEncounterInfoByIndex(bossIndex)
 		end
+
+		-- move last tab
+		local _, point = EncounterJournalEncounterFrameInfoModelTab:GetPoint()
+		EncounterJournalEncounterFrameInfoModelTab:SetPoint("TOP", point, "BOTTOM", 0, 1)
 	end)
 
 	hooksecurefunc("EncounterJournal_ToggleHeaders", function()
@@ -231,6 +230,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 			results[i]:SetNormalTexture("")
 		end
 	end)
+
+	-- [[ Various controls ]]
 
 	F.Reskin(EncounterJournalNavBarHomeButton)
 	F.Reskin(EncounterJournalInstanceSelectDungeonTab)
