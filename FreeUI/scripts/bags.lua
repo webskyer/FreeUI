@@ -10,6 +10,17 @@ local r, g, b = unpack(C.class)
 
 local sortButton
 
+-- [[ Disable tutorials ]]
+
+F.RegisterEvent("VARIABLES_LOADED", function()
+	-- this is false if the second tutorial hasn't been shown yet
+	-- we don't need to check for the first
+	if not GetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_BAG_SETTINGS) then
+		SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_CLEAN_UP_BAGS, true)
+		SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_BAG_SETTINGS, true)
+	end
+end)
+
 --[[ Get the number of bag and bank container slots used ]]
 
 local function CheckSlots()
