@@ -1052,6 +1052,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				navButton.selected:SetAlpha(0)
 				navButton.MenuArrowButton.Art:Hide()
 
+				navButton:HookScript("OnClick", function()
+					moveNavButtons(self)
+				end)
+
 				navButton.skinned = true
 			end
 
