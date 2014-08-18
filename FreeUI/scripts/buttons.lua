@@ -113,6 +113,7 @@ local function styleActionButton(bu)
 
 	_G[name.."Name"]:Hide()
 	_G[name.."Border"]:SetTexture("")
+	bu.NewActionTexture:SetTexture("")
 
 	F.SetFS(co)
 	co:ClearAllPoints()
