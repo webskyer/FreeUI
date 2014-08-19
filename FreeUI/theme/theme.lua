@@ -1014,18 +1014,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Battletag invite frame
 
-		for i = 1, 9 do
-			select(i, BattleTagInviteFrame.NoteFrame:GetRegions()):Hide()
-		end
-
 		F.CreateBD(BattleTagInviteFrame)
-		F.CreateBD(BattleTagInviteFrame.NoteFrame, .25)
 
-		local _, send, cancel = BattleTagInviteFrame:GetChildren()
+		local send, cancel = BattleTagInviteFrame:GetChildren()
 		F.Reskin(send)
 		F.Reskin(cancel)
-
-		F.ReskinScroll(BattleTagInviteFrameScrollFrameScrollBar)
 
 		-- Nav Bar
 

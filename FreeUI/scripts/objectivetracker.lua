@@ -51,9 +51,9 @@ F.SetFS(ot.BlocksFrame.QuestHeader.Text)
 F.SetFS(ot.BlocksFrame.AchievementHeader.Text)
 F.SetFS(ot.BlocksFrame.ScenarioHeader.Text)
 
-hooksecurefunc("ObjectiveTracker_AddBlock", function(block)
-	if not block.styled then
-		F.SetFS(block.HeaderText)
+-- hooksecurefunc("ObjectiveTracker_AddBlock", function(block)
+	-- if not block.styled then
+		-- F.SetFS(block.HeaderText)
 
 		-- for _, line in block.lines do
 			-- F.SetFS(line.Text)
@@ -61,9 +61,9 @@ hooksecurefunc("ObjectiveTracker_AddBlock", function(block)
 			-- line.Text:SetSpacing(2)
 		-- end
 
-		block.styled = true
-	end
-end)
+		-- block.styled = true
+	-- end
+-- end)
 
 -- local index = 1
 -- local itemIndex = 1
