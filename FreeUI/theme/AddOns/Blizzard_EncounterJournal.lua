@@ -103,11 +103,15 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 	-- [[ Encounter frame ]]
 
-	EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollChildLore:SetTextColor(1, 1, 1)
-	EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollChildLore:SetShadowOffset(1, -1)
-	EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollChildDescription:SetTextColor(1, 1, 1)
-	EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollChildDescription:SetShadowOffset(1, -1)
+	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildHeader:Hide()
+	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle:SetFontObject("GameFontNormalLarge")
+
 	EncounterJournalEncounterFrameInfoEncounterTitle:SetTextColor(1, 1, 1)
+	EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollChildLore:SetTextColor(1, 1, 1)
+	EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollChildDescription:SetTextColor(1, 1, 1)
+	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildLoreDescription:SetTextColor(1, 1, 1)
+	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle:SetTextColor(1, 1, 1)
+	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChild.overviewDescription.Text:SetTextColor(1, 1, 1)
 
 	F.CreateBDFrame(EncounterJournalEncounterFrameInfoModelFrame, .25)
 
@@ -134,50 +138,38 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		EncounterJournalEncounterFrameInfoModelTab:SetPoint("TOP", point, "BOTTOM", 0, 1)
 	end)
 
-	hooksecurefunc("EncounterJournal_ToggleHeaders", function()
+	hooksecurefunc("EncounterJournal_ToggleHeaders", function(self)
 		local index = 1
-		local name = "EncounterJournalInfoHeader"..index
-		local header = _G[name]
+		local header = _G["EncounterJournalInfoHeader"..index]
 		while header do
-			if not header.reskinned then
-				header.reskinned = true
-
+			if not header.styled then
 				header.flashAnim.Play = F.dummy
 
+				header.descriptionBG:SetAlpha(0)
+				header.descriptionBGBottom:SetAlpha(0)
+				for i = 4, 18 do
+					select(i, header.button:GetRegions()):SetTexture("")
+				end
+
 				header.description:SetTextColor(1, 1, 1)
-				header.description:SetShadowOffset(1, -1)
 				header.button.title:SetTextColor(1, 1, 1)
 				header.button.title.SetTextColor = F.dummy
 				header.button.expandedIcon:SetTextColor(1, 1, 1)
 				header.button.expandedIcon.SetTextColor = F.dummy
-				header.descriptionBG:SetAlpha(0)
-				header.descriptionBGBottom:SetAlpha(0)
 
-				F.Reskin(header.button, true)
+				F.Reskin(header.button)
+
+				-- workaround because blizz uses 'tex' as key and I use it in API
+				if header.expanded then
+					header.button.tex = header.button.textures.expanded
+				else
+					header.button.tex = header.button.textures.collapsed
+				end
 
 				header.button.abilityIcon:SetTexCoord(.08, .92, .08, .92)
+				header.button.bg = F.CreateBG(header.button.abilityIcon)
 
-				_G[name.."HeaderButtonELeftUp"]:SetAlpha(0)
-				_G[name.."HeaderButtonERightUp"]:SetAlpha(0)
-				_G[name.."HeaderButtonEMidUp"]:SetAlpha(0)
-				_G[name.."HeaderButtonCLeftUp"]:SetAlpha(0)
-				_G[name.."HeaderButtonCRightUp"]:SetAlpha(0)
-				_G[name.."HeaderButtonCMidUp"]:SetAlpha(0)
-				_G[name.."HeaderButtonELeftDown"]:SetAlpha(0)
-				_G[name.."HeaderButtonERightDown"]:SetAlpha(0)
-				_G[name.."HeaderButtonEMidDown"]:SetAlpha(0)
-				_G[name.."HeaderButtonCLeftDown"]:SetAlpha(0)
-				_G[name.."HeaderButtonCRightDown"]:SetAlpha(0)
-				_G[name.."HeaderButtonCMidDown"]:SetAlpha(0)
-				_G[name.."HeaderButtonHighlightLeft"]:Hide()
-				_G[name.."HeaderButtonHighlightMid"]:Hide()
-				_G[name.."HeaderButtonHighlightRight"]:Hide()
-
-				header.button.bg = header.button:CreateTexture(nil, "BACKGROUND")
-				header.button.bg:SetPoint("TOPLEFT", header.button.abilityIcon, -1, 1)
-				header.button.bg:SetPoint("BOTTOMRIGHT", header.button.abilityIcon, 1, -1)
-				header.button.bg:SetTexture(C.media.backdrop)
-				header.button.bg:SetVertexColor(0, 0, 0)
+				header.styled = true
 			end
 
 			if header.button.abilityIcon:IsShown() then
@@ -187,8 +179,42 @@ C.themes["Blizzard_EncounterJournal"] = function()
 			end
 
 			index = index + 1
-			name = "EncounterJournalInfoHeader"..index
-			header = _G[name]
+			header = _G["EncounterJournalInfoHeader"..index]
+		end
+	end)
+
+	hooksecurefunc("EncounterJournal_SetUpOverview", function(self, role, index)
+		local header = self.overviews[index]
+		if not header.styled then
+			header.flashAnim.Play = F.dummy
+
+			header.descriptionBG:SetAlpha(0)
+			header.descriptionBGBottom:SetAlpha(0)
+			for i = 4, 18 do
+				select(i, header.button:GetRegions()):SetTexture("")
+			end
+
+			header.button.title:SetTextColor(1, 1, 1)
+			header.button.title.SetTextColor = F.dummy
+			header.button.expandedIcon:SetTextColor(1, 1, 1)
+			header.button.expandedIcon.SetTextColor = F.dummy
+
+			F.Reskin(header.button)
+
+			header.styled = true
+		end
+	end)
+
+	hooksecurefunc("EncounterJournal_SetBullets", function(object, description)
+		local parent = object:GetParent()
+
+		if parent.Bullets then
+			for _, bullet in pairs(parent.Bullets) do
+				if not bullet.styled then
+					bullet.Text:SetTextColor(1, 1, 1)
+					bullet.styled = true
+				end
+			end
 		end
 	end)
 
@@ -245,6 +271,7 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	F.ReskinInput(EncounterJournalSearchBox)
 	F.ReskinScroll(EncounterJournalInstanceSelectScrollFrameScrollBar)
 	F.ReskinScroll(EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollBar)
+	F.ReskinScroll(EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollBar)
 	F.ReskinScroll(EncounterJournalEncounterFrameInfoBossesScrollFrameScrollBar)
 	F.ReskinScroll(EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollBar)
 	F.ReskinScroll(EncounterJournalEncounterFrameInfoLootScrollFrameScrollBar)
