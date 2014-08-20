@@ -1,10 +1,11 @@
 local F, C = unpack(select(2, ...))
 
 C.themes["Blizzard_EncounterJournal"] = function()
+	local r, g, b = C.r, C.g, C.b
+
 	EncounterJournalEncounterFrameInfo:DisableDrawLayer("BACKGROUND")
 	EncounterJournal:DisableDrawLayer("BORDER")
 	EncounterJournalInset:DisableDrawLayer("BORDER")
-	EncounterJournalSearchResults:DisableDrawLayer("BORDER")
 	EncounterJournal:DisableDrawLayer("OVERLAY")
 	EncounterJournalInstanceSelectDungeonTab:DisableDrawLayer("OVERLAY")
 	EncounterJournalInstanceSelectRaidTab:DisableDrawLayer("OVERLAY")
@@ -38,10 +39,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggleDownRIGHT:SetAlpha(0)
 	select(5, EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
 	select(6, EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
-	EncounterJournalSearchResultsBg:Hide()
 
 	F.SetBD(EncounterJournal)
-	F.CreateBD(EncounterJournalSearchResults, .75)
 
 	-- [[ Tabs ]]
 
@@ -244,14 +243,117 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		tex:SetVertexColor(0, 0, 0, .25)
 	end
 
+	-- [[ Search results ]]
+
+	EncounterJournalSearchResultsBg:Hide()
+	for i = 3, 11 do
+		select(i, EncounterJournalSearchResults:GetRegions()):Hide()
+	end
+
+	F.CreateBD(EncounterJournalSearchResults)
+	EncounterJournalSearchResults:SetBackdropColor(.15, .15, .15, .9)
+
+	EncounterJournalSearchBoxSearchButton1BotLeftCorner:Hide()
+	EncounterJournalSearchBoxSearchButton1BotRightCorner:Hide()
+	EncounterJournalSearchBoxSearchButton1BottomBorder:Hide()
+	EncounterJournalSearchBoxSearchButton1LeftBorder:Hide()
+	EncounterJournalSearchBoxSearchButton1RightBorder:Hide()
+
+	local function resultOnEnter(self)
+		self.hl:Show()
+	end
+
+	local function resultOnLeave(self)
+		self.hl:Hide()
+	end
+
+	local function styleSearchButton(result, index)
+		if index == 1 then
+			result:SetPoint("TOPLEFT", EncounterJournalSearchBox, "BOTTOMLEFT", 0, 1)
+			result:SetPoint("TOPRIGHT", EncounterJournalSearchBox, "BOTTOMRIGHT", -5, 1)
+		else
+			result:SetPoint("TOPLEFT", EncounterJournalSearchBox["sbutton"..index-1], "BOTTOMLEFT", 0, 1)
+			result:SetPoint("TOPRIGHT", EncounterJournalSearchBox["sbutton"..index-1], "BOTTOMRIGHT", 0, 1)
+		end
+
+		result:SetNormalTexture("")
+		result:SetPushedTexture("")
+		result:SetHighlightTexture("")
+
+		local hl = result:CreateTexture(nil, "BACKGROUND")
+		hl:SetAllPoints()
+		hl:SetTexture(C.media.backdrop)
+		hl:SetVertexColor(r, g, b, .2)
+		hl:Hide()
+		result.hl = hl
+
+		F.CreateBD(result)
+		result:SetBackdropColor(.1, .1, .1, .9)
+
+		if result.icon then
+			result:GetRegions():Hide() -- icon frame
+
+			result.icon:SetTexCoord(.08, .92, .08, .92)
+
+			local bg = F.CreateBG(result.icon)
+			bg:SetDrawLayer("BACKGROUND", 1)
+		end
+
+		result:HookScript("OnEnter", resultOnEnter)
+		result:HookScript("OnLeave", resultOnLeave)
+	end
+
+	for i = 1, 5 do
+		styleSearchButton(EncounterJournalSearchBox["sbutton"..i], i)
+	end
+
+	styleSearchButton(EncounterJournalSearchBox.showAllResults, 6)
+
 	hooksecurefunc("EncounterJournal_SearchUpdate", function()
-		local results = EncounterJournal.searchResults.scrollFrame.buttons
-		local result
+		local scrollFrame = EncounterJournal.searchResults.scrollFrame
+		local offset = HybridScrollFrame_GetOffset(scrollFrame)
+		local results = scrollFrame.buttons
+		local result, index
+
+		local numResults = EJ_GetNumSearchResults()
 
 		for i = 1, #results do
-			results[i]:SetNormalTexture("")
+			result = results[i]
+			index = offset + i
+
+			if index <= numResults then
+				if not result.styled then
+					result:SetNormalTexture("")
+					result:SetPushedTexture("")
+					result:GetRegions():Hide()
+
+					result.resultType:SetTextColor(1, 1, 1)
+					result.path:SetTextColor(1, 1, 1)
+
+					F.CreateBG(result.icon)
+
+					result.styled = true
+				end
+
+				if result.icon:GetTexCoord() == 0 then
+					result.icon:SetTexCoord(.08, .92, .08, .92)
+				end
+			end
 		end
 	end)
+
+	hooksecurefunc(EncounterJournal.searchResults.scrollFrame, "update", function(self)
+		for i = 1, #self.buttons do
+			local result = self.buttons[i]
+
+			if result.icon:GetTexCoord() == 0 then
+				result.icon:SetTexCoord(.08, .92, .08, .92)
+			end
+		end
+	end)
+
+	F.ReskinClose(EncounterJournalSearchResultsCloseButton)
+	F.ReskinScroll(EncounterJournalSearchResultsScrollFrameScrollBar)
 
 	-- [[ Various controls ]]
 
@@ -262,7 +364,6 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	F.Reskin(EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle)
 	F.ReskinArrow(EncounterJournalInstanceSelectScrollDownButton, "down")
 	F.ReskinClose(EncounterJournalCloseButton)
-	F.ReskinClose(EncounterJournalSearchResultsCloseButton)
 	F.ReskinInput(EncounterJournalSearchBox)
 	F.ReskinScroll(EncounterJournalInstanceSelectScrollFrameScrollBar)
 	F.ReskinScroll(EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollBar)
@@ -270,5 +371,4 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	F.ReskinScroll(EncounterJournalEncounterFrameInfoBossesScrollFrameScrollBar)
 	F.ReskinScroll(EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollBar)
 	F.ReskinScroll(EncounterJournalEncounterFrameInfoLootScrollFrameScrollBar)
-	F.ReskinScroll(EncounterJournalSearchResultsScrollFrameScrollBar)
 end
