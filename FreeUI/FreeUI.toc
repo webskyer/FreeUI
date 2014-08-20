@@ -132,6 +132,7 @@ theme\FrameXML\SpellBookFrame.lua
 theme\FrameXML\SplashFrame.lua
 theme\FrameXML\StaticPopup.lua
 theme\FrameXML\TaxiFrame.lua
+theme\FrameXML\VideoOptionsFrame.lua
 theme\FrameXML\WorldMapFrame.lua
 theme\FrameXML\WorldStateFrame.lua
 
