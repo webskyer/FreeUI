@@ -435,9 +435,10 @@ end
 
 F.ReskinInput = function(f, height, width)
 	local frame = f:GetName()
-	local left = _G[frame.."Left"] or f.Left
-	local middle = _G[frame.."Middle"] or _G[frame.."Mid"] or f.Middle
-	local right = _G[frame.."Right"] or f.Right
+
+	local left = f.Left or _G[frame.."Left"]
+	local middle = f.Middle or _G[frame.."Middle"] or _G[frame.."Mid"]
+	local right = f.Right or _G[frame.."Right"]
 
 	left:Hide()
 	middle:Hide()

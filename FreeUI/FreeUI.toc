@@ -113,6 +113,7 @@ theme\FrameXML\CharacterFrame.lua
 theme\FrameXML\EquipmentFlyout.lua
 theme\FrameXML\LFDFrame.lua
 theme\FrameXML\LFGFrame.lua
+theme\FrameXML\LFGList.lua
 theme\FrameXML\LFRFrame.lua
 theme\FrameXML\LootHistory.lua
 theme\FrameXML\ModelPreviewFrame.lua
