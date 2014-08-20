@@ -116,6 +116,7 @@ theme\FrameXML\LFGFrame.lua
 theme\FrameXML\LFRFrame.lua
 theme\FrameXML\LootHistory.lua
 theme\FrameXML\ModelPreviewFrame.lua
+theme\FrameXML\NavigationBar.lua
 theme\FrameXML\PaperDollFrame.lua
 theme\FrameXML\ProductChoiceFrame.lua
 theme\FrameXML\PVEFrame.lua

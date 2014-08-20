@@ -675,3 +675,11 @@ F.ReskinFilterButton = function(f)
 	f.Icon:SetPoint("RIGHT", f, "RIGHT", -5, 0)
 	f.Icon:SetSize(8, 8)
 end
+
+F.ReskinNavBar = function(f)
+	f:GetRegions():Hide()
+	f:DisableDrawLayer("BORDER")
+	f.overlay:Hide()
+	f.homeButton:GetRegions():Hide()
+	F.Reskin(f.homeButton)
+end
