@@ -8,6 +8,8 @@ local _G = _G
 
 local r, g, b = unpack(C.class)
 
+local bankbagholder, colourSelectedTab
+
 -- [[ Disable tutorials ]]
 
 F.RegisterEvent("VARIABLES_LOADED", function()
@@ -205,9 +207,9 @@ purchaseButton:SetScript("OnClick", function()
 	StaticPopup_Show("CONFIRM_BUY_BANK_SLOT")
 end)
 
-local colourSelectedTab -- defined later
+local cachedBankWidth, cachedBankHeight -- restored when switching from reagent to normal bank
 
-local ReanchorBankButtons = function()
+local ReanchorBankButtons = function(noMoving)
 	for _, button in pairs(bankbuttons) do
 		button:Hide()
 	end
@@ -247,11 +249,20 @@ local ReanchorBankButtons = function()
 		purchaseButton:Hide()
 	end
 
-	MoveButtons(bankbuttons, bankholder)
+	if not noMoving then
+		MoveButtons(bankbuttons, bankholder)
+		cachedBankWidth = bankholder:GetWidth()
+		cachedBankHeight = bankholder:GetHeight()
+	else
+		bankholder:SetWidth(cachedBankWidth)
+		bankholder:SetHeight(cachedBankHeight)
+	end
 
-	colourSelectedTab(bankholder.tabs[1])
-	bankholder.tabs[1]:SetWidth(floor(bankholder:GetWidth() / 2))
+	local tab = bankholder.tabs[1]
+	tab:SetWidth(floor(bankholder:GetWidth() / 2))
+	colourSelectedTab(tab)
 
+	bankbagholder:Show()
 	bankholder:Show()
 end
 
@@ -286,15 +297,18 @@ end
 local function bankTabOnClick(self)
 	_G[self.tabName]:Click()
 
-	if self.index == 1 and not self.isSelected then
-		ReanchorBankButtons()
-	end
+	if not self.isSelected then
+		if self.index == 1 then
+			ReanchorBankButtons(true)
+		end
 
-	colourSelectedTab(self)
+		colourSelectedTab(self)
+	end
 end
 
-local index = 1
-for _, tabName in pairs({"BankFrameTab1", "BankFrameTab2"}) do
+for i = 1, 2 do
+	local tabName = "BankFrameTab"..i
+
 	local oldTab = _G[tabName]
 
 	oldTab:EnableMouse(false)
@@ -313,10 +327,8 @@ for _, tabName in pairs({"BankFrameTab1", "BankFrameTab2"}) do
 	tab:SetScript("OnEnter", bankTabOnEnter)
 	tab:SetScript("OnLeave", bankTabOnLeave)
 
-	tab.index = index
+	tab.index = i
 	tab.tabName = tabName
-
-	index = index + 1
 
 	tinsert(bankholder.tabs, tab)
 end
@@ -324,8 +336,6 @@ end
 bankholder.tabs[1]:SetPoint("BOTTOMLEFT", bankholder, "BOTTOMLEFT")
 bankholder.tabs[2]:SetPoint("LEFT", bankholder.tabs[1], "RIGHT", -1, 0)
 bankholder.tabs[2]:SetPoint("RIGHT", bankholder, "RIGHT")
-
-colourSelectedTab(bankholder.tabs[1])
 
 -- [[ Reagent bank ]]
 
@@ -349,6 +359,9 @@ for i = 1, 9 do
 	select(i, ReagentBankFrameUnlockInfo:GetRegions()):Hide()
 end
 
+local reagentButtonsMoved = false -- this only needs to happen once
+local cachedReagentBankWidth, cachedReagentBankHeight -- restored when switching from reagent to normal bank after the first time
+
 local ReanchorReagentBankButtons = function()
 	for _, button in pairs(bankbuttons) do
 		button:Hide()
@@ -364,9 +377,21 @@ local ReanchorReagentBankButtons = function()
 		bu:Show()
 	end
 
-	MoveButtons(bankbuttons, bankholder)
+	if not reagentButtonsMoved then
+		MoveButtons(bankbuttons, bankholder)
+
+		cachedReagentBankWidth = bankholder:GetWidth()
+		cachedReagentBankHeight = bankholder:GetHeight()
+
+		reagentButtonsMoved = true
+	else
+		bankholder:SetWidth(cachedReagentBankWidth)
+		bankholder:SetHeight(cachedReagentBankHeight)
+	end
 
 	bankholder.tabs[1]:SetWidth(floor(bankholder:GetWidth() / 2))
+
+	bankbagholder:Hide()
 end
 
 -- [[ Button slot outline ]]
@@ -414,7 +439,7 @@ BankPortraitTexture:Hide()
 BankFrameMoneyFrameInset:Hide()
 BankFrameMoneyFrameBorder:Hide()
 
-local bankbagholder = CreateFrame("Frame", nil, BankFrame)
+bankbagholder = CreateFrame("Frame", nil, BankFrame)
 bankbagholder:SetSize(289, 43)
 bankbagholder:SetPoint("BOTTOM", bankholder, "TOP", 0, -1)
 F.CreateBD(bankbagholder, .6)
@@ -657,7 +682,7 @@ for i = 1, 7 do
 	local _, highlightFrame = bag:GetChildren()
 	local border = bag.IconBorder
 
-	bag:SetParent(bankholder)
+	bag:SetParent(bankbagholder)
 	bag:ClearAllPoints()
 
 	if i == 1 then
@@ -776,7 +801,17 @@ BankItemAutoSortButton:SetAlpha(0)
 local sortButton = CreateFrame("Button", nil, holder)
 sortButton:SetSize(17, 17)
 sortButton:SetPoint("BOTTOM", holder, 10, 2)
-sortButton:SetScript("OnClick", SortBags)
+sortButton:SetScript("OnClick", function()
+	SortBags()
+
+	if BankFrame:IsShown() then
+		if BankFrame.activeTabIndex == 1 then
+			SortBankBags()
+		else
+			SortReagentBankBags()
+		end
+	end
+end)
 
 local sortTextures = {}
 
