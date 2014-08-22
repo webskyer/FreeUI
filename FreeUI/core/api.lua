@@ -688,9 +688,22 @@ F.ReskinFilterButton = function(f)
 end
 
 F.ReskinNavBar = function(f)
+	local overflowButton = f.overflowButton
+
 	f:GetRegions():Hide()
 	f:DisableDrawLayer("BORDER")
 	f.overlay:Hide()
 	f.homeButton:GetRegions():Hide()
+
 	F.Reskin(f.homeButton)
+	F.Reskin(overflowButton, true)
+
+	local tex = overflowButton:CreateTexture(nil, "ARTWORK")
+	tex:SetTexture(C.media.arrowLeft)
+	tex:SetSize(8, 8)
+	tex:SetPoint("CENTER")
+	overflowButton.tex = tex
+
+	overflowButton:HookScript("OnEnter", colourArrow)
+	overflowButton:HookScript("OnLeave", clearArrow)
 end
