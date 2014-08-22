@@ -81,6 +81,7 @@ local RestyleButton = function(bu)
 	bg:SetPoint("TOPLEFT", bu, -1, 1)
 	bg:SetPoint("BOTTOMRIGHT", bu, 1, -1)
 	bg:SetShown(C.bags.slotsShowAlways)
+	bg:SetFrameLevel(bu:GetFrameLevel() - 1)
 	F.CreateBD(bg, 0)
 	bu.bg = bg
 
@@ -343,6 +344,12 @@ ReagentBankFrame:DisableDrawLayer("BACKGROUND")
 ReagentBankFrame:DisableDrawLayer("BORDER")
 ReagentBankFrame:DisableDrawLayer("ARTWORK")
 
+-- Unlock info
+
+for i = 1, 9 do
+	select(i, ReagentBankFrameUnlockInfo:GetRegions()):Hide()
+end
+
 ReagentBankFrameUnlockInfo:ClearAllPoints()
 ReagentBankFrameUnlockInfo:SetPoint("TOPLEFT", bankholder)
 ReagentBankFrameUnlockInfo:SetPoint("BOTTOMRIGHT", bankholder, 0, 19)
@@ -355,9 +362,34 @@ ReagentBankFrameUnlockInfoText:SetHeight(64)
 
 F.Reskin(ReagentBankFrameUnlockInfoPurchaseButton)
 
-for i = 1, 9 do
-	select(i, ReagentBankFrameUnlockInfo:GetRegions()):Hide()
+-- Deposit button
+
+do
+	local DepositButton = ReagentBankFrame.DespositButton
+
+	DepositButton.Left:Hide()
+	DepositButton.Middle:Hide()
+	DepositButton.Right:Hide()
+	DepositButton:SetHighlightTexture("")
+	F.CreateBD(DepositButton, .6)
+
+	DepositButton:SetPoint("BOTTOM", bankholder, "TOP", 0, -1)
+
+	local newFont = F.CreateFS(DepositButton)
+	newFont:SetTextColor(1, 1, 1)
+	newFont:SetText(DepositButton:GetText())
+	DepositButton:SetFontString(newFont)
+
+	DepositButton:HookScript("OnEnter", function()
+		newFont:SetTextColor(r, g, b)
+	end)
+
+	DepositButton:HookScript("OnLeave", function()
+		newFont:SetTextColor(1, 1, 1)
+	end)
 end
+
+-- Item buttons
 
 local reagentButtonsMoved = false -- this only needs to happen once
 local cachedReagentBankWidth, cachedReagentBankHeight -- restored when switching from reagent to normal bank after the first time
