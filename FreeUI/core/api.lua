@@ -669,6 +669,16 @@ F.ReskinColourSwatch = function(f)
 end
 
 F.ReskinFilterButton = function(f)
+	f.TopLeft:Hide()
+	f.TopRight:Hide()
+	f.BottomLeft:Hide()
+	f.BottomRight:Hide()
+	f.TopMiddle:Hide()
+	f.MiddleLeft:Hide()
+	f.MiddleRight:Hide()
+	f.BottomMiddle:Hide()
+	f.MiddleMiddle:Hide()
+
 	F.Reskin(f)
 	f.Icon:SetTexture(C.media.arrowRight)
 
