@@ -1020,112 +1020,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(send)
 		F.Reskin(cancel)
 
-		-- Quest Frame
-
-		F.ReskinPortraitFrame(QuestFrame, true)
-
-		QuestFrameDetailPanel:DisableDrawLayer("BACKGROUND")
-		QuestFrameProgressPanel:DisableDrawLayer("BACKGROUND")
-		QuestFrameRewardPanel:DisableDrawLayer("BACKGROUND")
-		QuestFrameGreetingPanel:DisableDrawLayer("BACKGROUND")
-		QuestFrameDetailPanel:DisableDrawLayer("BORDER")
-		QuestFrameRewardPanel:DisableDrawLayer("BORDER")
-
-		QuestDetailScrollFrameTop:Hide()
-		QuestDetailScrollFrameBottom:Hide()
-		QuestDetailScrollFrameMiddle:Hide()
-		QuestProgressScrollFrameTop:Hide()
-		QuestProgressScrollFrameBottom:Hide()
-		QuestProgressScrollFrameMiddle:Hide()
-		QuestRewardScrollFrameTop:Hide()
-		QuestRewardScrollFrameBottom:Hide()
-		QuestRewardScrollFrameMiddle:Hide()
-		QuestGreetingScrollFrameTop:Hide()
-		QuestGreetingScrollFrameBottom:Hide()
-		QuestGreetingScrollFrameMiddle:Hide()
-
-		QuestNPCModelShadowOverlay:Hide()
-		QuestNPCModelBg:Hide()
-		QuestNPCModel:DisableDrawLayer("OVERLAY")
-		QuestNPCModelNameText:SetDrawLayer("ARTWORK")
-		QuestNPCModelTextFrameBg:Hide()
-		QuestNPCModelTextFrame:DisableDrawLayer("OVERLAY")
-
-		QuestFrameProgressPanelMaterialTopLeft:SetAlpha(0)
-		QuestFrameProgressPanelMaterialTopRight:SetAlpha(0)
-		QuestFrameProgressPanelMaterialBotLeft:SetAlpha(0)
-		QuestFrameProgressPanelMaterialBotRight:SetAlpha(0)
-
-		local line = QuestFrameGreetingPanel:CreateTexture()
-		line:SetTexture(1, 1, 1, .2)
-		line:SetSize(256, 1)
-		line:SetPoint("CENTER", QuestGreetingFrameHorizontalBreak)
-
-		QuestGreetingFrameHorizontalBreak:SetTexture("")
-
-		QuestFrameGreetingPanel:HookScript("OnShow", function()
-			line:SetShown(QuestGreetingFrameHorizontalBreak:IsShown())
-		end)
-
-		local npcbd = CreateFrame("Frame", nil, QuestNPCModel)
-		npcbd:SetPoint("TOPLEFT", -1, 1)
-		npcbd:SetPoint("RIGHT", 1, 0)
-		npcbd:SetPoint("BOTTOM", QuestNPCModelTextScrollFrame)
-		npcbd:SetFrameLevel(0)
-		F.CreateBD(npcbd)
-
-		local npcLine = CreateFrame("Frame", nil, QuestNPCModel)
-		npcLine:SetPoint("BOTTOMLEFT", 0, -2)
-		npcLine:SetPoint("BOTTOMRIGHT", 0, -2)
-		npcLine:SetHeight(1)
-		npcLine:SetFrameLevel(0)
-		F.CreateBD(npcLine, 0)
-
-		for i = 1, MAX_REQUIRED_ITEMS do
-			local bu = _G["QuestProgressItem"..i]
-			local ic = _G["QuestProgressItem"..i.."IconTexture"]
-			local na = _G["QuestProgressItem"..i.."NameFrame"]
-			local co = _G["QuestProgressItem"..i.."Count"]
-
-			ic:SetSize(40, 40)
-			ic:SetTexCoord(.08, .92, .08, .92)
-			ic:SetDrawLayer("OVERLAY")
-
-			F.CreateBD(bu, .25)
-
-			na:Hide()
-			co:SetDrawLayer("OVERLAY")
-
-			local line = CreateFrame("Frame", nil, bu)
-			line:SetSize(1, 40)
-			line:SetPoint("RIGHT", ic, 1, 0)
-			F.CreateBD(line)
-		end
-
-		QuestDetailScrollFrame:SetWidth(302) -- else these buttons get cut off
-
-		hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, _, _, _, _, y)
-			QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", 2, y)
-		end)
-
-		hooksecurefunc(QuestProgressRequiredMoneyText, "SetTextColor", function(self, r, g, b)
-			if r == 0 then
-				self:SetTextColor(.8, .8, .8)
-			elseif r == .2 then
-				self:SetTextColor(1, 1, 1)
-			end
-		end)
-
-		for _, questButton in pairs({"QuestFrameAcceptButton", "QuestFrameDeclineButton", "QuestFrameCompleteQuestButton", "QuestFrameCompleteButton", "QuestFrameGoodbyeButton", "QuestFrameGreetingGoodbyeButton"}) do
-			F.Reskin(_G[questButton])
-		end
-
-		F.ReskinScroll(QuestProgressScrollFrameScrollBar)
-		F.ReskinScroll(QuestRewardScrollFrameScrollBar)
-		F.ReskinScroll(QuestDetailScrollFrameScrollBar)
-		F.ReskinScroll(QuestGreetingScrollFrameScrollBar)
-		F.ReskinScroll(QuestNPCModelTextScrollFrameScrollBar)
-
 		-- Gossip Frame
 
 		GossipGreetingScrollFrameTop:Hide()
@@ -2038,9 +1932,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		InvoiceTextFontNormal:SetTextColor(1, 1, 1)
 		InvoiceTextFontSmall:SetTextColor(1, 1, 1)
 		SpellBookPageText:SetTextColor(.8, .8, .8)
-		QuestProgressRequiredItemsText:SetTextColor(1, 1, 1)
-		QuestProgressRequiredItemsText:SetShadowColor(0, 0, 0)
-		QuestProgressTitleText:SetShadowColor(0, 0, 0)
 		AvailableServicesText:SetTextColor(1, 1, 1)
 		AvailableServicesText:SetShadowColor(0, 0, 0)
 		PetitionFrameCharterTitle:SetTextColor(1, 1, 1)
@@ -2049,20 +1940,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		PetitionFrameMasterTitle:SetShadowColor(0, 0, 0)
 		PetitionFrameMemberTitle:SetTextColor(1, 1, 1)
 		PetitionFrameMemberTitle:SetShadowColor(0, 0, 0)
-		QuestProgressTitleText:SetTextColor(1, 1, 1)
-		QuestProgressTitleText.SetTextColor = F.dummy
-		QuestProgressText:SetTextColor(1, 1, 1)
-		QuestProgressText.SetTextColor = F.dummy
 		ItemTextPageText:SetTextColor(1, 1, 1)
 		ItemTextPageText.SetTextColor = F.dummy
-		GreetingText:SetTextColor(1, 1, 1)
-		GreetingText.SetTextColor = F.dummy
-		AvailableQuestsText:SetTextColor(1, 1, 1)
-		AvailableQuestsText.SetTextColor = F.dummy
-		AvailableQuestsText:SetShadowColor(0, 0, 0)
-		CurrentQuestsText:SetTextColor(1, 1, 1)
-		CurrentQuestsText.SetTextColor = F.dummy
-		CurrentQuestsText:SetShadowColor(0, 0, 0)
 		CoreAbilityFont:SetTextColor(1, 1, 1)
 
 		hooksecurefunc("UpdateProfessionButton", function(self)

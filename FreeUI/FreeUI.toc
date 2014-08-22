@@ -121,6 +121,7 @@ theme\FrameXML\NavigationBar.lua
 theme\FrameXML\PaperDollFrame.lua
 theme\FrameXML\ProductChoiceFrame.lua
 theme\FrameXML\PVEFrame.lua
+theme\FrameXML\QuestFrame.lua
 theme\FrameXML\QuestInfo.lua
 theme\FrameXML\QuestMapFrame.lua
 theme\FrameXML\QueueStatusFrame.lua
