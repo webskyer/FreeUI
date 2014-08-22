@@ -12,20 +12,21 @@ end)
 WorldMapPlayerUpper:EnableMouse(false)
 WorldMapPlayerLower:EnableMouse(false)
 
--- map style function
+-- map bar
 
-local SmallerMapSkin = function()
-	local fontsize = C.appearance.fontSizeNormal / WORLDMAP_WINDOWED_SIZE
+local fontsize = C.appearance.fontSizeNormal / WORLDMAP_WINDOWED_SIZE
 
+MapBarFrame.Description:SetFont(C.media.font, fontsize, "OUTLINEMONOCHROME")
+MapBarFrame.Description:SetShadowOffset(0, 0)
+MapBarFrame.Title:SetFont(C.media.font, fontsize, "OUTLINEMONOCHROME")
+MapBarFrame.Title:SetShadowOffset(0, 0)
+
+-- keep it centered
+
+hooksecurefunc("WorldMap_ToggleSizeDown", function()
 	WorldMapFrame:ClearAllPoints()
 	WorldMapFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-
-	MapBarFrame.Description:SetFont(C.media.font, fontsize, "OUTLINEMONOCHROME")
-	MapBarFrame.Description:SetShadowOffset(0, 0)
-	MapBarFrame.Title:SetFont(C.media.font, fontsize, "OUTLINEMONOCHROME")
-	MapBarFrame.Title:SetShadowOffset(0, 0)
-end
-hooksecurefunc("WorldMap_ToggleSizeDown", function() SmallerMapSkin() end)
+end)
 
 -- coordinates
 
