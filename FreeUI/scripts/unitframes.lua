@@ -588,6 +588,8 @@ local UnitSpecific = {
 		local Castbar = self.Castbar
 		local Spark = Castbar.Spark
 
+		-- Health and power
+
 		Health:SetHeight(playerHeight - powerHeight - 1)
 
 		local HealthPoints = F.CreateFS(Health, C.FONT_SIZE_NORMAL, "LEFT")
@@ -609,6 +611,8 @@ local UnitSpecific = {
 			self:Tag(PowerPoints, '[free:power]')
 			Power.value = PowerPoints
 		end
+
+		-- Cast bar
 
 		Castbar.Width = self:GetWidth()
 		Spark:SetHeight(self.Health:GetHeight())
@@ -653,6 +657,8 @@ local UnitSpecific = {
 			IconFrame:SetSize(44, 44)
 		end
 
+		-- PVP
+
 		if C.unitframes.pvp then
 			local PvP = F.CreateFS(self)
 			PvP:SetPoint("BOTTOMRIGHT", Health, "TOPRIGHT", -50, 3)
@@ -681,6 +687,8 @@ local UnitSpecific = {
 			PvP.Override = UpdatePvP
 		end
 
+		-- Debuffs
+
 		-- We position these later on
 		local Debuffs = CreateFrame("Frame", nil, self)
 		Debuffs.initialAnchor = "TOPRIGHT"
@@ -696,6 +704,8 @@ local UnitSpecific = {
 
 		self.Debuffs = Debuffs
 		Debuffs.PostUpdateIcon = PostUpdateIcon
+
+		-- Class specific
 
 		if class == "DEATHKNIGHT" and C.classmod.deathknight then
 			local runes = CreateFrame("Frame", nil, self)
@@ -1094,6 +1104,8 @@ local UnitSpecific = {
 		end
 		moveDebuffAnchors()
 
+		-- Counter bar
+
 		local CounterBar = CreateFrame("StatusBar", nil, self)
 		CounterBar:SetWidth(playerWidth)
 		CounterBar:SetHeight(16)
@@ -1121,6 +1133,8 @@ local UnitSpecific = {
 		end)
 
 		self.CounterBar = CounterBar
+
+		-- Status indicator
 
 		local statusIndicator = CreateFrame("Frame")
 		local statusText = F.CreateFS(Health)
@@ -1166,6 +1180,12 @@ local UnitSpecific = {
 		F.AddOptionsCallback("unitframes", "statusIndicatorCombat", checkEvents)
 
 		statusIndicator:SetScript("OnEvent", updateStatus)
+
+		-- Exit vehicle button
+
+		if C.actionbars.enable then
+			FreeUI_LeaveVehicle:SetPoint("RIGHT", self, "LEFT", -9, 0)
+		end
 	end,
 
 	target = function(self, ...)

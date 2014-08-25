@@ -395,8 +395,12 @@ RegisterStateDriver(barextra, "visibility", "[extrabar] show; hide")
 -- [[ Leave vehicle ]]
 
 local leave = CreateFrame("Frame", "FreeUI_LeaveVehicle", UIParent, "SecureHandlerStateTemplate")
-leave:SetSize(26, 26)
-leave:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 18)
+leave:SetSize(18, 18)
+
+-- if unit frames are enabled, position is set there
+if not C.unitframes.enable then
+	leave:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -6, 30)
+end
 
 local leaveBu = CreateFrame("Button", nil, leave, "SecureHandlerClickTemplate, SecureHandlerStateTemplate")
 leaveBu:SetAllPoints()
@@ -407,7 +411,7 @@ F.CreateBD(leaveBu)
 
 leaveBu.pixels = {}
 
-for i = 1, 18 do
+for i = 1, 10 do
 	local tex = leaveBu:CreateTexture()
 	tex:SetTexture(1, 1, 1)
 	tex:SetSize(1, 1)
@@ -415,7 +419,7 @@ for i = 1, 18 do
 	tinsert(leaveBu.pixels, tex)
 end
 
-for i = 1, 18 do
+for i = 1, 10 do
 	local tex = leaveBu:CreateTexture()
 	tex:SetTexture(1, 1, 1)
 	tex:SetSize(1, 1)
@@ -444,7 +448,7 @@ RegisterStateDriver(leave, "visibility", "[petbattle][vehicleui][overridebar][po
 
 -- [[ Bags ]]
 
-if not C.bags.enable then
+if not C.bags.enable and not C.actionbars.enable then
 	for i = 0, 3 do
 		_G["CharacterBag"..i.."Slot"]:SetParent(FreeUIHider)
 	end
