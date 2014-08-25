@@ -294,6 +294,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
+		hooksecurefunc("UIDropDownMenu_SetIconImage", function(icon, texture)
+			if texture:find("Divider") then
+				icon:SetTexture(1, 1, 1, .2)
+				icon:SetHeight(1)
+			end
+		end)
+
 		-- Tab text position
 
 		hooksecurefunc("PanelTemplates_DeselectTab", function(tab)
