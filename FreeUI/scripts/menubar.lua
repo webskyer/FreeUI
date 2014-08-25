@@ -78,11 +78,13 @@ end
 
 local function showBar()
 	bar:SetScript("OnUpdate", fadeIn)
+	bar:SetFrameStrata("HIGH")
 end
 bar.showBar = showBar
 
 local function hideBar()
 	bar:SetScript("OnUpdate", fadeOut)
+	bar:SetFrameStrata("BACKGROUND")
 end
 bar.hideBar = hideBar
 
