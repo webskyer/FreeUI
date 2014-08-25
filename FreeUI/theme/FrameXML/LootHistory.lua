@@ -1,6 +1,8 @@
 local F, C = unpack(select(2, ...))
 
 tinsert(C.themes["FreeUI"], function()
+	local r, g, b = C.r, C.g, C.b
+
 	local LootHistoryFrame = LootHistoryFrame
 
 	for i = 1, 9 do
@@ -13,16 +15,41 @@ tinsert(C.themes["FreeUI"], function()
 	LootHistoryFrame.Label:ClearAllPoints()
 	LootHistoryFrame.Label:SetPoint("TOP", LootHistoryFrame, "TOP", 0, -8)
 
-	LootHistoryFrame.ResizeButton:SetPoint("TOP", LootHistoryFrame, "BOTTOM", 0, 1)
-	LootHistoryFrame.ResizeButton:SetFrameStrata("LOW")
-
-	F.ReskinArrow(LootHistoryFrame.ResizeButton, "down")
-	LootHistoryFrame.ResizeButton:SetSize(32, 12)
-
 	F.CreateBD(LootHistoryFrame)
 
 	F.ReskinClose(LootHistoryFrame.CloseButton)
 	F.ReskinScroll(LootHistoryFrameScrollFrameScrollBar)
+
+	-- [[ Resize button ]]
+
+	LootHistoryFrame.ResizeButton:SetNormalTexture("")
+	LootHistoryFrame.ResizeButton:SetHeight(8)
+
+	do
+		local line1 = LootHistoryFrame.ResizeButton:CreateTexture()
+		line1:SetTexture(C.media.backdrop)
+		line1:SetVertexColor(.7, .7, .7)
+		line1:SetSize(30, 1)
+		line1:SetPoint("TOP")
+
+		local line2 = LootHistoryFrame.ResizeButton:CreateTexture()
+		line2:SetTexture(C.media.backdrop)
+		line2:SetVertexColor(.7, .7, .7)
+		line2:SetSize(30, 1)
+		line2:SetPoint("TOP", 0, -3)
+
+		LootHistoryFrame.ResizeButton:HookScript("OnEnter", function(self)
+			line1:SetVertexColor(r, g, b)
+			line2:SetVertexColor(r, g, b)
+		end)
+
+		LootHistoryFrame.ResizeButton:HookScript("OnLeave", function(self)
+			line1:SetVertexColor(.7, .7, .7)
+			line2:SetVertexColor(.7, .7, .7)
+		end)
+	end
+
+	-- [[ Item frame ]]
 
 	hooksecurefunc("LootHistoryFrame_UpdateItemFrame", function(self, frame)
 		local rollID, _, _, isDone, winnerIdx = C_LootHistory.GetItem(frame.itemIdx)
@@ -70,6 +97,8 @@ tinsert(C.themes["FreeUI"], function()
 		frame.ToggleButton.plus:SetShown(not expanded)
 	end)
 
+	-- [[ Player frame ]]
+
 	hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", function(_, playerFrame)
 		if not playerFrame.styled then
 			F.SetFS(playerFrame.PlayerName)
@@ -95,6 +124,8 @@ tinsert(C.themes["FreeUI"], function()
 			end
 		end
 	end)
+
+	-- [[ Dropdown ]]
 
 	LootHistoryDropDown.initialize = function(self)
 		local info = UIDropDownMenu_CreateInfo();
