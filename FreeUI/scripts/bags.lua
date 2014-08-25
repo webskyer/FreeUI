@@ -51,6 +51,7 @@ end
 local RestyleButton = function(bu)
 	local buName = bu:GetName()
 	local border = bu.IconBorder
+	local searchOverlay = bu.searchOverlay
 	local newItemTexture = bu.NewItemTexture
 
 	bu:SetSize(C.bags.size, C.bags.size)
@@ -74,6 +75,9 @@ local RestyleButton = function(bu)
 	border:SetPoint("TOPLEFT", -1, 1)
 	border:SetPoint("BOTTOMRIGHT", 1, -1)
 	border:SetDrawLayer("BACKGROUND")
+
+	searchOverlay:SetPoint("TOPLEFT", -1, 1)
+	searchOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
 
 	local questTexture = _G[buName.."IconQuestTexture"] or bu.IconQuestTexture
 	questTexture:SetAlpha(0)
