@@ -51,6 +51,7 @@ end
 local RestyleButton = function(bu)
 	local buName = bu:GetName()
 	local border = bu.IconBorder
+	local newItemTexture = bu.NewItemTexture
 
 	bu:SetSize(C.bags.size, C.bags.size)
 
@@ -76,6 +77,12 @@ local RestyleButton = function(bu)
 
 	local questTexture = _G[buName.."IconQuestTexture"] or bu.IconQuestTexture
 	questTexture:SetAlpha(0)
+
+	if newItemTexture then
+		-- easiest way to 'hide' it without breaking stuff
+		newItemTexture:SetDrawLayer("BACKGROUND")
+		newItemTexture:SetSize(1, 1)
+	end
 
 	local bg = CreateFrame("Frame", nil, bu)
 	bg:SetPoint("TOPLEFT", bu, -1, 1)
