@@ -48,8 +48,10 @@ WorldMapDetailFrame:HookScript("OnUpdate", function(self, elapsed)
 		y = math.floor(100 * y)
 		if x ~= 0 and y ~= 0 then
 			coords:SetText(PLAYER..": "..x..", "..y)
+			cursorcoords:SetPoint("BOTTOMLEFT", coords, "TOPLEFT", 0, 4)
 		else
 			coords:SetText("")
+			cursorcoords:SetPoint("BOTTOMLEFT", UIFrame, 5, 5)
 		end
 
 		local scale = WorldMapDetailFrame:GetEffectiveScale()
