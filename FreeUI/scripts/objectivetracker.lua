@@ -69,13 +69,16 @@ for _, headerName in pairs({"QuestHeader", "AchievementHeader", "ScenarioHeader"
 end
 
 hooksecurefunc("ObjectiveTracker_AddBlock", function(block)
+	-- to adjust for header and line text possibly taking up more or less lines
 	local heightToSubstract = 0
-	local heightToAdd = 0
+	local heightToAdd = 5 -- default spacing between blocks is a bit small
 
 	if not block.styled then
-		heightToSubstract = block.HeaderText:GetHeight()
-		F.SetFS(block.HeaderText)
-		heightToAdd = block.HeaderText:GetHeight()
+		if block.HeaderText then
+			heightToSubstract = block.HeaderText:GetHeight()
+			F.SetFS(block.HeaderText)
+			heightToAdd = block.HeaderText:GetHeight()
+		end
 
 		if block.lines then
 			for _, line in pairs(block.lines) do
@@ -115,6 +118,9 @@ hooksecurefunc("ObjectiveTracker_AddBlock", function(block)
 		block.styled = true
 	end
 
-	block.height = block.height - heightToSubstract + heightToAdd
-	block:SetHeight(block.height)
+	-- blocks without .HeaderText or .lines seem to always have .height = 0
+	if block.height ~= 0 then
+		block.height = block.height - heightToSubstract + heightToAdd
+		block:SetHeight(block.height)
+	end
 end)
