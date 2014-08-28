@@ -80,10 +80,11 @@ local RestyleButton = function(bu)
 	searchOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
 
 	local questTexture = _G[buName.."IconQuestTexture"] or bu.IconQuestTexture
-	questTexture:SetAlpha(0)
+	-- easiest way to 'hide' it without breaking stuff
+	questTexture:SetDrawLayer("BACKGROUND")
+	questTexture:SetSize(1, 1)
 
 	if newItemTexture then
-		-- easiest way to 'hide' it without breaking stuff
 		newItemTexture:SetDrawLayer("BACKGROUND")
 		newItemTexture:SetSize(1, 1)
 	end
