@@ -22,3 +22,9 @@ InterfaceOptionsBuffsPanelCastableBuffs:Disable()
 InterfaceOptionsBuffsPanelCastableBuffsText:SetTextColor(.5, .5, .5)
 InterfaceOptionsBuffsPanelShowAllEnemyDebuffs:Disable()
 InterfaceOptionsBuffsPanelShowAllEnemyDebuffsText:SetTextColor(.5, .5, .5)
+
+-- disable store button
+GameMenuFrame:HookScript("OnShow", function(self)
+	GameMenuButtonStore:Hide()
+	GameMenuButtonWhatsNew:SetPoint("TOP", GameMenuButtonHelp, "BOTTOM", 0, -1)
+end)
