@@ -82,6 +82,8 @@ RegisterStateDriver(bar3, "visibility", "[petbattle][vehicleui][overridebar][pos
 -- bar1:SetPoint("BOTTOM", bar2, "TOP", 0, 1)
 
 local function positionBars()
+	if InCombatLockdown() then return end
+
 	local leftShown, rightShown = MultiBarBottomLeft:IsShown(), MultiBarBottomRight:IsShown()
 
 	if leftShown and rightShown then
