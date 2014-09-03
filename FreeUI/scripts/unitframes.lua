@@ -142,14 +142,6 @@ oUF.Tags.Methods['free:bosshealth'] = function(unit)
 end
 oUF.Tags.Events['free:bosshealth'] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_TARGETABLE_CHANGED"
 
-oUF.Tags.Methods['free:maxhealth'] = function(unit)
-	if(not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit)) then return end
-
-	local max = UnitHealthMax(unit)
-	return max
-end
-oUF.Tags.Events['free:maxhealth'] = oUF.Tags.Events.missinghp
-
 local function shortName(unit)
 	name = UnitName(unit)
 	if name and name:len() > 4 then name = name:sub(1, 4) end
@@ -437,13 +429,6 @@ local Shared = function(self, unit, isSingle)
 
 		SmoothBar(AltPowerBar)
 
-		AltPowerBar:HookScript("OnShow", function()
-			oUF_FreePlayer.MaxHealthPoints:Hide()
-		end)
-		AltPowerBar:HookScript("OnHide", function()
-			oUF_FreePlayer.MaxHealthPoints:Show()
-		end)
-
 		AltPowerBar:EnableMouse(true)
 
 		self.AltPowerBar = AltPowerBar
@@ -593,13 +578,8 @@ local UnitSpecific = {
 		Health:SetHeight(playerHeight - powerHeight - 1)
 
 		local HealthPoints = F.CreateFS(Health, C.FONT_SIZE_NORMAL, "LEFT")
-		self.MaxHealthPoints = F.CreateFS(Health, C.FONT_SIZE_NORMAL, "RIGHT")
-
 		HealthPoints:SetPoint("BOTTOMLEFT", Health, "TOPLEFT", 0, 3)
-		self.MaxHealthPoints:SetPoint("BOTTOMRIGHT", Health, "TOPRIGHT", 0, 3)
-
 		self:Tag(HealthPoints, '[dead][offline][free:health]')
-		self:Tag(self.MaxHealthPoints, '[free:maxhealth]')
 		Health.value = HealthPoints
 
 		local _, UnitPowerType = UnitPowerType("player")
