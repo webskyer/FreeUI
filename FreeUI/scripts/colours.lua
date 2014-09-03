@@ -245,9 +245,6 @@ local function updateGuild()
 			elseif currentView == "achievement" then
 				button.string1:SetText(diffColor[level]..level)
 				button.string2:SetText(displayedName)
-			elseif currentView == "weeklyxp" or currentView == "totalxp" then
-				button.string1:SetText(diffColor[level]..level)
-				button.string2:SetText(displayedName)
 			elseif currentView == "reputation" then
 				button.string1:SetText(diffColor[level]..level)
 				button.string2:SetText(displayedName)
