@@ -1119,8 +1119,10 @@ local UnitSpecific = {
 		local function updateStatus()
 			if UnitAffectingCombat("player") and C.unitframes.statusIndicatorCombat then
 				statusText:SetText("!")
+				statusText:SetTextColor(1, 0, 0)
 			elseif IsResting() then
 				statusText:SetText("Zzz")
+				statusText:SetTextColor(.8, .8, .8)
 			else
 				statusText:SetText("")
 			end
