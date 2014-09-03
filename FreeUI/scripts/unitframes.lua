@@ -414,7 +414,7 @@ local Shared = function(self, unit, isSingle)
 		F.CreateBD(abd)
 
 		AltPowerBar.Text = F.CreateFS(AltPowerBar, C.FONT_SIZE_NORMAL, "RIGHT")
-		AltPowerBar.Text:SetPoint("RIGHT", oUF_FreePlayer, "TOPRIGHT", 0, 6)
+		AltPowerBar.Text:SetPoint("BOTTOM", oUF_FreePlayer, "TOP", 0, 3)
 
 		AltPowerBar:SetScript("OnValueChanged", function(_, value)
 			local min, max = AltPowerBar:GetMinMaxValues()
@@ -582,15 +582,11 @@ local UnitSpecific = {
 		self:Tag(HealthPoints, '[dead][offline][free:health]')
 		Health.value = HealthPoints
 
-		local _, UnitPowerType = UnitPowerType("player")
-		if UnitPowerType == "MANA" or class == "DRUID" then
-			local PowerPoints = F.CreateFS(Power)
-			PowerPoints:SetPoint("LEFT", HealthPoints, "RIGHT", 2, 0)
-			PowerPoints:SetTextColor(.4, .7, 1)
-
-			self:Tag(PowerPoints, '[free:power]')
-			Power.value = PowerPoints
-		end
+		local PowerPoints = F.CreateFS(Power, C.FONT_SIZE_NORMAL, "RIGHT")
+		PowerPoints:SetPoint("BOTTOMRIGHT", Health, "TOPRIGHT", 0, 3)
+		PowerPoints:SetTextColor(.4, .7, 1)
+		self:Tag(PowerPoints, '[free:power]')
+		Power.value = PowerPoints
 
 		-- Cast bar
 
@@ -1118,7 +1114,7 @@ local UnitSpecific = {
 
 		local statusIndicator = CreateFrame("Frame")
 		local statusText = F.CreateFS(Health)
-		statusText:SetPoint("BOTTOM", Health, "TOP", 0, 3)
+		statusText:SetPoint("LEFT", HealthPoints, "RIGHT", 10, 0)
 
 		local function updateStatus()
 			if UnitAffectingCombat("player") and C.unitframes.statusIndicatorCombat then
