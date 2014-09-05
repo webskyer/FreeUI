@@ -77,10 +77,6 @@ RegisterStateDriver(bar3, "visibility", "[petbattle][vehicleui][overridebar][pos
 
 -- [[ Main bar positions ]]
 
--- bar3:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 15)
--- bar2:SetPoint("BOTTOM", bar3, "TOP", 0, 1)
--- bar1:SetPoint("BOTTOM", bar2, "TOP", 0, 1)
-
 local function positionBars()
 	if InCombatLockdown() then return end
 
