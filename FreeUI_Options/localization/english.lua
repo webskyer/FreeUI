@@ -185,7 +185,6 @@ ns.localization.classmodmonk = ns.localization.classmodmonk..":|cffffffff Chi an
 ns.localization.classmodpaladinHP = ns.localization.classmodpaladin..":|cffffffff Holy Power tracker"
 ns.localization.classmodpaladinRF = ns.localization.classmodpaladin..":|cffffffff Righteous Fury reminder"
 ns.localization.classmodpriest = ns.localization.classmodpriest..":|cffffffff Shadow orb tracker"
-ns.localization.classmodshaman = ns.localization.classmodshaman..":|cffffffff Maelstrom Weapon tracker"
 ns.localization.classmodwarlock = ns.localization.classmodwarlock..":|cffffffff Specialization bars"
 
 ns.localization.credits = "Credits"

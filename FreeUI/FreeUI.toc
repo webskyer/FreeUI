@@ -71,7 +71,6 @@ scripts\worldmarker.lua
 scripts\worldstateframe.lua
 
 class\paladin.lua
-class\shaman.lua
 
 theme\theme.lua
 

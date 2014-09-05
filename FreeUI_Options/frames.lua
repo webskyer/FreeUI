@@ -616,12 +616,8 @@ local priest = ns.CreateCheckBox(classmod, "priest", false, true)
 priest:SetPoint("TOPLEFT", paladinRF, "BOTTOMLEFT", 0, -8)
 tinsert(ns.classOptions, priest)
 
-local shaman = ns.CreateCheckBox(classmod, "shaman", false, true)
-shaman:SetPoint("TOPLEFT", priest, "BOTTOMLEFT", 0, -8)
-tinsert(ns.classOptions, shaman)
-
 local warlock = ns.CreateCheckBox(classmod, "warlock", false, true)
-warlock:SetPoint("TOPLEFT", shaman, "BOTTOMLEFT", 0, -8)
+warlock:SetPoint("TOPLEFT", priest, "BOTTOMLEFT", 0, -8)
 tinsert(ns.classOptions, warlock)
 
 -- [[ Credits ]]

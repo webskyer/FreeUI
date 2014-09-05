@@ -155,7 +155,6 @@ C["classmod"] = {
 	["paladinHP"] = true, 	-- holy power
 	["paladinRF"] = true, 	-- righteous fury
 	["priest"] = true,		-- shadow orbs
-	["shaman"] = true, 		-- maelstrom weapon tracker
 	["warlock"] = true, 	-- spec bar
 }
 
