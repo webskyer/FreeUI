@@ -386,7 +386,7 @@ ns.addSubCategory = function(category, name)
 	line:SetPoint("TOPLEFT", header, "BOTTOMLEFT", 0, -4)
 	line:SetTexture(1, 1, 1, .2)
 
-	return header
+	return header, line
 end
 
 -- [[ Init ]]

@@ -442,7 +442,7 @@ notifications.tab.Icon:SetTexture("Interface\\Icons\\inv_misc_enggizmos_27")
 local enable = ns.CreateCheckBox(notifications, "enable", true, true)
 enable:SetPoint("TOPLEFT", notifications.subText, "BOTTOMLEFT", 0, -8)
 
-local when = ns.addSubCategory(notifications, ns.localization.notificationsWhen)
+local when, whenLine = ns.addSubCategory(notifications, ns.localization.notificationsWhen)
 when:SetPoint("TOPLEFT", enable, "BOTTOMLEFT", 0, -30)
 
 local checkBagsFull = ns.CreateCheckBox(notifications, "checkBagsFull", true)
@@ -457,7 +457,7 @@ checkGuildEvents:SetPoint("TOPLEFT", checkEvents, "BOTTOMLEFT", 0, -8)
 local checkMail = ns.CreateCheckBox(notifications, "checkMail", true)
 checkMail:SetPoint("TOPLEFT", checkGuildEvents, "BOTTOMLEFT", 0, -8)
 
-local how = ns.addSubCategory(notifications, ns.localization.notificationsHow)
+local how, howLine = ns.addSubCategory(notifications, ns.localization.notificationsHow)
 how:SetPoint("TOPLEFT", checkMail, "BOTTOMLEFT", 0, -30)
 
 local playSounds = ns.CreateCheckBox(notifications, "playSounds", true)
@@ -479,7 +479,9 @@ notifications.previewButton = previewButton
 local function toggleNotificationsOptions()
 	local shown = enable:GetChecked()
 	when:SetShown(shown)
+	whenLine:SetShown(shown)
 	how:SetShown(shown)
+	howLine:SetShown(shown)
 	checkBagsFull:SetShown(shown)
 	checkMail:SetShown(shown)
 	checkEvents:SetShown(shown)
@@ -487,6 +489,7 @@ local function toggleNotificationsOptions()
 	playSounds:SetShown(shown)
 	animations:SetShown(shown)
 	timeShown:SetShown(shown)
+	previewButton:SetShown(shown)
 end
 
 enable:HookScript("OnClick", toggleNotificationsOptions)
