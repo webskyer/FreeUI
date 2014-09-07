@@ -613,6 +613,10 @@ init:SetScript("OnEvent", function()
 	F.AddOptionsCallback("appearance", "fontOutlineMonochrome", updateFontSamples)
 	F.AddOptionsCallback("appearance", "fontShadow", updateFontSamples)
 
+	FreeUIOptionsPanel.notifications.previewButton:SetScript("OnClick", function()
+		F.Notification("FreeUI", ns.localization.notificationPreviewText)
+	end)
+
 	displaySettings()
 end)
 

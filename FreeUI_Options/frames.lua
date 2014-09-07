@@ -209,7 +209,7 @@ CreditsButton:SetPoint("TOP", options.lastCategoryTab, "BOTTOM", 0, -136)
 local general = FreeUIOptionsPanel.general
 general.tab.Icon:SetTexture("Interface\\Icons\\inv_gizmo_02")
 
-local features = ns.addSubCategory(general, "Features")
+local features = ns.addSubCategory(general, ns.localization.generalFeatures)
 features:SetPoint("TOPLEFT", general.subText, "BOTTOMLEFT", 0, -8)
 
 local buffReminder = ns.CreateCheckBox(general, "buffreminder", true, true)
@@ -261,7 +261,7 @@ nameplates:SetPoint("TOPLEFT", rareAlert, "BOTTOMLEFT", 0, -42)
 local undressButton = ns.CreateCheckBox(general, "undressButton", true, true)
 undressButton:SetPoint("TOPLEFT", nameplates, "BOTTOMLEFT", 0, -8)
 
-local misc = ns.addSubCategory(general, "Miscellaneous")
+local misc = ns.addSubCategory(general, ns.localization.generalMisc)
 misc:SetPoint("TOPLEFT", interruptOutdoors, "BOTTOMLEFT", -16, -30)
 
 local uiScaleAuto = ns.CreateCheckBox(general, "uiScaleAuto", true)
@@ -272,7 +272,7 @@ uiScaleAuto:SetPoint("TOPLEFT", misc, "BOTTOMLEFT", 0, -20)
 local appearance = FreeUIOptionsPanel.appearance
 appearance.tab.Icon:SetTexture("Interface\\Icons\\inv_ore_arcanite_01")
 
-local colours = ns.addSubCategory(appearance, "Colours")
+local colours = ns.addSubCategory(appearance, ns.localization.appearanceColours)
 colours:SetPoint("TOPLEFT", appearance.subText, "BOTTOMLEFT", 0, -8)
 
 local useCustomColour = ns.CreateCheckBox(appearance, "useCustomColour", true, true)
@@ -281,7 +281,7 @@ useCustomColour:SetPoint("TOPLEFT", colours, "BOTTOMLEFT", 0, -20)
 local customColour = ns.CreateColourPicker(appearance, "customColour", true)
 customColour:SetPoint("LEFT", useCustomColour.Text, "RIGHT", 6, 0)
 
-local fonts = ns.addSubCategory(appearance, "Fonts")
+local fonts = ns.addSubCategory(appearance, ns.localization.appearanceFonts)
 fonts:SetPoint("TOPLEFT", useCustomColour, "BOTTOMLEFT", 0, -30)
 
 local fontUseAlternativeFont = ns.CreateCheckBox(appearance, "fontUseAlternativeFont", true, true)
@@ -442,8 +442,11 @@ notifications.tab.Icon:SetTexture("Interface\\Icons\\inv_misc_enggizmos_27")
 local enable = ns.CreateCheckBox(notifications, "enable", true, true)
 enable:SetPoint("TOPLEFT", notifications.subText, "BOTTOMLEFT", 0, -8)
 
+local when = ns.addSubCategory(notifications, ns.localization.notificationsWhen)
+when:SetPoint("TOPLEFT", enable, "BOTTOMLEFT", 0, -30)
+
 local checkBagsFull = ns.CreateCheckBox(notifications, "checkBagsFull", true)
-checkBagsFull:SetPoint("TOPLEFT", enable, "BOTTOMLEFT", 0, -16)
+checkBagsFull:SetPoint("TOPLEFT", when, "BOTTOMLEFT", 0, -20)
 
 local checkEvents = ns.CreateCheckBox(notifications, "checkEvents", true)
 checkEvents:SetPoint("TOPLEFT", checkBagsFull, "BOTTOMLEFT", 0, -8)
@@ -454,8 +457,11 @@ checkGuildEvents:SetPoint("TOPLEFT", checkEvents, "BOTTOMLEFT", 0, -8)
 local checkMail = ns.CreateCheckBox(notifications, "checkMail", true)
 checkMail:SetPoint("TOPLEFT", checkGuildEvents, "BOTTOMLEFT", 0, -8)
 
+local how = ns.addSubCategory(notifications, ns.localization.notificationsHow)
+how:SetPoint("TOPLEFT", checkMail, "BOTTOMLEFT", 0, -30)
+
 local playSounds = ns.CreateCheckBox(notifications, "playSounds", true)
-playSounds:SetPoint("LEFT", checkBagsFull, "RIGHT", 240, 0)
+playSounds:SetPoint("TOPLEFT", how, "BOTTOMLEFT", 0, -20)
 
 local animations = ns.CreateCheckBox(notifications, "animations", true)
 animations:SetPoint("TOPLEFT", playSounds, "BOTTOMLEFT", 0, -8)
@@ -463,8 +469,17 @@ animations:SetPoint("TOPLEFT", playSounds, "BOTTOMLEFT", 0, -8)
 local timeShown = ns.CreateNumberSlider(notifications, "timeShown", "1 sec", "10 sec", 1, 10, 1)
 timeShown:SetPoint("TOPLEFT", animations, "BOTTOMLEFT", 8, -30)
 
+local previewButton = CreateFrame("Button", nil, notifications, "UIPanelButtonTemplate")
+previewButton:SetPoint("TOPLEFT", timeShown, "BOTTOMLEFT", -8, -40)
+previewButton:SetSize(128, 25)
+previewButton:SetText(ns.localization.notificationsPreview)
+tinsert(ns.buttons, previewButton)
+notifications.previewButton = previewButton
+
 local function toggleNotificationsOptions()
 	local shown = enable:GetChecked()
+	when:SetShown(shown)
+	how:SetShown(shown)
 	checkBagsFull:SetShown(shown)
 	checkMail:SetShown(shown)
 	checkEvents:SetShown(shown)
