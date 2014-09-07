@@ -599,6 +599,7 @@ local function bagOnMouseover(self, isEnter)
 			local bu = _G["ContainerFrame1Item"..j]
 			bu.bg:SetBackdropBorderColor(bgR, bgG, bgB)
 			bu.bg:SetShown(isEnter)
+			bu.IconBorder:SetAlpha(isEnter and 0 or 1)
 		end
 	else
 		local id = self:GetID() - CharacterBag0Slot:GetID() + 1
@@ -610,6 +611,7 @@ local function bagOnMouseover(self, isEnter)
 					local bu = _G["ContainerFrame"..i.."Item"..j]
 					bu.bg:SetBackdropBorderColor(bgR, bgG, bgB)
 					bu.bg:SetShown(isEnter)
+					bu.IconBorder:SetAlpha(isEnter and 0 or 1)
 				end
 
 				break
@@ -706,6 +708,7 @@ local function bankBagOnMouseover(self, isEnter)
 				local bu = _G["ContainerFrame"..i.."Item"..j]
 				bu.bg:SetBackdropBorderColor(bgR, bgG, bgB)
 				bu.bg:SetShown(isEnter)
+				bu.IconBorder:SetAlpha(isEnter and 0 or 1)
 			end
 
 			break
