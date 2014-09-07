@@ -114,11 +114,13 @@ hooksecurefunc("ObjectiveTracker_AddBlock", function(block)
 				heightDiff = heightDiff - line:GetHeight()
 
 				F.SetFS(line.Text)
-				F.SetFS(line.Dash)
 				line.Text:SetSpacing(2)
 
-				line:SetHeight(line.Text:GetHeight())
+				if line.Dash then
+					F.SetFS(line.Dash)
+				end
 
+				line:SetHeight(line.Text:GetHeight())
 				heightDiff = heightDiff + line:GetHeight()
 
 				line.styled = true
