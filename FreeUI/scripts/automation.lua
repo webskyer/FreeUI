@@ -218,7 +218,6 @@ if C.automation.questRewardHighlight then
 					maxPriceIndex = i
 				end
 			else
-				-- print("scanning")
 				startIndex = i
 				f:SetScript("OnUpdate", onUpdate)
 				return

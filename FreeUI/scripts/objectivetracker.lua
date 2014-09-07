@@ -20,7 +20,7 @@ local function moveTracker()
 
 	ot:ClearAllPoints()
 	ot:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", xCoord, -160)
-	ot:SetPoint("BOTTOM", yAnchor, "TOP", 0, 10)
+	ot:SetPoint("BOTTOM", yAnchor, "TOP", 0, 220) -- bogus positioning because we can't touch ObjectiveTracker_CanFitBlock
 end
 
 hooksecurefunc(ot, "SetPoint", function(_, _, _, point)
@@ -59,9 +59,6 @@ end)
 
 -- [[ Blocks and lines ]]
 
-DEFAULT_OBJECTIVE_TRACKER_MODULE.lineSpacing = 6
-DEFAULT_OBJECTIVE_TRACKER_MODULE.blockOffsetY = -11
-
 for _, headerName in pairs({"QuestHeader", "AchievementHeader", "ScenarioHeader"}) do
 	local header = BlocksFrame[headerName]
 
@@ -72,8 +69,6 @@ end
 hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "SetBlockHeader", function(_, block)
 	if not block.headerStyled then
 		F.SetFS(block.HeaderText)
-		block.height = block.HeaderText:GetHeight()
-
 		block.headerStyled = true
 	end
 end)
@@ -81,8 +76,6 @@ end)
 hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", function(_, block)
 	if not block.headerStyled then
 		F.SetFS(block.HeaderText)
-		block.height = block.HeaderText:GetHeight()
-
 		block.headerStyled = true
 	end
 
@@ -104,15 +97,37 @@ hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", function(_, block)
 	end
 end)
 
-hooksecurefunc("ObjectiveTracker_AddBlock", function(block)
-	-- to adjust for line text possibly taking up more or less lines
-	local heightDiff = 0
+hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddObjective", function(self, block)
+	if block.module == QUEST_TRACKER_MODULE or block.module == ACHIEVEMENT_TRACKER_MODULE then
+		local line = block.currentLine
 
+		local p1, a, p2, x, y = line:GetPoint()
+		line:SetPoint(p1, a, p2, x, y - 4)
+	end
+end)
+
+local function fixBlockHeight(block)
+	if block.shouldFix then
+		local height = block:GetHeight()
+
+		if block.lines then
+			for _, line in pairs(block.lines) do
+				if line:IsShown() then
+					height = height + 4
+				end
+			end
+		end
+
+		block.shouldFix = false
+		block:SetHeight(height + 5)
+		block.shouldFix = true
+	end
+end
+
+hooksecurefunc("ObjectiveTracker_AddBlock", function(block)
 	if block.lines then
 		for _, line in pairs(block.lines) do
 			if not line.styled then
-				heightDiff = heightDiff - line:GetHeight()
-
 				F.SetFS(line.Text)
 				line.Text:SetSpacing(2)
 
@@ -121,16 +136,15 @@ hooksecurefunc("ObjectiveTracker_AddBlock", function(block)
 				end
 
 				line:SetHeight(line.Text:GetHeight())
-				heightDiff = heightDiff + line:GetHeight()
 
 				line.styled = true
 			end
 		end
 	end
 
-	-- blocks without .HeaderText or .lines seem to always have .height = 0
-	if block.height ~= 0 and heightDiff ~= 0 then
-		block.height = block.height + heightDiff
-		block:SetHeight(block.height)
+	if not block.styled then
+		block.shouldFix = true
+		hooksecurefunc(block, "SetHeight", fixBlockHeight)
+		block.styled = true
 	end
 end)
