@@ -9,17 +9,21 @@ local hasMail = false -- same with mail
 
 -- Bags
 
+local alertBagsFull
+local shouldAlertBags = false
+
 local last = 0
 local function delayBagCheck(self, elapsed)
 	last = last + elapsed
-	if last > 5 then
-		self:RegisterEvent("BAG_UPDATE")
+	if last > 1 then
 		self:SetScript("OnUpdate", nil)
 		last = 0
+		shouldAlertBags = true
+		alertBagsFull(self)
 	end
 end
 
-local function alertBagsFull(self)
+alertBagsFull = function(self)
 	local totalFree, freeSlots, bagFamily = 0
 	for i = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		freeSlots, bagFamily = GetContainerNumFreeSlots(i)
@@ -29,9 +33,14 @@ local function alertBagsFull(self)
 	end
 
 	if totalFree == 0 then
-		F.Notification("Bags", "Your bags are full.", ToggleBackpack, "Interface\\Icons\\inv_misc_bag_08")
-		self:UnregisterEvent("BAG_UPDATE")
-		self:SetScript("OnUpdate", delayBagCheck)
+		if shouldAlertBags then
+			F.Notification("Bags", "Your bags are full.", ToggleBackpack, "Interface\\Icons\\inv_misc_bag_08")
+			shouldAlertBags = false
+		else
+			self:SetScript("OnUpdate", delayBagCheck)
+		end
+	else
+		shouldAlertBags = false
 	end
 end
 
@@ -102,6 +111,10 @@ end
 local f = CreateFrame("Frame", nil, frame)
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 
+if C.notifications.checkBagsFull then
+	f:RegisterEvent("BAG_UPDATE")
+end
+
 if C.notifications.checkGuildEvents then
 	f:RegisterEvent("CALENDAR_UPDATE_GUILD_EVENTS")
 end
@@ -168,11 +181,6 @@ f:SetScript("OnEvent", function(self, event)
 	elseif event == "CALENDAR_UPDATE_GUILD_EVENTS" then
 		alertGuildEvents()
 	else -- PLAYER_ENTERING_WORLD
-		if C.notifications.checkBagsFull then
-			-- need to delay this, bag events are unreliable on login
-			f:SetScript("OnUpdate", delayBagCheck)
-		end
-
 		if C.notifications.checkEvents or C.notifications.checkGuildEvents then
 			OpenCalendar()
 			f:RegisterEvent("CALENDAR_UPDATE_PENDING_INVITES")
