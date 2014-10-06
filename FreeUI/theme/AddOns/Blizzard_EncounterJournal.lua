@@ -194,13 +194,6 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 				F.Reskin(header.button)
 
-				-- workaround because blizz uses 'tex' as key and I use it in API
-				if header.expanded then
-					header.button.tex = header.button.textures.expanded
-				else
-					header.button.tex = header.button.textures.collapsed
-				end
-
 				header.button.abilityIcon:SetTexCoord(.08, .92, .08, .92)
 				header.button.bg = F.CreateBG(header.button.abilityIcon)
 
