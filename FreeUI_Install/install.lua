@@ -315,7 +315,7 @@ end
 local tut4 = function()
 	sb:SetValue(400)
 	header:SetText("4. Features (2)")
-	body:SetText("You can see how much money your other characters have by moving your mouse over the money display on the bag frame.\n\nTo copy text from the chat frame, shift-click the first chat tab, which will show when moving the cursor over the chat frame.\n\nThe minimap will display a text saying 'Mail' if you have unread mail.\n\nTo show the time manager and stopwatch, click the info text in the middle of the panel at the bottom of the screen.\n\nTo collect mail money and items easily, click the button at the bottom of your inbox.\n\nThe rest should explain itself. If you have any questions, you can always ask.")
+	body:SetText("You can see how much money your other characters have by moving your mouse over the money display on the bag frame.\n\nTo copy text from the chat frame, shift-click the first chat tab, which will show when moving the cursor over the chat frame.\n\nTo change minimap tracking options, right-click the minimap.\n\nThe minimap will display a text saying 'Mail' if you have unread mail.\n\nTo show the time manager and stopwatch, click the info text in the middle of the panel at the bottom of the screen.\n\nTo collect mail money and items easily, click the button at the bottom of your inbox.\n\nThe rest should explain itself. If you have any questions, you can always ask.")
 
 	sbt:SetText("4/6")
 
