@@ -1,7 +1,7 @@
 ## Interface: 60000
 ## Title: FreeUI Install
 ## Notes: FreeUI setup addon.
-## Author: Haleth/Freethinker
+## Author: Haleth/Lightsword
 ## Version: 8.0
 ## RequiredDeps: FreeUI
 

@@ -1,7 +1,7 @@
 ## Interface: 60000
 ## Title: FreeUI
 ## Notes: Minimalistic user interface.
-## Author: Haleth/Freethinker
+## Author: Haleth/Lightsword
 ## Version: 8.0
 ## RequiredDeps: Blizzard_CombatText
 ## OptionalDeps: Clique, FreeUI_Options, MyRolePlay, oUF
