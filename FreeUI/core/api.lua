@@ -82,6 +82,11 @@ C.FONT_SIZE_LARGE = 2
 
 F.dummy = function() end
 
+-- compatibility with Aurora plugins that are compatible with Aurora's custom style system
+F.AddPlugin = function(func)
+	func()
+end
+
 local CreateBD = function(f, a)
 	f:SetBackdrop({
 		bgFile = C.media.backdrop,
