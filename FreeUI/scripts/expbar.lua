@@ -134,7 +134,7 @@ mouseFrame:SetScript("OnEnter", function()
 		GameTooltip:AddDoubleLine(L_EXPBAR_CUR, string.format('%s/%s (%d%%)', BreakUpLargeNumbers(XP), BreakUpLargeNumbers(maxXP), (XP/maxXP)*100), r, g, b, 1, 1, 1)
 		GameTooltip:AddDoubleLine(L_EXPBAR_REMA, string.format('%s', BreakUpLargeNumbers(maxXP-XP)), r, g, b, 1, 1, 1)
 		if restXP then
-			GameTooltip:AddDoubleLine("Rested: ", string.format('|cffb3e1ff%s (%d%%)', BreakUpLargeNumbers(restXP), restXP/maxXP*100), r, g, b)
+			GameTooltip:AddDoubleLine(L_EXPBAR_REST, string.format('|cffb3e1ff%s (%d%%)', BreakUpLargeNumbers(restXP), restXP/maxXP*100), r, g, b)
 		end
 	end
 	if GetWatchedFactionInfo() then
