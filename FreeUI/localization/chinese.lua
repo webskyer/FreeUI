@@ -233,3 +233,9 @@ L_MENUBAR_CHAT_MENU = "聊天 " --201
 L_MENUBAR_DBM_MENU = "切换 DBM" --228
 L_MENUBAR_DBM_DISABLED = "FreeUI: |cffffffffDBM 已禁用. Type|r /rl |cfffffffff 重载界面.|r" --232
 L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已启用. Type|r /rl |cfffffffffor 重载界面.|r" --236
+
+--[[ Events ]] 
+-- scrpit/events.lua 54
+
+L_EVENTS_MAIL = "邮件"
+L_EVENTS_MAIL_NEW = "你有新的邮件."

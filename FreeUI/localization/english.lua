@@ -232,3 +232,9 @@ L_MENUBAR_CHAT_MENU = "Chat menu" --201
 L_MENUBAR_DBM_MENU = "Toggle DBM" --228
 L_MENUBAR_DBM_DISABLED = "FreeUI: |cffffffffDBM disabled. Type|r /rl |cfffffffffor the changes to apply.|r" --232
 L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM enabled. Type|r /rl |cfffffffffor the changes to apply.|r" --236
+
+--[[ Events ]] 
+-- scrpit/events.lua 54
+
+L_EVENTS_MAIL = "Mail"
+L_EVENTS_MAIL_NEW = "You have new mail."
