@@ -163,3 +163,49 @@ TRIVIAL_QUEST_DISPLAY = "|cffffffff%s (低級別)|r"
 -- [[ Misc ]]
 
 ERR_AUCTION_SOLD_S = "|cff1eff00%s|r |cffffffff賣.|r"
+
+-- [[scrpit/automation.lua]]
+-- scrpit/automation.lua 168 176
+
+L_UNDRESS = "一鍵換裝"
+
+--[[ Bank ]] 
+-- scrpit/bag.lua 228
+
+L_BUY_NEW_SLOT = "购买新的銀行包欄: 點擊這裡."
+
+--[[ Stats_bar ]] 
+-- scrpit/stats.lua 37
+
+L_FPS = "|r 幀   |cffffffff"
+L_MS = "|r 毫秒   |cffffffff"
+
+--[[ Mail ]] 
+-- scrpit/mail.lua 37
+
+L_MAIL_ITEM = "%d 金, %d 件 物品"
+
+--[[ Minimap ]] 
+-- scrpit/minimap.lua 45
+
+L_MINIMAP_MAIL = "郵件"
+
+--[[ Nameplate ]] 
+-- scrpit/nameplates.lua 156
+
+L_NAMEPLATE_B = "首領"
+
+--[[ Tooltip ]] 
+-- scrpit/tooltip.lua 217
+
+L_TOOLTIP_MSP = "MSP"
+
+--[[ Unitframes ]] 
+-- scrpit/unitframes.lua 696
+
+L_UNITFRAME_PVP = "PVP開啟"
+L_UNITFRAME_COMBAT = "戰鬥中" --1138
+L_UNITFRAME_RESTING = "休息中" --1141
+L_UNITFRAME_YOU = "> 自己 <" --1217
+L_UNITFRAME_QUEST = "進行中" --1297
+L_UNITFRAME_LEADER = "指揮"	--1578

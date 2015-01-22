@@ -162,3 +162,62 @@ TRIVIAL_QUEST_DISPLAY = "|cffffffff%s (low level)|r"
 -- [[ Misc ]]
 
 ERR_AUCTION_SOLD_S = "|cff1eff00%s|r |cffffffffsold.|r"
+
+-- [[Undress]]
+-- scrpit/automation.lua 168 176
+
+L_UNDRESS = "Undress"
+
+--[[ Bank ]] 
+-- scrpit/bag.lua 228
+
+L_BUY_NEW_SLOT = "Buy new slots: Click here."
+
+--[[ Stats_bar ]] 
+-- scrpit/stats.lua 37
+
+L_FPS = "|r fps   |cffffffff"
+L_MS = "|r ms   |cffffffff"
+
+--[[ Mail ]] 
+-- scrpit/mail.lua 37
+
+L_MAIL_ITEM = "%d gold, %d items"
+
+--[[ Minimap ]] 
+-- scrpit/minimap.lua 45
+
+L_MINIMAP_MAIL = "Mail"
+L_MINIMAP_N = "N" --232
+L_MINIMAP_H = "H" --234
+
+--[[ Nameplate ]] 
+-- scrpit/nameplates.lua 156
+
+L_NAMEPLATE_B = "B"
+
+--[[ Tooltip ]] 
+-- scrpit/tooltip.lua 217
+
+L_TOOLTIP_MSP = "MSP"
+
+--[[ Unitframes ]] 
+-- scrpit/unitframes.lua 696
+
+L_UNITFRAME_PVP = "P"
+L_UNITFRAME_COMBAT = "!" --1138
+L_UNITFRAME_RESTING = "Zzz"	--1141
+L_UNITFRAME_YOU = "> YOU <" --1217
+L_UNITFRAME_QUEST = "!"	--1297
+L_UNITFRAME_LEADER = "l"	--1578
+
+--[[ Expbar ]] 
+-- scrpit/expbar.lua 133
+
+L_EXPBAR_EXP = "Experience:"
+L_EXPBAR_CUR = "Current: " --134
+L_EXPBAR_REMA = "Remaining: " --135 146
+L_EXPBAR_REST = "Rested: " --137
+L_EXPBAR_REPU = "Reputation:"	--143
+L_EXPBAR_STAN = "Standing:"	--144
+L_EXPBAR_REP = "Rep:" --145

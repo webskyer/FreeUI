@@ -693,7 +693,7 @@ local UnitSpecific = {
 		if C.unitframes.pvp then
 			local PvP = F.CreateFS(self)
 			PvP:SetPoint("BOTTOMRIGHT", Health, "TOPRIGHT", -50, 3)
-			PvP:SetText("P")
+			PvP:SetText(L_UNITFRAME_PVP)
 
 			local UpdatePvP = function(self, event, unit)
 				if(unit ~= self.unit) then return end
@@ -1135,10 +1135,10 @@ local UnitSpecific = {
 
 		local function updateStatus()
 			if UnitAffectingCombat("player") and C.unitframes.statusIndicatorCombat then
-				statusText:SetText("!")
+				statusText:SetText(L_UNITFRAME_COMBAT)
 				statusText:SetTextColor(1, 0, 0)
 			elseif IsResting() then
-				statusText:SetText("Zzz")
+				statusText:SetText(L_UNITFRAME_RESTING)
 				statusText:SetTextColor(.8, .8, .8)
 			else
 				statusText:SetText("")
@@ -1214,7 +1214,7 @@ local UnitSpecific = {
 		tt:RegisterEvent("PLAYER_TARGET_CHANGED")
 		tt:SetScript("OnEvent", function()
 			if(UnitName("targettarget")==UnitName("player")) then
-				ttt:SetText("> YOU <")
+				ttt:SetText(L_UNITFRAME_YOU)
 				ttt:SetTextColor(1, 0, 0)
 			else
 				ttt:SetText(UnitName"targettarget")
@@ -1294,7 +1294,7 @@ local UnitSpecific = {
 		end
 
 		local QuestIcon = F.CreateFS(self)
-		QuestIcon:SetText("!")
+		QuestIcon:SetText(L_UNITFRAME_QUEST)
 		QuestIcon:SetTextColor(228/255, 225/255, 16/255)
 		QuestIcon:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 2)
 
@@ -1575,7 +1575,7 @@ do
 		self.RaidIcon:SetPoint("CENTER", self, "CENTER")
 
 		local Leader = F.CreateFS(self, C.FONT_SIZE_NORMAL, "LEFT")
-		Leader:SetText("l")
+		Leader:SetText(L_UNITFRAME_LEADER)
 		Leader:SetPoint("TOPLEFT", Health, 2, -1)
 
 		self.Leader = Leader

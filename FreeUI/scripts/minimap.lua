@@ -42,7 +42,7 @@ MiniMapMailFrame:HookScript("OnMouseUp", function(self)
 end)
 
 local mt = F.CreateFS(mail)
-mt:SetText("Mail")
+mt:SetText(L_MINIMAP_MAIL)
 mt:SetPoint("BOTTOM", Minimap, 0, 6)
 
 MiniMapMailFrame:SetAlpha(0)
@@ -229,9 +229,9 @@ rd:SetScript("OnEvent", function()
 		rdt:SetText(instanceTexts[difficultyID])
 	else
 		if difficultyID == 14 then
-			rdt:SetText(instanceGroupSize.."N")
+			rdt:SetText(instanceGroupSize..L_MINIMAP_N)
 		elseif difficultyID == 15 then
-			rdt:SetText(instanceGroupSize.."H")
+			rdt:SetText(instanceGroupSize..L_MINIMAP_H)
 		else
 			rdt:SetText("")
 		end

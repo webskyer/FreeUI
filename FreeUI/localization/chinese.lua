@@ -163,3 +163,62 @@ TRIVIAL_QUEST_DISPLAY = "|cffffffff%s (低级别)|r"
 -- [[ Misc ]]
 
 ERR_AUCTION_SOLD_S = "|cff1eff00%s|r |cffffffff卖.|r"
+
+-- [[scrpit/automation.lua]]
+-- scrpit/automation.lua 168 176
+
+L_UNDRESS = "一键换装"
+
+--[[ Bank ]] 
+-- scrpit/bag.lua 228
+
+L_BUY_NEW_SLOT = "购买新的银行包栏: 点击这里."
+
+--[[ Stats_bar ]] 
+-- scrpit/stats.lua 37
+
+L_FPS = "|r 帧   |cffffffff"
+L_MS = "|r 毫秒   |cffffffff"
+
+--[[ Mail ]] 
+-- scrpit/mail.lua 37
+
+L_MAIL_ITEM = "%d 金, %d 件 物品"
+
+--[[ Minimap ]] 
+-- scrpit/minimap.lua 45
+
+L_MINIMAP_MAIL = "邮件"
+L_MINIMAP_N = "普通" --232
+L_MINIMAP_H = "英雄" --234
+
+--[[ Nameplate ]] 
+-- scrpit/nameplates.lua 156
+
+L_NAMEPLATE_B = "首领"
+
+--[[ Tooltip ]] 
+-- scrpit/tooltip.lua 217
+
+L_TOOLTIP_MSP = "MSP"
+
+--[[ Unitframes ]] 
+-- scrpit/unitframes.lua 696
+
+L_UNITFRAME_PVP = "PVP开启"
+L_UNITFRAME_COMBAT = "战斗中" --1138
+L_UNITFRAME_RESTING = "休息中" --1141
+L_UNITFRAME_YOU = "> 自己 <" --1217
+L_UNITFRAME_QUEST = "进行中" --1297
+L_UNITFRAME_LEADER = "指挥"	--1578
+
+--[[ Expbar ]] 
+-- scrpit/expbar.lua 133
+
+L_EXPBAR_EXP = "经验:"
+L_EXPBAR_CUR = "目前: " --134
+L_EXPBAR_REMA = "剩余: " --135 146
+L_EXPBAR_REST = "精力充沛: " --137
+L_EXPBAR_REPU = "声望:"	--143
+L_EXPBAR_STAN = "固定:"	--144
+L_EXPBAR_REP = "Rep:" --145
