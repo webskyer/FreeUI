@@ -73,6 +73,7 @@
 /DBM-WorldEvents/
 
 /GarrisonMissionManager/
+/MasterPlan/
 /GladiatorlosSA/
 
 /TradeSkillMaster/
@@ -93,7 +94,8 @@
 ###############
 #  fixed file #
 ###############
-
+/FreeUI/media/font.ttf
+/FreeUI/media/PFRondaSeven.ttf
 
 ###############
 #  temp file  #
