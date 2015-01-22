@@ -225,7 +225,7 @@ F.CreateBD(bankholder, .6)
 
 local purchase = F.CreateFS(bankholder)
 purchase:SetPoint("BOTTOMLEFT", bankholder, "BOTTOMLEFT", 3, 22)
-purchase:SetText("Buy new slots: Click here.")
+purchase:SetText(L_BUY_NEW_SLOT)
 
 local purchaseButton = CreateFrame("Button", nil, bankholder)
 purchaseButton:SetSize(purchase:GetStringWidth(), 8)
