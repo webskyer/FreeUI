@@ -176,8 +176,10 @@ L_BUY_NEW_SLOT = "Buy new slots: Click here."
 --[[ Stats_bar ]] 
 -- scrpit/stats.lua 37
 
-L_FPS = "|r fps   |cffffffff"
-L_MS = "|r ms   |cffffffff"
+L_STATS_FPS = "|r fps   |cffffffff"
+L_STATS_MS = "|r ms   |cffffffff"
+L_STATS_ADDONS = "Addons" --68
+L_STATS_SHOW = "Click |cffffffffto show time manager." --78
 
 --[[ Mail ]] 
 -- scrpit/mail.lua 37
@@ -221,3 +223,12 @@ L_EXPBAR_REST = "Rested: " --137
 L_EXPBAR_REPU = "Reputation:"	--143
 L_EXPBAR_STAN = "Standing:"	--144
 L_EXPBAR_REP = "Rep:" --145
+
+--[[ Menubar ]] 
+-- scrpit/menubar.lua 193
+
+L_MENUBAR_MICRO_MENU = "Micro menu"
+L_MENUBAR_CHAT_MENU = "Chat menu" --201
+L_MENUBAR_DBM_MENU = "Toggle DBM" --228
+L_MENUBAR_DBM_DISABLED = "FreeUI: |cffffffffDBM disabled. Type|r /rl |cfffffffffor the changes to apply.|r" --232
+L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM enabled. Type|r /rl |cfffffffffor the changes to apply.|r" --236

@@ -177,8 +177,10 @@ L_BUY_NEW_SLOT = "购买新的銀行包欄: 點擊這裡."
 --[[ Stats_bar ]] 
 -- scrpit/stats.lua 37
 
-L_FPS = "|r 幀   |cffffffff"
-L_MS = "|r 毫秒   |cffffffff"
+L_STATS_FPS = "|r 幀   |cffffffff"
+L_STATS_MS = "|r 毫秒   |cffffffff"
+L_STATS_ADDONS = "插件內存占用" --68
+L_STATS_SHOW = "點擊 |cffffffff顯示時鐘." --78
 
 --[[ Mail ]] 
 -- scrpit/mail.lua 37
@@ -209,3 +211,12 @@ L_UNITFRAME_RESTING = "休息中" --1141
 L_UNITFRAME_YOU = "> 自己 <" --1217
 L_UNITFRAME_QUEST = "進行中" --1297
 L_UNITFRAME_LEADER = "指揮"	--1578
+
+--[[ Menubar ]] 
+-- scrpit/menubar.lua 193
+
+L_MENUBAR_MICRO_MENU = "微菜單"
+L_MENUBAR_CHAT_MENU = "聊天 " --201
+L_MENUBAR_DBM_MENU = "切換 DBM" --228
+L_MENUBAR_DBM_DISABLED = "FreeUI: |cffffffffDBM 已禁用. Type|r /rl |cfffffffff 重載界面.|r" --232
+L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已啟用. Type|r /rl |cfffffffffor 重載界面.|r" --236
