@@ -221,9 +221,9 @@ L_EXPBAR_EXP = "经验:"
 L_EXPBAR_CUR = "目前: " --134
 L_EXPBAR_REMA = "剩余: " --135 146
 L_EXPBAR_REST = "精力充沛: " --137
-L_EXPBAR_REPU = "声望:"	--143
-L_EXPBAR_STAN = "固定:"	--144
-L_EXPBAR_REP = "Rep:" --145
+L_EXPBAR_REPU = "阵营:"	--143
+L_EXPBAR_STAN = "声望级别:"	--144
+L_EXPBAR_REP = "声望:" --145
 
 --[[ Menubar ]] 
 -- scrpit/menubar.lua 193

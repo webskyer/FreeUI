@@ -212,6 +212,17 @@ L_UNITFRAME_YOU = "> 自己 <" --1217
 L_UNITFRAME_QUEST = "進行中" --1297
 L_UNITFRAME_LEADER = "指揮"	--1578
 
+--[[ Expbar ]] 
+-- scrpit/expbar.lua 133
+
+L_EXPBAR_EXP = "經驗:"
+L_EXPBAR_CUR = "目前: " --134
+L_EXPBAR_REMA = "剩余: " --135 146
+L_EXPBAR_REST = "精力充沛: " --137
+L_EXPBAR_REPU = "陣營:"	--143
+L_EXPBAR_STAN = "聲望級別:"	--144
+L_EXPBAR_REP = "聲望:" --145
+
 --[[ Menubar ]] 
 -- scrpit/menubar.lua 193
 
