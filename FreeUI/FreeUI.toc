@@ -12,6 +12,7 @@ core\core.lua
 
 localization\english.lua
 localization\chinese.lua
+localization\taiwan.lua
 
 options.lua
 profiles.lua
@@ -46,7 +47,7 @@ scripts\errors.lua
 scripts\events.lua
 scripts\expbar.lua
 scripts\fonts.lua
-scripts\globals.lua
+## scripts\globals.lua
 scripts\interrupt.lua
 scripts\loot.lua
 scripts\lootroll.lua
