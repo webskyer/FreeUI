@@ -34,7 +34,7 @@ FreeUIStatsButton:SetScript("OnUpdate", function(self, elapsed)
 	end
 
 	if last >= 1 then
-		text:SetText("|cffffffff"..floor(GetFramerate() + .5)..L_FPS..home.."|r/|cffffffff"..world..L_MS..GameTime_GetTime(false))
+		text:SetText("|cffffffff"..floor(GetFramerate() + .5)..L_STATS_FPS..home.."|r/|cffffffff"..world..L_STATS_MS..GameTime_GetTime(false))
 		last = 0
 	end
 end)
@@ -65,7 +65,7 @@ FreeUIStatsButton:HookScript("OnEnter", function()
 	else
 		GameTooltip:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMLEFT", -1, -2)
 	end
-	GameTooltip:AddDoubleLine("Addons", format("%.1f kb", total), r, g, b, 1, 1, 1)
+	GameTooltip:AddDoubleLine(L_STATS_ADDONS, format("%.1f kb", total), r, g, b, 1, 1, 1)
 
 	GameTooltip:AddLine(" ")
 
@@ -75,7 +75,7 @@ FreeUIStatsButton:HookScript("OnEnter", function()
 
 	GameTooltip:AddLine(" ")
 
-	GameTooltip:AddLine("Click |cffffffffto show time manager.", r, g, b)
+	GameTooltip:AddLine(L_STATS_SHOW, r, g, b)
 
 	GameTooltip:Show()
 end)
