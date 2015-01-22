@@ -3,86 +3,86 @@ local F, C, L = unpack(select(2, ...))
 if GetLocale() ~= "enUS" and GetLocale() ~= "enGB" then return end
 
 ----------------------------------------------------------------------------------------
---	Localization for enUS and enGB client
+--Localization for enUS and enGB client
 ----------------------------------------------------------------------------------------
 --/scrpit/globals.lua
 
 ITEM_LEVEL = "|cff00ffffilvl: %d|r"
 ITEM_LEVEL_ALT = "|cff00ffffilvl: %d (%d)|r"
 
-	ITEM_BIND_ON_EQUIP = "BoE"
-	ITEM_BIND_ON_PICKUP = "BoP"
-	ITEM_BIND_ON_USE = "Bind on use"
-	ITEM_CLASSES_ALLOWED = "Class: %s"
-	ITEM_CONJURED = "Conjured"
-	ITEM_CREATED_BY = "" -- No creator name
-	ITEM_MOD_ARMOR_PENETRATION_RATING = "ARP +%s"
-	ITEM_MOD_ARMOR_PENETRATION_RATING_SHORT = "ARP"
-	ITEM_MOD_ATTACK_POWER = "AP +%s"
-	ITEM_MOD_BLOCK_RATING = "Block rating +%s"
-	ITEM_MOD_BLOCK_VALUE = "Block value +%s"
-	ITEM_MOD_BLOCK_VALUE_SHORT = "Block value"
-	ITEM_MOD_CRIT_MELEE_RATING = "Crit (melee) +%s"
-	ITEM_MOD_CRIT_MELEE_RATING_SHORT = "Crit (melee)"
-	ITEM_MOD_CRIT_RANGED_RATING = "Crit (ranged) +%s"
-	ITEM_MOD_CRIT_RANGED_RATING_SHORT = "Crit (ranged)"
-	ITEM_MOD_CRIT_RATING = "Crit +%s"
-	ITEM_MOD_CRIT_RATING_SHORT = "Crit"
-	ITEM_MOD_CRIT_SPELL_RATING = "Crit (spell) +%s"
-	ITEM_MOD_CRIT_SPELL_RATING_SHORT = "Crit (spell)"
-	ITEM_MOD_DAMAGE_PER_SECOND_SHORT = "DPS"
-	ITEM_MOD_DEFENSE_SKILL_RATING = "Defence +%s"
-	ITEM_MOD_DEFENSE_SKILL_RATING_SHORT = "Defence"
-	ITEM_MOD_DODGE_RATING = "Dodge +%s"
-	ITEM_MOD_EXPERTISE_RATING = "Expertise +%s"
-	ITEM_MOD_FERAL_ATTACK_POWER = "Feral AP +%s"
-	ITEM_MOD_FERAL_ATTACK_POWER_SHORT = "Feral AP"
-	ITEM_MOD_HASTE_MELEE_RATING = "Haste (melee) +%s"
-	ITEM_MOD_HASTE_RANGED_RATING = "Haste (ranged) +%s"
-	ITEM_MOD_HASTE_RATING = "Haste +%s"
-	ITEM_MOD_HASTE_SPELL_RATING = "Haste (spell) +%s"
-	ITEM_MOD_HEALTH_REGEN = "%d Hp5"
-	ITEM_MOD_HEALTH_REGEN_SHORT = "Hp5"
-	ITEM_MOD_HEALTH_REGENERATION = "%d Hp5"
-	ITEM_MOD_HEALTH_REGENERATION_SHORT = "Hp5"
-	ITEM_MOD_HIT_MELEE_RATING = "Hit (melee) +%s"
-	ITEM_MOD_HIT_RANGED_RATING = "Hit (ranged) +%s"
-	ITEM_MOD_HIT_RATING = "Hit +%s"
-	ITEM_MOD_HIT_SPELL_RATING = "Hit (spell) +%s"
-	ITEM_MOD_HIT_TAKEN_RATING = "Avoidance +%s"
-	ITEM_MOD_HIT_TAKEN_RATING_SHORT = "Avoidance"
-	ITEM_MOD_HIT_TAKEN_SPELL_RATING = "Spell avoidance +%s"
-	ITEM_MOD_HIT_TAKEN_SPELL_RATING_SHORT = "Avoidance (spell)"
-	ITEM_MOD_HIT_TAKEN_MELEE_RATING = "Melee avoidance +%s"
-	ITEM_MOD_HIT_TAKEN_MELEE_RATING_SHORT = "Avoidance (melee)"
-	ITEM_MOD_HIT_TAKEN_RANGED_RATING = "Ranged avoidance +%s"
-	ITEM_MOD_HIT_TAKEN_RANGED_RATING_SHORT = "Avoidance (ranged)"
-	ITEM_MOD_MANA_REGENERATION = "+%d Mp5"
-	ITEM_MOD_MANA_REGENERATION_SHORT = "Mp5"
-	ITEM_MOD_MASTERY_RATING = "Mastery +%s"
-	ITEM_MOD_MELEE_ATTACK_POWER_SHORT = "AP (melee)"
-	ITEM_MOD_PARRY_RATING = "Parry +%s"
-	ITEM_MOD_RANGED_ATTACK_POWER = "AP (ranged) +%s"
-	ITEM_MOD_RANGED_ATTACK_POWER_SHORT = "AP (ranged)"
-	ITEM_MOD_RESILIENCE_RATING = "Resi +%s"
-	ITEM_MOD_RESILIENCE_RATING_SHORT = "Resi"
-	ITEM_MOD_SPELL_DAMAGE_DONE = "Spell damage +%s"
-	ITEM_MOD_SPELL_HEALING_DONE = "Healing +%s"
-	ITEM_MOD_SPELL_POWER = "Spell power +%s"
-	ITEM_MOD_SPELL_PENETRATION = "Spell Penetration +%s"
-	ITEM_OPENABLE = "Open!"
-	ITEM_RANDOM_ENCHANT = "Random enchant"
-	ITEM_RESIST_SINGLE = "Resist: %c%d %s"
-	ITEM_SIGNABLE = "Sign!"
-	ITEM_SOCKETABLE = "" -- No gem info line
-	ITEM_SOCKET_BONUS = "Bonus: %s"
-	ITEM_SOLD_COLON = "Sold:"
-	ITEM_SPELL_CHARGES = "%d charges"
-	ITEM_SPELL_TRIGGER_ONPROC = "Proc:"
-	ITEM_STARTS_QUEST = "Starts quest"
-	ITEM_WRONG_CLASS = "Wrong class!"
-	ITEM_UNSELLABLE = "Can't be sold"
-	SELL_PRICE = "Price"
+ITEM_BIND_ON_EQUIP = "BoE"
+ITEM_BIND_ON_PICKUP = "BoP"
+ITEM_BIND_ON_USE = "Bind on use"
+ITEM_CLASSES_ALLOWED = "Class: %s"
+ITEM_CONJURED = "Conjured"
+ITEM_CREATED_BY = "" -- No creator name
+ITEM_MOD_ARMOR_PENETRATION_RATING = "ARP +%s"
+ITEM_MOD_ARMOR_PENETRATION_RATING_SHORT = "ARP"
+ITEM_MOD_ATTACK_POWER = "AP +%s"
+ITEM_MOD_BLOCK_RATING = "Block rating +%s"
+ITEM_MOD_BLOCK_VALUE = "Block value +%s"
+ITEM_MOD_BLOCK_VALUE_SHORT = "Block value"
+ITEM_MOD_CRIT_MELEE_RATING = "Crit (melee) +%s"
+ITEM_MOD_CRIT_MELEE_RATING_SHORT = "Crit (melee)"
+ITEM_MOD_CRIT_RANGED_RATING = "Crit (ranged) +%s"
+ITEM_MOD_CRIT_RANGED_RATING_SHORT = "Crit (ranged)"
+ITEM_MOD_CRIT_RATING = "Crit +%s"
+ITEM_MOD_CRIT_RATING_SHORT = "Crit"
+ITEM_MOD_CRIT_SPELL_RATING = "Crit (spell) +%s"
+ITEM_MOD_CRIT_SPELL_RATING_SHORT = "Crit (spell)"
+ITEM_MOD_DAMAGE_PER_SECOND_SHORT = "DPS"
+ITEM_MOD_DEFENSE_SKILL_RATING = "Defence +%s"
+ITEM_MOD_DEFENSE_SKILL_RATING_SHORT = "Defence"
+ITEM_MOD_DODGE_RATING = "Dodge +%s"
+ITEM_MOD_EXPERTISE_RATING = "Expertise +%s"
+ITEM_MOD_FERAL_ATTACK_POWER = "Feral AP +%s"
+ITEM_MOD_FERAL_ATTACK_POWER_SHORT = "Feral AP"
+ITEM_MOD_HASTE_MELEE_RATING = "Haste (melee) +%s"
+ITEM_MOD_HASTE_RANGED_RATING = "Haste (ranged) +%s"
+ITEM_MOD_HASTE_RATING = "Haste +%s"
+ITEM_MOD_HASTE_SPELL_RATING = "Haste (spell) +%s"
+ITEM_MOD_HEALTH_REGEN = "%d Hp5"
+ITEM_MOD_HEALTH_REGEN_SHORT = "Hp5"
+ITEM_MOD_HEALTH_REGENERATION = "%d Hp5"
+ITEM_MOD_HEALTH_REGENERATION_SHORT = "Hp5"
+ITEM_MOD_HIT_MELEE_RATING = "Hit (melee) +%s"
+ITEM_MOD_HIT_RANGED_RATING = "Hit (ranged) +%s"
+ITEM_MOD_HIT_RATING = "Hit +%s"
+ITEM_MOD_HIT_SPELL_RATING = "Hit (spell) +%s"
+ITEM_MOD_HIT_TAKEN_RATING = "Avoidance +%s"
+ITEM_MOD_HIT_TAKEN_RATING_SHORT = "Avoidance"
+ITEM_MOD_HIT_TAKEN_SPELL_RATING = "Spell avoidance +%s"
+ITEM_MOD_HIT_TAKEN_SPELL_RATING_SHORT = "Avoidance (spell)"
+ITEM_MOD_HIT_TAKEN_MELEE_RATING = "Melee avoidance +%s"
+ITEM_MOD_HIT_TAKEN_MELEE_RATING_SHORT = "Avoidance (melee)"
+ITEM_MOD_HIT_TAKEN_RANGED_RATING = "Ranged avoidance +%s"
+ITEM_MOD_HIT_TAKEN_RANGED_RATING_SHORT = "Avoidance (ranged)"
+ITEM_MOD_MANA_REGENERATION = "+%d Mp5"
+ITEM_MOD_MANA_REGENERATION_SHORT = "Mp5"
+ITEM_MOD_MASTERY_RATING = "Mastery +%s"
+ITEM_MOD_MELEE_ATTACK_POWER_SHORT = "AP (melee)"
+ITEM_MOD_PARRY_RATING = "Parry +%s"
+ITEM_MOD_RANGED_ATTACK_POWER = "AP (ranged) +%s"
+ITEM_MOD_RANGED_ATTACK_POWER_SHORT = "AP (ranged)"
+ITEM_MOD_RESILIENCE_RATING = "Resi +%s"
+ITEM_MOD_RESILIENCE_RATING_SHORT = "Resi"
+ITEM_MOD_SPELL_DAMAGE_DONE = "Spell damage +%s"
+ITEM_MOD_SPELL_HEALING_DONE = "Healing +%s"
+ITEM_MOD_SPELL_POWER = "Spell power +%s"
+ITEM_MOD_SPELL_PENETRATION = "Spell Penetration +%s"
+ITEM_OPENABLE = "Open!"
+ITEM_RANDOM_ENCHANT = "Random enchant"
+ITEM_RESIST_SINGLE = "Resist: %c%d %s"
+ITEM_SIGNABLE = "Sign!"
+ITEM_SOCKETABLE = "" -- No gem info line
+ITEM_SOCKET_BONUS = "Bonus: %s"
+ITEM_SOLD_COLON = "Sold:"
+ITEM_SPELL_CHARGES = "%d charges"
+ITEM_SPELL_TRIGGER_ONPROC = "Proc:"
+ITEM_STARTS_QUEST = "Starts quest"
+ITEM_WRONG_CLASS = "Wrong class!"
+ITEM_UNSELLABLE = "Can't be sold"
+SELL_PRICE = "Price"
 
 ARMOR_TEMPLATE = "Armor: %s"
 DAMAGE_TEMPLATE = "Damage: %s - %s"
@@ -162,3 +162,62 @@ TRIVIAL_QUEST_DISPLAY = "|cffffffff%s (low level)|r"
 -- [[ Misc ]]
 
 ERR_AUCTION_SOLD_S = "|cff1eff00%s|r |cffffffffsold.|r"
+
+-- [[Undress]]
+-- scrpit/automation.lua 168 176
+
+L_UNDRESS = "Undress"
+
+--[[ Bank ]] 
+-- scrpit/bag.lua 228
+
+L_BUY_NEW_SLOT = "Buy new slots: Click here."
+
+--[[ Stats_bar ]] 
+-- scrpit/stats.lua 37
+
+L_FPS = "|r fps   |cffffffff"
+L_MS = "|r ms   |cffffffff"
+
+--[[ Mail ]] 
+-- scrpit/mail.lua 37
+
+L_MAIL_ITEM = "%d gold, %d items"
+
+--[[ Minimap ]] 
+-- scrpit/minimap.lua 45
+
+L_MINIMAP_MAIL = "Mail"
+L_MINIMAP_N = "N" --232
+L_MINIMAP_H = "H" --234
+
+--[[ Nameplate ]] 
+-- scrpit/nameplates.lua 156
+
+L_NAMEPLATE_B = "B"
+
+--[[ Tooltip ]] 
+-- scrpit/tooltip.lua 217
+
+L_TOOLTIP_MSP = "MSP"
+
+--[[ Unitframes ]] 
+-- scrpit/unitframes.lua 696
+
+L_UNITFRAME_PVP = "P"
+L_UNITFRAME_COMBAT = "!" --1138
+L_UNITFRAME_RESTING = "Zzz"	--1141
+L_UNITFRAME_YOU = "> YOU <" --1217
+L_UNITFRAME_QUEST = "!"	--1297
+L_UNITFRAME_LEADER = "l"	--1578
+
+--[[ Expbar ]] 
+-- scrpit/expbar.lua 133
+
+L_EXPBAR_EXP = "Experience:"
+L_EXPBAR_CUR = "Current: " --134
+L_EXPBAR_REMA = "Remaining: " --135 146
+L_EXPBAR_REST = "Rested: " --137
+L_EXPBAR_REPU = "Reputation:"	--143
+L_EXPBAR_STAN = "Standing:"	--144
+L_EXPBAR_REP = "Rep:" --145
