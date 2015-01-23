@@ -5,4 +5,8 @@
 ## Version: 8.1.1
 ## RequiredDeps: FreeUI
 
+localization\english.lua
+localization\chinese.lua
+localization\taiwan.lua
+
 install.lua
