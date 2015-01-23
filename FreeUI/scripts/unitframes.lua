@@ -187,11 +187,11 @@ oUF.Tags.Methods['free:missinghealth'] = function(unit)
 	local min, max = UnitHealth(unit), UnitHealthMax(unit)
 
 	if not UnitIsConnected(unit) then
-		return "Off"
+		return L_UNITFRAME_OFF
 	elseif UnitIsDead(unit) then
-		return "Dead"
+		return L_UNITFRAME_DEAD
 	elseif UnitIsGhost(unit) then
-		return "Ghost"
+		return L_UNITFRAME_GHOST
 	elseif min ~= max then
 		return siValue(max-min)
 	else

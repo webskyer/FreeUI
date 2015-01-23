@@ -205,8 +205,11 @@ L_NAMEPLATE_B = "首领"
 L_TOOLTIP_MSP = "MSP"
 
 --[[ Unitframes ]] 
--- scrpit/unitframes.lua 696
+-- scrpit/unitframes.lua 190
 
+L_UNITFRAME_OFF = "离线"
+L_UNITFRAME_DEAD = "死亡" --192
+L_UNITFRAME_GHOST = "幽灵" --194
 L_UNITFRAME_PVP = "PVP开启"
 L_UNITFRAME_COMBAT = "战斗中" --1138
 L_UNITFRAME_RESTING = "休息中" --1141

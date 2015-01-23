@@ -204,9 +204,12 @@ L_NAMEPLATE_B = "B"
 L_TOOLTIP_MSP = "MSP"
 
 --[[ Unitframes ]] 
--- scrpit/unitframes.lua 696
+-- scrpit/unitframes.lua 190
 
-L_UNITFRAME_PVP = "P"
+L_UNITFRAME_OFF = "Off"
+L_UNITFRAME_DEAD = "Dead" --192
+L_UNITFRAME_GHOST = "Ghost" --194
+L_UNITFRAME_PVP = "P" --696
 L_UNITFRAME_COMBAT = "!" --1138
 L_UNITFRAME_RESTING = "Zzz"	--1141
 L_UNITFRAME_YOU = "> YOU <" --1217
