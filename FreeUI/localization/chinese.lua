@@ -239,3 +239,10 @@ L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已启用. Type|r /rl |cfffffffff
 
 L_EVENTS_MAIL = "邮件"
 L_EVENTS_MAIL_NEW = "你有新的邮件."
+
+--[[ Slash ]] 
+-- scrpit/slash.lua 65
+
+L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: 选择用户界面|r"
+L_SLASH_INSTALL = "|cffffffff/freeui|r 安装|cffffffff: 载入安装界面|r" --67
+L_SLASH_RESET = "|cffffffff/freeui|r 重置|cffffffff: 清除保存的设置|r" --68
