@@ -248,3 +248,8 @@ L_EVENTS_MAIL_NEW = "You have new mail."
 L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: Select a unitframe layout|r"
 L_SLASH_INSTALL = "|cffffffff/freeui|r install|cffffffff: Load the intaller|r" --67
 L_SLASH_RESET = "|cffffffff/freeui|r reset|cffffffff: Clear saved settings|r" --68
+
+--[[ Rarealert ]] 
+-- scrpit/rarealert.lua 17
+
+L_RARE_RARE = "Rare spotted!"

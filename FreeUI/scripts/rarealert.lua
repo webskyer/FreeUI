@@ -14,7 +14,7 @@ local function OnEvent()
 		PlaySoundFile("Sound\\Interface\\RaidWarning.wav")
 	end
 
-	RaidNotice_AddMessage(RaidWarningFrame, "Rare spotted!", ChatTypeInfo["RAID_WARNING"])
+	RaidNotice_AddMessage(RaidWarningFrame, L_RARE_RARE, ChatTypeInfo["RAID_WARNING"])
 end
 
 if general.rareAlert then

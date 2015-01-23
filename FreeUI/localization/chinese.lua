@@ -215,7 +215,7 @@ L_UNITFRAME_COMBAT = "战斗中" --1138
 L_UNITFRAME_RESTING = "休息中" --1141
 L_UNITFRAME_YOU = "> 自己 <" --1217
 L_UNITFRAME_QUEST = "进行中" --1297
-L_UNITFRAME_LEADER = "指挥"	--1578
+L_UNITFRAME_LEADER = "RL"	--1578 最好换成皇冠图标
 
 --[[ Expbar ]] 
 -- scrpit/expbar.lua 133
@@ -249,3 +249,8 @@ L_EVENTS_MAIL_NEW = "你有新的邮件."
 L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: 选择用户界面|r"
 L_SLASH_INSTALL = "|cffffffff/freeui|r 安装|cffffffff: 载入安装界面|r" --67
 L_SLASH_RESET = "|cffffffff/freeui|r 重置|cffffffff: 清除保存的设置|r" --68
+
+--[[ Rarealert ]] 
+-- scrpit/rarealert.lua 17
+
+L_RARE_RARE = "发现 稀有精英!"

@@ -247,3 +247,8 @@ L_EVENTS_MAIL_NEW = "你有新的郵件."
 L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: 選擇用戶界面|r"
 L_SLASH_INSTALL = "|cffffffff/freeui|r 安裝|cffffffff: 載入安裝界面|r" --67
 L_SLASH_RESET = "|cffffffff/freeui|r 重置|cffffffff: 清除保存的設置|r" --68
+
+--[[ Rarealert ]] 
+-- scrpit/rarealert.lua 17
+
+L_RARE_RARE = "發現 稀有精英!"
