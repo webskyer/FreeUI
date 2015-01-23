@@ -205,8 +205,11 @@ L_NAMEPLATE_B = "首领"
 L_TOOLTIP_MSP = "MSP"
 
 --[[ Unitframes ]] 
--- scrpit/unitframes.lua 696
+-- scrpit/unitframes.lua 190
 
+L_UNITFRAME_OFF = "离线"
+L_UNITFRAME_DEAD = "死亡" --192
+L_UNITFRAME_GHOST = "幽灵" --194
 L_UNITFRAME_PVP = "PVP开启"
 L_UNITFRAME_COMBAT = "战斗中" --1138
 L_UNITFRAME_RESTING = "休息中" --1141
@@ -239,3 +242,10 @@ L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已启用. Type|r /rl |cfffffffff
 
 L_EVENTS_MAIL = "邮件"
 L_EVENTS_MAIL_NEW = "你有新的邮件."
+
+--[[ Slash ]] 
+-- scrpit/slash.lua 65
+
+L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: 选择用户界面|r"
+L_SLASH_INSTALL = "|cffffffff/freeui|r 安装|cffffffff: 载入安装界面|r" --67
+L_SLASH_RESET = "|cffffffff/freeui|r 重置|cffffffff: 清除保存的设置|r" --68

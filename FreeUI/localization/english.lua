@@ -204,9 +204,12 @@ L_NAMEPLATE_B = "B"
 L_TOOLTIP_MSP = "MSP"
 
 --[[ Unitframes ]] 
--- scrpit/unitframes.lua 696
+-- scrpit/unitframes.lua 190
 
-L_UNITFRAME_PVP = "P"
+L_UNITFRAME_OFF = "Off"
+L_UNITFRAME_DEAD = "Dead" --192
+L_UNITFRAME_GHOST = "Ghost" --194
+L_UNITFRAME_PVP = "P" --696
 L_UNITFRAME_COMBAT = "!" --1138
 L_UNITFRAME_RESTING = "Zzz"	--1141
 L_UNITFRAME_YOU = "> YOU <" --1217
@@ -238,3 +241,10 @@ L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM enabled. Type|r /rl |cfffffffffor
 
 L_EVENTS_MAIL = "Mail"
 L_EVENTS_MAIL_NEW = "You have new mail."
+
+--[[ Slash ]] 
+-- scrpit/slash.lua 65
+
+L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: Select a unitframe layout|r"
+L_SLASH_INSTALL = "|cffffffff/freeui|r install|cffffffff: Load the intaller|r" --67
+L_SLASH_RESET = "|cffffffff/freeui|r reset|cffffffff: Clear saved settings|r" --68
