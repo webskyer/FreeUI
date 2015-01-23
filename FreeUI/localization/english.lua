@@ -238,3 +238,10 @@ L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM enabled. Type|r /rl |cfffffffffor
 
 L_EVENTS_MAIL = "Mail"
 L_EVENTS_MAIL_NEW = "You have new mail."
+
+--[[ Slash ]] 
+-- scrpit/slash.lua 65
+
+L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: Select a unitframe layout|r"
+L_SLASH_INSTALL = "|cffffffff/freeui|r install|cffffffff: Load the intaller|r" --67
+L_SLASH_RESET = "|cffffffff/freeui|r reset|cffffffff: Clear saved settings|r" --68
