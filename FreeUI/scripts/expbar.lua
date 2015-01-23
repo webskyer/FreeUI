@@ -130,20 +130,20 @@ mouseFrame:SetScript("OnEnter", function()
 	GameTooltip:SetOwner(mouseFrame, "ANCHOR_BOTTOMLEFT", 0, 7)
 	GameTooltip:ClearLines()
 	if UnitLevel("player") ~= MAX_PLAYER_LEVEL then
-		GameTooltip:AddLine("Experience:", r, g, b)
-		GameTooltip:AddDoubleLine("Current: ", string.format('%s/%s (%d%%)', BreakUpLargeNumbers(XP), BreakUpLargeNumbers(maxXP), (XP/maxXP)*100), r, g, b, 1, 1, 1)
-		GameTooltip:AddDoubleLine("Remaining: ", string.format('%s', BreakUpLargeNumbers(maxXP-XP)), r, g, b, 1, 1, 1)
+		GameTooltip:AddLine(L_EXPBAR_EXP, r, g, b)
+		GameTooltip:AddDoubleLine(L_EXPBAR_CUR, string.format('%s/%s (%d%%)', BreakUpLargeNumbers(XP), BreakUpLargeNumbers(maxXP), (XP/maxXP)*100), r, g, b, 1, 1, 1)
+		GameTooltip:AddDoubleLine(L_EXPBAR_REMA, string.format('%s', BreakUpLargeNumbers(maxXP-XP)), r, g, b, 1, 1, 1)
 		if restXP then
-			GameTooltip:AddDoubleLine("Rested: ", string.format('|cffb3e1ff%s (%d%%)', BreakUpLargeNumbers(restXP), restXP/maxXP*100), r, g, b)
+			GameTooltip:AddDoubleLine(L_EXPBAR_REST, string.format('|cffb3e1ff%s (%d%%)', BreakUpLargeNumbers(restXP), restXP/maxXP*100), r, g, b)
 		end
 	end
 	if GetWatchedFactionInfo() then
 		local name, rank, start, cap, value = GetWatchedFactionInfo()
 		if UnitLevel("player") ~= MAX_PLAYER_LEVEL then GameTooltip:AddLine(" ") end
-		GameTooltip:AddDoubleLine("Reputation:", name, r, g, b, 1, 1, 1)
-		GameTooltip:AddDoubleLine("Standing:", string.format('|c'..FactionInfo[rank][5]..'%s|r', FactionInfo[rank][4]), r, g, b)
-		GameTooltip:AddDoubleLine("Rep:", string.format('%s/%s (%d%%)', BreakUpLargeNumbers(value-start), BreakUpLargeNumbers(cap-start), (value-start)/(cap-start)*100), r, g, b, 1, 1, 1)
-		GameTooltip:AddDoubleLine("Remaining:", string.format('%s', BreakUpLargeNumbers(cap-value)), r, g, b, 1, 1, 1)
+		GameTooltip:AddDoubleLine(L_EXPBAR_REPU, name, r, g, b, 1, 1, 1)
+		GameTooltip:AddDoubleLine(L_EXPBAR_STAN, string.format('|c'..FactionInfo[rank][5]..'%s|r', FactionInfo[rank][4]), r, g, b)
+		GameTooltip:AddDoubleLine(L_EXPBAR_REP, string.format('%s/%s (%d%%)', BreakUpLargeNumbers(value-start), BreakUpLargeNumbers(cap-start), (value-start)/(cap-start)*100), r, g, b, 1, 1, 1)
+		GameTooltip:AddDoubleLine(L_EXPBAR_REMA, string.format('%s', BreakUpLargeNumbers(cap-value)), r, g, b, 1, 1, 1)
 	end
 	GameTooltip:Show()
 end)

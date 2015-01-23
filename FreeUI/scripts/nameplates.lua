@@ -153,7 +153,7 @@ local UpdateFrame = function(self)
 	F.SetFS(self.level, fontSize)
 	self.level:SetShadowColor(0, 0, 0, 0)
 	if self.boss:IsShown() then
-		self.level:SetText("B")
+		self.level:SetText(L_NAMEPLATE_B)
 		self.level:SetTextColor(0.8, 0.05, 0)
 		self.level:Show()
 	elseif not elite and level == mylevel then

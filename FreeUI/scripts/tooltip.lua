@@ -214,7 +214,7 @@ local function OnTooltipSetUnit(self)
 
 		if msp.char[fullName].supported then
 			hasMSP = true
-			GameTooltipTextRight1:SetText(GetColor(unit).."MSP")
+			GameTooltipTextRight1:SetText(GetColor(unit)..L_TOOLTIP_MSP)
 			GameTooltipTextRight1:Show()
 			local cu = msp.char[fullName].field["CU"]
 			if cu ~= "" then
@@ -240,7 +240,7 @@ if msp then
 	tinsert(msp.callback.received, function(unitName)
 		if not hasMSP and UnitExists("mouseover") and UnitName("mouseover") == Ambiguate(unitName, "none") then
 			hasMSP = true
-			GameTooltipTextRight1:SetText(GetColor("mouseover").."MSP")
+			GameTooltipTextRight1:SetText(GetColor("mouseover")..L_TOOLTIP_MSP)
 			GameTooltipTextRight1:Show()
 			local cu = msp.char[unitName].field["CU"]
 			if cu ~= "" then

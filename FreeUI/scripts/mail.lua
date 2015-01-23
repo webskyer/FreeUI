@@ -26,7 +26,7 @@ local function OnEvent()
 		if(item and COD<1) then items = items + item end
 		cash = cash + money
 	end
-	text:SetText(format("%d gold, %d items", floor(cash * 0.0001), items))
+	text:SetText(format(L_MAIL_ITEM, floor(cash * 0.0001), items))
 
 	if(processing) then
 		if(num==0) then

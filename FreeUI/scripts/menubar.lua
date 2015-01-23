@@ -190,7 +190,7 @@ F.AddOptionsCallback("menubar", "buttons_mouseover", function()
 	end
 end)
 
-addButton("Micro menu", POSITION_LEFT, function()
+addButton(L_MENUBAR_MICRO_MENU, POSITION_LEFT, function()
 	if DropDownList1:IsShown() then
 		ToggleFrame(DropDownList1)
 	else
@@ -198,7 +198,7 @@ addButton("Micro menu", POSITION_LEFT, function()
 	end
 end)
 
-addButton("Chat menu", POSITION_LEFT, function()
+addButton(L_MENUBAR_CHAT_MENU, POSITION_LEFT, function()
 	ChatMenu:ClearAllPoints()
 	ChatMenu:SetPoint("BOTTOMLEFT", UIParent, 30, 30)
 	ToggleFrame(ChatMenu)
@@ -225,15 +225,15 @@ GarrisonLandingPageMinimapButton:HookScript("OnEvent", function(self, event)
 	end
 end)
 
-addButton("Toggle DBM", POSITION_RIGHT, function()
+addButton(L_MENUBAR_DBM_MENU, POSITION_RIGHT, function()
 	if IsAddOnLoaded("DBM-Core") then
 		DisableAddOn("DBM-Core")
 		DisableAddOn("DBM-StatusBarTimers")
-		DEFAULT_CHAT_FRAME:AddMessage("FreeUI: |cffffffffDBM disabled. Type|r /rl |cfffffffffor the changes to apply.|r", r, g, b)
+		DEFAULT_CHAT_FRAME:AddMessage(L_MENUBAR_DBM_DISABLED, r, g, b)
 	else
 		EnableAddOn("DBM-Core")
 		EnableAddOn("DBM-StatusBarTimers")
-		DEFAULT_CHAT_FRAME:AddMessage("FreeUI: |cffffffffDBM enabled. Type|r /rl |cfffffffffor the changes to apply.|r", r, g, b)
+		DEFAULT_CHAT_FRAME:AddMessage(L_MENUBAR_DBM_ENABLED, r, g, b)
 	end
 end)
 
