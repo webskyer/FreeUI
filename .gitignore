@@ -96,7 +96,8 @@
 #  fixed file #
 ###############
 .gitignore
-*.ttf
+/FreeUI/media/PFRondaSeven.ttf
+/FreeUI/media/font.ttf
 
 ###############
 #  temp file  #
