@@ -168,6 +168,12 @@ ERR_AUCTION_SOLD_S = "|cff1eff00%s|r |cffffffff卖.|r"
 -- scrpit/automation.lua 168 176
 
 L_UNDRESS = "一键换装"
+L_AUTO_REPAIR = "修理费: %.1fg (公会)"
+L_AUTO_REPAIR_NO = "你的公会不让你使用公会修理."
+L_AUTO_REPAIR_1 = "修理费: %.1fg"
+L_AUTO_REPAIRS = "修理"
+L_AUTO_REPAIRS_YOU = "你没有足够的修理费."
+L_AUTO_REPAIRS_GUILD = "公会修理失败. 手动修复,或者自费修理."
 
 --[[ Bank ]] 
 -- scrpit/bag.lua 228
@@ -203,6 +209,7 @@ L_NAMEPLATE_B = "首领"
 -- scrpit/tooltip.lua 217
 
 L_TOOLTIP_MSP = "MSP"
+L_TOOLTIP_TYOU = "T: > 你 <" --204
 
 --[[ Unitframes ]] 
 -- scrpit/unitframes.lua 190
@@ -213,7 +220,7 @@ L_UNITFRAME_GHOST = "幽灵" --194
 L_UNITFRAME_PVP = "PVP开启"
 L_UNITFRAME_COMBAT = "战斗中" --1138
 L_UNITFRAME_RESTING = "休息中" --1141
-L_UNITFRAME_YOU = "> 自己 <" --1217
+L_UNITFRAME_YOU = "> 你 <" --1217
 L_UNITFRAME_QUEST = "进行中" --1297
 L_UNITFRAME_LEADER = "RL"	--1578 最好换成皇冠图标
 

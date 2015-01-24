@@ -201,7 +201,7 @@ local function OnTooltipSetUnit(self)
 		local text = ""
 
 		if(UnitName(tunit)==UnitName("player")) then
-			text = "T: > YOU <"
+			text = L_TOOLTIP_TYOU
 		else
 			text = "T: "..UnitName(tunit)
 		end

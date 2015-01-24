@@ -163,10 +163,16 @@ TRIVIAL_QUEST_DISPLAY = "|cffffffff%s (low level)|r"
 
 ERR_AUCTION_SOLD_S = "|cff1eff00%s|r |cffffffffsold.|r"
 
--- [[Undress]]
+-- [[Automation]]
 -- scrpit/automation.lua 168 176
 
 L_UNDRESS = "Undress"
+L_AUTO_REPAIR = "Repair: %.1fg (Guild)"
+L_AUTO_REPAIR_NO = "Your guild cannot afford your repairs."
+L_AUTO_REPAIR_1 = "Repair: %.1fg"
+L_AUTO_REPAIRS = "Repairs"
+L_AUTO_REPAIRS_YOU = "You have insufficient funds to repair your equipment."
+L_AUTO_REPAIRS_GUILD = "Guild repair failed. Repair manually, or click to use own money."
 
 --[[ Bank ]] 
 -- scrpit/bag.lua 228
@@ -202,6 +208,7 @@ L_NAMEPLATE_B = "B"
 -- scrpit/tooltip.lua 217
 
 L_TOOLTIP_MSP = "MSP"
+L_TOOLTIP_TYOU = "T: > YOU <" --204
 
 --[[ Unitframes ]] 
 -- scrpit/unitframes.lua 190

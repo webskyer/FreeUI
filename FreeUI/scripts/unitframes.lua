@@ -165,7 +165,7 @@ oUF.Tags.Events['free:bosshealth'] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_T
 
 local function shortName(unit)
 	local name = UnitName(unit)
-	if name and name:len() > 4 then name = name:sub(1, 4) end
+	if name and name:len() > 12 then name = name:sub(1, 12) end
 
 	return name
 end
