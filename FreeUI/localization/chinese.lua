@@ -222,7 +222,8 @@ L_UNITFRAME_COMBAT = "战斗中" --1138
 L_UNITFRAME_RESTING = "休息中" --1141
 L_UNITFRAME_YOU = "> 你 <" --1217
 L_UNITFRAME_QUEST = "进行中" --1297
-L_UNITFRAME_LEADER = "RL"	--1578 最好换成皇冠图标
+L_UNITFRAME_LEADER = "\124TInterface\\GROUPFRAME\\UI-Group-LeaderIcon.tga:16:16:0:0:16:16:0:16:0:16\124t"	--1578
+L_UNITFRAME_MASTERLOOTER = "\124TInterface\\GROUPFRAME\\UI-Group-MasterLooter.tga:16:16:0:0:16:16:0:16:0:16\124t"	--1578
 
 --[[ Expbar ]] 
 -- scrpit/expbar.lua 133
@@ -242,7 +243,7 @@ L_MENUBAR_MICRO_MENU = "微菜单"
 L_MENUBAR_CHAT_MENU = "聊天 " --201
 L_MENUBAR_DBM_MENU = "切换 DBM" --228
 L_MENUBAR_DBM_DISABLED = "FreeUI: |cffffffffDBM 已禁用. Type|r /rl |cfffffffff 重载界面.|r" --232
-L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已启用. Type|r /rl |cfffffffffor 重载界面.|r" --236
+L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已启用. Type|r /rl |cffffffff 重载界面.|r" --236
 
 --[[ Events ]] 
 -- scrpit/events.lua 54
