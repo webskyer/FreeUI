@@ -90,12 +90,12 @@
 /TradeSkillMaster_WoWuction/
 
 /bosseskilled/
-
+/Postal/
+/sFishing/
 ###############
 #  fixed file #
 ###############
-/FreeUI/media/font.ttf
-/FreeUI/media/PFRondaSeven.ttf
+/media/*.ttf
 
 ###############
 #  temp file  #
