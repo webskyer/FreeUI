@@ -95,7 +95,8 @@
 ###############
 #  fixed file #
 ###############
-
+.gitignore
+*.ttf
 
 ###############
 #  temp file  #
@@ -105,6 +106,8 @@
 ###############
 #    script   #
 ###############
-*.bat
 
 #########保守模式############
+!/FreeUI/
+!/FreeUI_Install/
+!/FreeUI_Options/
