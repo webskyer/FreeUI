@@ -195,7 +195,7 @@ L_MAIL_ITEM = "%d gold, %d items"
 --[[ Minimap ]] 
 -- scrpit/minimap.lua 45
 
-L_MINIMAP_MAIL = "Mail"
+L_MINIMAP_MAIL = "\124TInterface\\CURSOR\\CURSORICONSNEW.tga:10:15:0:0:128:256:33:63:38:59\124tMail"
 L_MINIMAP_N = "N" --232
 L_MINIMAP_H = "H" --234
 

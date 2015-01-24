@@ -196,7 +196,7 @@ L_MAIL_ITEM = "%d 金, %d 件 物品"
 --[[ Minimap ]] 
 -- scrpit/minimap.lua 45
 
-L_MINIMAP_MAIL = "郵件"
+L_MINIMAP_MAIL = "\124TInterface\\CURSOR\\CURSORICONSNEW.tga:10:15:0:0:128:256:33:63:38:59\124t郵件"
 
 --[[ Nameplate ]] 
 -- scrpit/nameplates.lua 156
