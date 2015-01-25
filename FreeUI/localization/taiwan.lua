@@ -168,6 +168,12 @@ ERR_AUCTION_SOLD_S = "|cff1eff00%s|r |cffffffff賣.|r"
 -- scrpit/automation.lua 168 176
 
 L_UNDRESS = "一鍵換裝"
+L_AUTO_REPAIR = "修理費: %.1fg (公會)"
+L_AUTO_REPAIR_NO = "你的公會不讓你使用公會修理."
+L_AUTO_REPAIR_1 = "修理費: %.1fg"
+L_AUTO_REPAIRS = "修理"
+L_AUTO_REPAIRS_YOU = "你沒有足夠的修理費."
+L_AUTO_REPAIRS_GUILD = "公會修理失敗. 手動修復,或者自費修理."
 
 --[[ Bank ]] 
 -- scrpit/bag.lua 228
@@ -190,7 +196,7 @@ L_MAIL_ITEM = "%d 金, %d 件 物品"
 --[[ Minimap ]] 
 -- scrpit/minimap.lua 45
 
-L_MINIMAP_MAIL = "郵件"
+L_MINIMAP_MAIL = "\124TInterface\\CURSOR\\CURSORICONSNEW.tga:10:15:0:0:128:256:33:63:38:59\124t郵件"
 
 --[[ Nameplate ]] 
 -- scrpit/nameplates.lua 156
@@ -211,9 +217,11 @@ L_UNITFRAME_GHOST = "幽靈" --194
 L_UNITFRAME_PVP = "PVP開啟" --696
 L_UNITFRAME_COMBAT = "戰鬥中" --1138
 L_UNITFRAME_RESTING = "休息中" --1141
-L_UNITFRAME_YOU = "> 自己 <" --1217
+L_UNITFRAME_YOU = "> 你 <" --1217
 L_UNITFRAME_QUEST = "進行中" --1297
-L_UNITFRAME_LEADER = "指揮"	--1578
+L_UNITFRAME_LEADER = "\124TInterface\\GROUPFRAME\\UI-Group-LeaderIcon.tga:16:16:0:0:16:16:0:16:0:16\124t"	--1578
+L_UNITFRAME_MASTERLOOTER = "\124TInterface\\GROUPFRAME\\UI-Group-MasterLooter.tga:16:16:0:0:16:16:0:16:0:16\124t"	--1578
+
 
 --[[ Expbar ]] 
 -- scrpit/expbar.lua 133
@@ -233,7 +241,7 @@ L_MENUBAR_MICRO_MENU = "微菜單"
 L_MENUBAR_CHAT_MENU = "聊天 " --201
 L_MENUBAR_DBM_MENU = "切換 DBM" --228
 L_MENUBAR_DBM_DISABLED = "FreeUI: |cffffffffDBM 已禁用. Type|r /rl |cfffffffff 重載界面.|r" --232
-L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已啟用. Type|r /rl |cfffffffffor 重載界面.|r" --236
+L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已啟用. Type|r /rl |cffffffff 重載界面.|r" --236
 
 --[[ Events ]] 
 -- scrpit/events.lua 54
@@ -247,3 +255,8 @@ L_EVENTS_MAIL_NEW = "你有新的郵件."
 L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: 選擇用戶界面|r"
 L_SLASH_INSTALL = "|cffffffff/freeui|r 安裝|cffffffff: 載入安裝界面|r" --67
 L_SLASH_RESET = "|cffffffff/freeui|r 重置|cffffffff: 清除保存的設置|r" --68
+
+--[[ Rarealert ]] 
+-- scrpit/rarealert.lua 17
+
+L_RARE_RARE = "發現 稀有精英!"

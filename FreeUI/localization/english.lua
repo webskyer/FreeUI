@@ -163,10 +163,16 @@ TRIVIAL_QUEST_DISPLAY = "|cffffffff%s (low level)|r"
 
 ERR_AUCTION_SOLD_S = "|cff1eff00%s|r |cffffffffsold.|r"
 
--- [[Undress]]
+-- [[Automation]]
 -- scrpit/automation.lua 168 176
 
 L_UNDRESS = "Undress"
+L_AUTO_REPAIR = "Repair: %.1fg (Guild)"
+L_AUTO_REPAIR_NO = "Your guild cannot afford your repairs."
+L_AUTO_REPAIR_1 = "Repair: %.1fg"
+L_AUTO_REPAIRS = "Repairs"
+L_AUTO_REPAIRS_YOU = "You have insufficient funds to repair your equipment."
+L_AUTO_REPAIRS_GUILD = "Guild repair failed. Repair manually, or click to use own money."
 
 --[[ Bank ]] 
 -- scrpit/bag.lua 228
@@ -189,7 +195,7 @@ L_MAIL_ITEM = "%d gold, %d items"
 --[[ Minimap ]] 
 -- scrpit/minimap.lua 45
 
-L_MINIMAP_MAIL = "Mail"
+L_MINIMAP_MAIL = "\124TInterface\\CURSOR\\CURSORICONSNEW.tga:10:15:0:0:128:256:33:63:38:59\124tMail"
 L_MINIMAP_N = "N" --232
 L_MINIMAP_H = "H" --234
 
@@ -202,6 +208,7 @@ L_NAMEPLATE_B = "B"
 -- scrpit/tooltip.lua 217
 
 L_TOOLTIP_MSP = "MSP"
+L_TOOLTIP_TYOU = "T: > YOU <" --204
 
 --[[ Unitframes ]] 
 -- scrpit/unitframes.lua 190
@@ -214,7 +221,8 @@ L_UNITFRAME_COMBAT = "!" --1138
 L_UNITFRAME_RESTING = "Zzz"	--1141
 L_UNITFRAME_YOU = "> YOU <" --1217
 L_UNITFRAME_QUEST = "!"	--1297
-L_UNITFRAME_LEADER = "l"	--1578
+L_UNITFRAME_LEADER = "\124TInterface\\GROUPFRAME\\UI-Group-LeaderIcon.tga:16:16:0:0:16:16:0:16:0:16\124t"	--1578
+L_UNITFRAME_MASTERLOOTER = "\124TInterface\\GROUPFRAME\\UI-Group-MasterLooter.tga:16:16:0:0:16:16:0:16:0:16\124t"	--1578
 
 --[[ Expbar ]] 
 -- scrpit/expbar.lua 133
@@ -248,3 +256,8 @@ L_EVENTS_MAIL_NEW = "You have new mail."
 L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: Select a unitframe layout|r"
 L_SLASH_INSTALL = "|cffffffff/freeui|r install|cffffffff: Load the intaller|r" --67
 L_SLASH_RESET = "|cffffffff/freeui|r reset|cffffffff: Clear saved settings|r" --68
+
+--[[ Rarealert ]] 
+-- scrpit/rarealert.lua 17
+
+L_RARE_RARE = "Rare spotted!"

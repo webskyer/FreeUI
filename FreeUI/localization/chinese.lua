@@ -168,6 +168,12 @@ ERR_AUCTION_SOLD_S = "|cff1eff00%s|r |cffffffff卖.|r"
 -- scrpit/automation.lua 168 176
 
 L_UNDRESS = "一键换装"
+L_AUTO_REPAIR = "修理费: %.1fg (公会)"
+L_AUTO_REPAIR_NO = "你的公会不让你使用公会修理."
+L_AUTO_REPAIR_1 = "修理费: %.1fg"
+L_AUTO_REPAIRS = "修理"
+L_AUTO_REPAIRS_YOU = "你没有足够的修理费."
+L_AUTO_REPAIRS_GUILD = "公会修理失败. 手动修复,或者自费修理."
 
 --[[ Bank ]] 
 -- scrpit/bag.lua 228
@@ -190,7 +196,7 @@ L_MAIL_ITEM = "%d 金, %d 件 物品"
 --[[ Minimap ]] 
 -- scrpit/minimap.lua 45
 
-L_MINIMAP_MAIL = "邮件"
+L_MINIMAP_MAIL = "\124TInterface\\CURSOR\\CURSORICONSNEW.tga:10:15:0:0:128:256:33:63:38:59\124t邮件"
 L_MINIMAP_N = "普通" --232
 L_MINIMAP_H = "英雄" --234
 
@@ -203,6 +209,7 @@ L_NAMEPLATE_B = "首领"
 -- scrpit/tooltip.lua 217
 
 L_TOOLTIP_MSP = "MSP"
+L_TOOLTIP_TYOU = "T: > 你 <" --204
 
 --[[ Unitframes ]] 
 -- scrpit/unitframes.lua 190
@@ -213,9 +220,10 @@ L_UNITFRAME_GHOST = "幽灵" --194
 L_UNITFRAME_PVP = "PVP开启"
 L_UNITFRAME_COMBAT = "战斗中" --1138
 L_UNITFRAME_RESTING = "休息中" --1141
-L_UNITFRAME_YOU = "> 自己 <" --1217
+L_UNITFRAME_YOU = "> 你 <" --1217
 L_UNITFRAME_QUEST = "进行中" --1297
-L_UNITFRAME_LEADER = "指挥"	--1578
+L_UNITFRAME_LEADER = "\124TInterface\\GROUPFRAME\\UI-Group-LeaderIcon.tga:16:16:0:0:16:16:0:16:0:16\124t"	--1578
+L_UNITFRAME_MASTERLOOTER = "\124TInterface\\GROUPFRAME\\UI-Group-MasterLooter.tga:16:16:0:0:16:16:0:16:0:16\124t"	--1578
 
 --[[ Expbar ]] 
 -- scrpit/expbar.lua 133
@@ -235,7 +243,7 @@ L_MENUBAR_MICRO_MENU = "微菜单"
 L_MENUBAR_CHAT_MENU = "聊天 " --201
 L_MENUBAR_DBM_MENU = "切换 DBM" --228
 L_MENUBAR_DBM_DISABLED = "FreeUI: |cffffffffDBM 已禁用. Type|r /rl |cfffffffff 重载界面.|r" --232
-L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已启用. Type|r /rl |cfffffffffor 重载界面.|r" --236
+L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已启用. Type|r /rl |cffffffff 重载界面.|r" --236
 
 --[[ Events ]] 
 -- scrpit/events.lua 54
@@ -249,3 +257,8 @@ L_EVENTS_MAIL_NEW = "你有新的邮件."
 L_SLASH_SELECT = "|cffffffff/freeui|r [dps/healer]|cffffffff: 选择用户界面|r"
 L_SLASH_INSTALL = "|cffffffff/freeui|r 安装|cffffffff: 载入安装界面|r" --67
 L_SLASH_RESET = "|cffffffff/freeui|r 重置|cffffffff: 清除保存的设置|r" --68
+
+--[[ Rarealert ]] 
+-- scrpit/rarealert.lua 17
+
+L_RARE_RARE = "发现 稀有精英!"

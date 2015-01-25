@@ -1,9 +1,9 @@
 local F, C, L = unpack(select(2, ...))
 
-if GetLocale() ~= "zhCN" then return end
+if GetLocale() ~= "zhTW" then return end
 
 ----------------------------------------------------------------------------------------
---Localization for zhCN client
+--Localization for zhTW client
 --Translation: Webskyer
 ----------------------------------------------------------------------------------------
 --install.lua

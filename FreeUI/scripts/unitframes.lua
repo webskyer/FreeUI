@@ -163,9 +163,37 @@ oUF.Tags.Methods['free:bosshealth'] = function(unit)
 end
 oUF.Tags.Events['free:bosshealth'] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_TARGETABLE_CHANGED"
 
+local function utf8sub(string, i, dots)
+  local bytes = string:len()
+  if bytes <= i then
+    return string
+  else
+    local len, pos = 0, 1
+    while pos <= bytes do
+      len = len + 1
+      local c = string:byte(pos)
+      if c > 0 and c <= 127 then
+        pos = pos + 1
+      elseif c >= 194 and c <= 223 then
+        pos = pos + 2
+      elseif c >= 224 and c <= 239 then
+        pos = pos + 3
+      elseif c >= 240 and c <= 244 then
+        pos = pos + 4
+      end
+      if len == i then break end
+    end
+    if len == i and pos <= bytes then
+      return string:sub(1, pos - 1)..(dots and '...' or '')
+    else
+      return string
+    end
+  end
+end	
+
 local function shortName(unit)
 	local name = UnitName(unit)
-	if name and name:len() > 4 then name = name:sub(1, 4) end
+	if name and name:len() > 4 then name = utf8sub(name,4,false) end
 
 	return name
 end
@@ -1581,7 +1609,7 @@ do
 		self.Leader = Leader
 
 		local MasterLooter = F.CreateFS(self, C.FONT_SIZE_NORMAL, "RIGHT")
-		MasterLooter:SetText("m")
+		MasterLooter:SetText(L_UNITFRAME_MASTERLOOTER)
 		MasterLooter:SetPoint("TOPRIGHT", Health, 1, 0)
 
 		self.MasterLooter = MasterLooter
