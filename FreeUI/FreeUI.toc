@@ -7,6 +7,7 @@
 ## OptionalDeps: Clique, FreeUI_Options, MyRolePlay, oUF
 ## SavedVariables: FreeUIGlobalConfig
 ## SavedVariablesPerCharacter: FreeUIConfig
+## X-SlashCmdList: /omf
 
 core\core.lua
 
@@ -148,3 +149,5 @@ theme\FrameXML\WorldMapFrame.lua
 theme\FrameXML\WorldStateFrame.lua
 
 theme\SharedXML\AddonList.lua
+
+core\Movers.lua
