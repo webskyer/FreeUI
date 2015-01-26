@@ -183,8 +183,8 @@ L_BUY_NEW_SLOT = "购买新的银行包栏: 点击这里."
 --[[ Stats_bar ]] 
 -- scrpit/stats.lua 37
 
-L_STATS_FPS = "|r 帧   |cffffffff"
-L_STATS_MS = "|r 毫秒   |cffffffff"
+L_STATS_FPS = "|r fps   |cffffffff"
+L_STATS_MS = "|r ms   |cffffffff"
 L_STATS_ADDONS = "插件内存占用" --68
 L_STATS_SHOW = "点击 |cffffffff显示时钟." --78
 
