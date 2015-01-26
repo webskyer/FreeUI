@@ -393,7 +393,42 @@ do
 	hotKey:SetPoint("TOPLEFT", rightBarsMouseover, "BOTTOMLEFT", 0, -8)
 
 	enableStyle.children = {hotKey}
+	
+	local actionbarSkillBar = ns.addSubCategory(actionbars, ns.localization.actionbarsSkillBar)
+	actionbarSkillBar:SetPoint("TOPLEFT", hotKey, "BOTTOMLEFT", 0, -30)
+	
+	local MainMenuBarButton_Width = ns.CreateNumberSlider(actionbars, "MainMenuBarButton_Width", 26, 50, 26, 50, 1, true)
+	MainMenuBarButton_Width:SetPoint("TOPLEFT", actionbarSkillBar, "BOTTOMLEFT", 0, -30)
+	
+	local MainMenuBarButton_Height = ns.CreateNumberSlider(actionbars, "MainMenuBarButton_Height", 26, 50, 26, 50, 1, true)
+	MainMenuBarButton_Height:SetPoint("LEFT", MainMenuBarButton_Width, "RIGHT", 70, 0)
+	
+	local BottomLeftBarButton_Width = ns.CreateNumberSlider(actionbars, "BottomLeftBarButton_Width", 26, 50, 26, 50, 1, true)
+	BottomLeftBarButton_Width:SetPoint("TOPLEFT", MainMenuBarButton_Width, "BOTTOMLEFT", 0, -30)
+	
+	local BottomLeftBarButton_Height = ns.CreateNumberSlider(actionbars, "BottomLeftBarButton_Height", 26, 50, 26, 50, 1, true)
+	BottomLeftBarButton_Height:SetPoint("TOPLEFT", MainMenuBarButton_Height, "BOTTOMLEFT", 0, -30)
 
+	local BottomRightBarButton_Width = ns.CreateNumberSlider(actionbars, "BottomRightBarButton_Width", 26, 50, 26, 50, 1, true)
+	BottomRightBarButton_Width:SetPoint("TOPLEFT", BottomLeftBarButton_Width, "BOTTOMLEFT", 0, -30)
+	
+	local BottomRightBarButton_Height = ns.CreateNumberSlider(actionbars, "BottomRightBarButton_Height", 26, 50, 26, 50, 1, true)
+	BottomRightBarButton_Height:SetPoint("TOPLEFT", BottomLeftBarButton_Height, "BOTTOMLEFT", 0, -30)
+
+	local MultiBarRightButton_Width = ns.CreateNumberSlider(actionbars, "MultiBarRightButton_Width", 26, 50, 26, 50, 1, true)
+	MultiBarRightButton_Width:SetPoint("TOPLEFT", BottomRightBarButton_Width, "BOTTOMLEFT", 0, -30)
+	
+	local MultiBarRightButton_Height = ns.CreateNumberSlider(actionbars, "MultiBarRightButton_Height", 26, 50, 26, 50, 1, true)
+	MultiBarRightButton_Height:SetPoint("TOPLEFT", BottomRightBarButton_Height, "BOTTOMLEFT", 0, -30)
+
+	local MultiBarLeftButton_Width = ns.CreateNumberSlider(actionbars, "MultiBarLeftButton_Width", 26, 50, 26, 50, 1, true)
+	MultiBarLeftButton_Width:SetPoint("TOPLEFT", MultiBarRightButton_Width, "BOTTOMLEFT", 0, -30)
+	
+	local MultiBarLeftButton_Height = ns.CreateNumberSlider(actionbars, "MultiBarLeftButton_Height", 26, 50, 26, 50, 1, true)
+	MultiBarLeftButton_Height:SetPoint("TOPLEFT", MultiBarRightButton_Height, "BOTTOMLEFT", 0, -30)
+	
+
+	
 	local function toggleActionBarsOptions()
 		local shown = enable:GetChecked()
 		enableStyle:SetShown(shown)

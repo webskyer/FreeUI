@@ -28,8 +28,8 @@ C["appearance"] = {
 	["colourScheme"] = 1,			-- 1 = class coloured, 2 = custom
 		["customColour"] = {r = 1, g = 1, b = 1},
 	["fontUseAlternativeFont"] = false,
-	["fontSizeNormal"] = 8,
-	["fontSizeLarge"] = 16,
+	["fontSizeNormal"] = 11,
+	["fontSizeLarge"] = 20,
 	["fontOutline"] = true,
 	["fontOutlineStyle"] = 2,		-- 1 = normal, 2 = monochrome
 	["fontShadow"] = false,
@@ -53,7 +53,23 @@ C["actionbars"] = {
 	["enableStyle"] = true,				-- style the action bars (might have to be turned off for other addons)
 
 	["hotkey"] = false, 				-- show hot keys on buttons
+	["hotkey1"] = false, 				-- show hot keys on buttons
 	["rightbars_mouseover"] = false,	-- show right bars on mouseover (show/hide: use blizz option)
+	
+	["MainMenuBarButton_Width"] = 26,	-- MainMenuBarButton Width
+	["MainMenuBarButton_Height"] = 26,	-- MainMenuBarButton Height
+	
+	["BottomLeftBarButton_Width"] = 26,	-- BottomLeftBarButton Width
+	["BottomLeftBarButton_Height"] = 26,	-- BottomLeftBarButton Height
+	
+	["BottomRightBarButton_Width"] = 26,	-- BottomRightBarButton Width
+	["BottomRightBarButton_Height"] = 26,	-- BottomRightBarButton Height
+	
+	["MultiBarRightButton_Width"] = 26,	-- MultiBarRightButton Width
+	["MultiBarRightButton_Height"] = 26,	-- MultiBarRightButton Height
+	
+	["MultiBarLeftButton_Width"] = 26,	-- MultiBarLeftButton Width
+	["MultiBarLeftButton_Height"] = 26,	-- MultiBarLeftButton Height
 }
 
 C["bags"] = {
@@ -103,9 +119,9 @@ C["unitframes"] = {
 	["enableGroup"] = true,								-- enable party/raid frames
 		["healerClasscolours"] = false,						-- colour unitframes by class in healer layout
 		["showRaidFrames"] = true, 							-- show the raid frames
-		["partyNameAlways"] = false,						-- show name on party/raid frames in dps/tank layout
+		["partyNameAlways"] = true,						-- show name on party/raid frames in dps/tank layout
 	["enableArena"] = true,								-- enable arena/flag carrier frames
-	["targettarget"] = false, 							-- show target of target frame
+	["targettarget"] = true, 							-- show target of target frame
 
 	["absorb"] = true, 									-- absorb bar/over absorb glow
 	["cast"] = {"BOTTOM", UIParent, "CENTER", 0, -105},	-- only applies with 'castbar' set to 2
