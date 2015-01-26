@@ -237,6 +237,38 @@ addButton(L_MENUBAR_DBM_MENU, POSITION_RIGHT, function()
 	end
 end)
 
+addButton(L_MENUBAR_TSM_MENU, POSITION_RIGHT, function()
+	if IsAddOnLoaded("TradeSkillMaster") then
+		DisableAddOn("TradeSkillMaster")
+		DisableAddOn("TradeSkillMaster_Accounting")
+		DisableAddOn("TradeSkillMaster_Additions")
+		DisableAddOn("TradeSkillMaster_AuctionDB")
+		DisableAddOn("TradeSkillMaster_Auctioning")
+		DisableAddOn("TradeSkillMaster_Crafting")
+		DisableAddOn("TradeSkillMaster_Destroying")
+		DisableAddOn("TradeSkillMaster_ItemTracker")
+		DisableAddOn("TradeSkillMaster_Mailing")
+		DisableAddOn("TradeSkillMaster_Shopping")
+		DisableAddOn("TradeSkillMaster_Warehousing")
+		DisableAddOn("TradeSkillMaster_WoWuction")
+		DEFAULT_CHAT_FRAME:AddMessage(L_MENUBAR_TSM_DISABLED, r, g, b)
+	else
+		EnableAddOn("TradeSkillMaster")
+		EnableAddOn("TradeSkillMaster_Accounting")
+		EnableAddOn("TradeSkillMaster_Additions")
+		EnableAddOn("TradeSkillMaster_AuctionDB")
+		EnableAddOn("TradeSkillMaster_Auctioning")
+		EnableAddOn("TradeSkillMaster_Crafting")
+		EnableAddOn("TradeSkillMaster_Destroying")
+		EnableAddOn("TradeSkillMaster_ItemTracker")
+		EnableAddOn("TradeSkillMaster_Mailing")
+		EnableAddOn("TradeSkillMaster_Shopping")
+		EnableAddOn("TradeSkillMaster_Warehousing")
+		EnableAddOn("TradeSkillMaster_WoWuction")		
+		DEFAULT_CHAT_FRAME:AddMessage(L_MENUBAR_TSM_ENABLED, r, g, b)
+	end
+end)
+
 --[[addButton("Toggle damage meter", POSITION_RIGHT, function()
 	if IsAddOnLoaded("alDamageMeter") then
 		DisableAddOn("alDamageMeter")

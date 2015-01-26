@@ -243,6 +243,9 @@ L_MENUBAR_CHAT_MENU = "Chat menu" --201
 L_MENUBAR_DBM_MENU = "Toggle DBM" --228
 L_MENUBAR_DBM_DISABLED = "FreeUI: |cffffffffDBM disabled. Type|r /rl |cfffffffffor the changes to apply.|r" --232
 L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM enabled. Type|r /rl |cfffffffffor the changes to apply.|r" --236
+L_MENUBAR_TSM_MENU = "Toggle TSM" --228
+L_MENUBAR_TSM_DISABLED = "FreeUI: |cffffffffTradeSkillMaster disabled. Type|r /rl |cffffffffffor the changes to apply.|r" --232
+L_MENUBAR_TSM_ENABLED = "FreeUI: |cffffffffTradeSkillMaster enabled. Type|r /rl |cfffffffffor the changes to apply.|r" --236
 
 --[[ Events ]] 
 -- scrpit/events.lua 54
@@ -261,3 +264,8 @@ L_SLASH_RESET = "|cffffffff/freeui|r reset|cffffffff: Clear saved settings|r" --
 -- scrpit/rarealert.lua 17
 
 L_RARE_RARE = "Rare spotted!"
+
+--[[ Reset UI Layout ]] 
+-- oUF/oUF_MovableFrames.lua 1019
+
+L_POPUP_RESETUI = "Are you sure you want to reset layout for FreeUI?"

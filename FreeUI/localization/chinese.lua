@@ -183,8 +183,8 @@ L_BUY_NEW_SLOT = "购买新的银行包栏: 点击这里."
 --[[ Stats_bar ]] 
 -- scrpit/stats.lua 37
 
-L_STATS_FPS = "|r 帧   |cffffffff"
-L_STATS_MS = "|r 毫秒   |cffffffff"
+L_STATS_FPS = "|r fps   |cffffffff"
+L_STATS_MS = "|r ms   |cffffffff"
 L_STATS_ADDONS = "插件内存占用" --68
 L_STATS_SHOW = "点击 |cffffffff显示时钟." --78
 
@@ -244,6 +244,9 @@ L_MENUBAR_CHAT_MENU = "聊天 " --201
 L_MENUBAR_DBM_MENU = "切换 DBM" --228
 L_MENUBAR_DBM_DISABLED = "FreeUI: |cffffffffDBM 已禁用. Type|r /rl |cfffffffff 重载界面.|r" --232
 L_MENUBAR_DBM_ENABLED = "FreeUI: |cffffffffDBM 已启用. Type|r /rl |cffffffff 重载界面.|r" --236
+L_MENUBAR_TSM_MENU = "切换 TSM" --228
+L_MENUBAR_TSM_DISABLED = "FreeUI: |cffffffffTradeSkillMaster 已禁用. Type|r /rl |cfffffffff 重载界面.|r" --232
+L_MENUBAR_TSM_ENABLED = "FreeUI: |cffffffffTradeSkillMaster 已启用. Type|r /rl |cffffffff 重载界面.|r" --236
 
 --[[ Events ]] 
 -- scrpit/events.lua 54
@@ -262,3 +265,8 @@ L_SLASH_RESET = "|cffffffff/freeui|r 重置|cffffffff: 清除保存的设置|r" 
 -- scrpit/rarealert.lua 17
 
 L_RARE_RARE = "发现 稀有精英!"
+
+--[[ Reset UI Layout ]] 
+-- oUF/oUF_MovableFrames.lua 1019
+
+L_POPUP_RESETUI = "你要重置FreeUI界面位置?"
