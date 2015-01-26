@@ -1,0 +1,22 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+
+	<Script file='AuctionPlus.lua'/>
+	
+	<Script file='ChatFilter.lua'/>
+	
+	<Script file='CNChatEmote.lua'/>
+
+	<Script file='EasyChannel.lua'/>
+	
+	<Script file='Focuser.lua'/>
+
+	<Script file='GreedyQuester.lua'/>
+	
+	<Script file='OnlyMyBadges.lua'/>
+	
+	<Script file='TWChatEmote.lua'/>
+	
+	<Script file='ToyBoxFilterFixer.lua'/>
+	
+</Ui>

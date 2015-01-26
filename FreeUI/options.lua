@@ -186,6 +186,28 @@ C["performance"] = {
 	["nameplatesHealth"] = .2, 	-- update interval for nameplate health bar colour (only with name plates shown)
 }
 
+----------------------------------------------------------------------------------------
+--	Chat options
+----------------------------------------------------------------------------------------
+C["chat"] = {
+	["enable"] = true,							-- Enable chat
+	["background"] = false,						-- Enable background for chat
+	["background_alpha"] = 0.7,					-- Background alpha
+	["filter"] = true,							-- Removing some systems spam("Player1" won duel "Player2")
+	["spam"] = false,							-- Removing some players spam(gold/portals/etc)
+	["width"] = 330,							-- Chat width
+	["height"] = 135,							-- Chat height
+	["chat_bar"] = true,						-- Lite Button Bar for switch chat channel
+	["chat_bar_mouseover"] = false,				-- Lite Button Bar on mouseover
+	["time_color"] = {1, 1, 0},					-- Timestamp coloring(http://www.december.com/html/spec/colorcodescompact.html)
+	["whisp_sound"] = true,						-- Sound when whisper
+	["bubbles"] = true,							-- Skin Blizzard chat bubbles
+	["combatlog"] = true,						-- Show CombatLog tab
+	["tabs_mouseover"] = false,					-- Chat tabs on mouseover
+	["sticky"] = true,							-- Remember last channel
+	["damage_meter_spam"] = true,				-- Merge damage meter spam in one line-link
+}
+
 -- Selfbuff reminder
 -- put all possible buffs with the same effect in the same list, even when you can't cast them yourself
 -- outer tables are for buffs that you want together (e.g. an outer table with inner fire and an outer table with PW:F)
