@@ -3,6 +3,8 @@
 
 	<Script file='AuctionPlus.lua'/>
 	
+	<Script file='ChatBars.lua'/>
+	
 	<Script file='ChatFilter.lua'/>
 	
 	<Script file='CNChatEmote.lua'/>
@@ -17,6 +19,8 @@
 	
 	<Script file='TWChatEmote.lua'/>
 	
-	<Script file='ToyBoxFilterFixer.lua'/>
+	<Script file='SpellID.lua'/>
+	
+	<!-- <Script file='ToyBoxFilterFixer.lua'/> -->
 	
 </Ui>

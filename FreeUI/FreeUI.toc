@@ -36,7 +36,6 @@ scripts\bufftracker.lua
 scripts\buttons.lua
 scripts\chat.lua
 scripts\chattabs.lua
-scripts\chatbars.lua
 scripts\colours.lua
 scripts\combattext.lua
 scripts\combo.lua
@@ -150,7 +149,5 @@ theme\FrameXML\WorldStateFrame.lua
 
 theme\SharedXML\AddonList.lua
 
-
 WJ\Misc\load.xml
 WJ\Threat\Threat.lua
-WJ\FriendsMenuXP\FriendsMenuXP.xml

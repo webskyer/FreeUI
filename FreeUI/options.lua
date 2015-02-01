@@ -59,13 +59,13 @@ C["actionbars"] = {
 	["MainMenuBarButton_Width"] = 26,	-- MainMenuBarButton Width
 	["MainMenuBarButton_Height"] = 26,	-- MainMenuBarButton Height
 	
-	["BottomLeftBarButton_Width"] = 26,	-- BottomLeftBarButton Width
+	["BottomLeftBarButton_Width"] = 26,		-- BottomLeftBarButton Width
 	["BottomLeftBarButton_Height"] = 26,	-- BottomLeftBarButton Height
 	
 	["BottomRightBarButton_Width"] = 26,	-- BottomRightBarButton Width
 	["BottomRightBarButton_Height"] = 26,	-- BottomRightBarButton Height
 	
-	["MultiBarRightButton_Width"] = 26,	-- MultiBarRightButton Width
+	["MultiBarRightButton_Width"] = 26,		-- MultiBarRightButton Width
 	["MultiBarRightButton_Height"] = 26,	-- MultiBarRightButton Height
 	
 	["MultiBarLeftButton_Width"] = 26,	-- MultiBarLeftButton Width
@@ -109,6 +109,7 @@ C["tooltip"] = {
 	["guildrank"] = true,
 	["title"] = false,
 	["pvp"] = true,
+	["spell_id"] = true,
 }
 
 C["unitframes"] = {
@@ -117,7 +118,7 @@ C["unitframes"] = {
 	["autoPosition"] = true,							-- automatically postion unit frames based on resolution
 
 	["enableGroup"] = true,								-- enable party/raid frames
-		["healerClasscolours"] = false,						-- colour unitframes by class in healer layout
+		["healerClasscolours"] = true,						-- colour unitframes by class in healer layout
 		["showRaidFrames"] = true, 							-- show the raid frames
 		["partyNameAlways"] = true,						-- show name on party/raid frames in dps/tank layout
 	["enableArena"] = true,								-- enable arena/flag carrier frames
@@ -128,7 +129,7 @@ C["unitframes"] = {
 	["castbarSeparate"] = true, 						-- true for a separate player cast bar
 		["castbarSeparateOnlyCasters"] = true, 				-- separate bar only for mages/warlocks/priests
 	["pvp"] = true, 									-- show pvp icon on player frame
-	["statusIndicator"] = false,						-- show combat/resting status on player frame
+	["statusIndicator"] = true,						-- show combat/resting status on player frame
 		["statusIndicatorCombat"] = true,					-- show combat status (else: only resting)
 
 	["player"] = {"BOTTOM", UIParent, "CENTER", -275, -105},
@@ -184,28 +185,6 @@ C["performance"] = {
 	["mapcoords"] = .1, 	-- update interval for map coords in seconds (only with map open)
 	["nameplates"] = .1, 	-- update interval for nameplates in seconds (always)
 	["nameplatesHealth"] = .2, 	-- update interval for nameplate health bar colour (only with name plates shown)
-}
-
-----------------------------------------------------------------------------------------
---	Chat options
-----------------------------------------------------------------------------------------
-C["chat"] = {
-	["enable"] = true,							-- Enable chat
-	["background"] = false,						-- Enable background for chat
-	["background_alpha"] = 0.7,					-- Background alpha
-	["filter"] = true,							-- Removing some systems spam("Player1" won duel "Player2")
-	["spam"] = false,							-- Removing some players spam(gold/portals/etc)
-	["width"] = 330,							-- Chat width
-	["height"] = 135,							-- Chat height
-	["chat_bar"] = true,						-- Lite Button Bar for switch chat channel
-	["chat_bar_mouseover"] = false,				-- Lite Button Bar on mouseover
-	["time_color"] = {1, 1, 0},					-- Timestamp coloring(http://www.december.com/html/spec/colorcodescompact.html)
-	["whisp_sound"] = true,						-- Sound when whisper
-	["bubbles"] = true,							-- Skin Blizzard chat bubbles
-	["combatlog"] = true,						-- Show CombatLog tab
-	["tabs_mouseover"] = false,					-- Chat tabs on mouseover
-	["sticky"] = true,							-- Remember last channel
-	["damage_meter_spam"] = true,				-- Merge damage meter spam in one line-link
 }
 
 -- Selfbuff reminder

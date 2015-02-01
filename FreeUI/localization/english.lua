@@ -210,6 +210,10 @@ L_NAMEPLATE_B = "B"
 L_TOOLTIP_MSP = "MSP"
 L_TOOLTIP_TYOU = "T: > YOU <" --204
 
+-- WJ/Misc/SpellID.lua 14
+L_TOOLTIP_SPELL_ID = "Spell ID:"
+L_TOOLTIP_ITEM_ID = "Item ID:"
+
 --[[ Unitframes ]] 
 -- scrpit/unitframes.lua 190
 

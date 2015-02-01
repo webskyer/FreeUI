@@ -1,5 +1,5 @@
-﻿local T, C, L = unpack(select(2, ...))
-if T.client ~= "zhCN" then return end
+﻿local F, C, L = unpack(select(2, ...))
+if GetLocale() ~= "zhCN" then return end
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 -- Config 		设置
@@ -8,12 +8,12 @@ local Config = {
 	iconSize 			= 22,					-- 表情IconSize
 	enableEmoteInput	= true,					-- 启用
 	enableBubbleEmote	= true,					-- 聊天泡泡也显示表情
-	b_p	= {"BOTTOM", ChatBar, "top", 1, 3},	-- 表情按钮位置
-	t_p	= {"BOTTOMLEFT", UIParent, 21, 220},	-- 表情列表位置
+	b_p	= {"BOTTOM", ChatBar, "TOP", 1, 3},	-- 表情按钮位置
+	t_p	= {"BOTTOMLEFT", UIParent, 30, 260},	-- 表情列表位置
 }
 ----------------------------------------------------------------------------------------
 local customEmoteStartIndex = 9
-local fdir = "InterFace\\AddOns\\FreeUI\\Media\\Textures\\ChatIcon\\"
+local fdir = "InterFace\\AddOns\\FreeUI\\media\\Textures\\ChatIcon\\"
 local emotes = {
 	{"{rt1}",	[[Interface\TargetingFrame\UI-RaidTargetingIcon_1]]},
 	{"{rt2}",	[[Interface\TargetingFrame\UI-RaidTargetingIcon_2]]},
@@ -189,7 +189,7 @@ function ChatEmoteButtons()-----------------------------------------------------
 	button:SetPoint(unpack(Config.b_p))			-- Button Position
 	button:SetHeight(20)
 	button:SetWidth(20)
-	button:SetAlpha(0)
+	button:SetAlpha(0.5)
 
 -- buttonicon
 	local buttontexture = button:CreateTexture(nil, "BORDER")

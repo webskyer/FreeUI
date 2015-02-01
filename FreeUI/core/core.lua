@@ -108,9 +108,15 @@ updateScale = function(event)
 	if C.general.uiScaleAuto then
 		if not InCombatLockdown() then
 			-- we don't bother with the cvar because of high resolution shenanigans
-			UIParent:SetScale(768/string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)"))
+			local uiscale =min(2, max(0.64, 768 / string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)")))
+			UIParent:SetScale(uiscale)	
 			ChatFrame1:ClearAllPoints()
 			ChatFrame1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 30, 30)
+			
+			local mult = 768 /string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)")/ uiscale
+			F.mult = mult
+			F.uiscale = uiscale
+			F.noscalemult = F.mult * F.uiscale
 		else
 			F.RegisterEvent("PLAYER_REGEN_ENABLED", updateScale)
 		end

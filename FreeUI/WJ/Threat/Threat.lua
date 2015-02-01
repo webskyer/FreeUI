@@ -1,17 +1,30 @@
-﻿local T, C, L, _ = unpack(select(2, ...))
+﻿local F, C, L = unpack(select(2, ...))
+
+----------------------------------------------------------------------------------------
+--	Threat options
+----------------------------------------------------------------------------------------
+C["threat"] = {
+	["enable"] = false,							-- Enable threat meter
+	["enable_new"] = true,						-- Enable threat meter
+	["height"] = 12,							-- Bars height
+	["width"] = 217,							-- Bars width
+	["bar_rows"] = 7,							-- Number of bars
+	["hide_solo"] = false,						-- Show only in party/raid
+}
+
 if C.threat.enable_new ~= true then return end
 ----------------
 --  命名空间  --
 ----------------
 local cfg = CreateFrame("Frame")
-local Media = "Interface\\AddOns\\ShestakUI\\WJ\\Threat\\Media\\"
-cfg.Font = C.font.stylization_font
+local Media = "Interface\\AddOns\\FreeUI\\WJ\\Threat\\Media\\"
+cfg.Font = C.mainFont
 cfg.Statusbar = Media.."statusbar"
 cfg.GlowTex = Media.."solid"
 cfg.Solid = Media.."dM2"
 cfg.ArrowLarge = Media.."ArrowLarge"
 cfg.ArrowSmall = Media.."ArrowSmall"
-cfg.Pos = {"BOTTOMLEFT","oUF_Target", "TOPLEFT", 0, -100}	-- 仇恨条位置(已修正,可以锚在任意框体上,包括oUF头像)
+cfg.Pos = {"BOTTOMLEFT","target", "TOPLEFT", 0, -100}	-- 仇恨条位置(已修正,可以锚在任意框体上,包括oUF头像)
 cfg.NameTextL = 3	-- 姓名长度(单位:字)
 cfg.ThreatLimited = 3	-- 显示仇恨人数(不包括Tank)
 

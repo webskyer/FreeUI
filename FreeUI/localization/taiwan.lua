@@ -207,6 +207,11 @@ L_NAMEPLATE_B = "首領"
 -- scrpit/tooltip.lua 217
 
 L_TOOLTIP_MSP = "MSP"
+L_TOOLTIP_TYOU = "目標: > 你 <" --204
+
+-- WJ/Misc/SpellID.lua 14
+L_TOOLTIP_SPELL_ID = "法術ID:"
+L_TOOLTIP_ITEM_ID = "物品ID:"
 
 --[[ Unitframes ]] 
 -- scrpit/unitframes.lua 190

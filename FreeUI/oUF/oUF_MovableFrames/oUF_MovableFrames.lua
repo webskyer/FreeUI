@@ -979,7 +979,7 @@ do
 	InterfaceOptions_AddCategory(opt)
 end
 
-local slashList = GetAddOnMetadata(_NAME, 'X-SlashCmdList'):gsub('%s+', '')
+local slashList = "/ui,moveui"
 local handleCmds = function(...)
 	for i=1, select('#', ...) do
 		local cmd = select(i, ...)
@@ -1017,7 +1017,6 @@ end
 -- [[ copy from shestak MovableFrames.lua
 StaticPopupDialogs.RESET_UF = {
 	text = L_POPUP_RESETUI,
-	-- text = "你要重置FreeUI界面位置",
 	button1 = ACCEPT,
 	button2 = CANCEL,
 	OnAccept = function() if InCombatLockdown() then print("|cffffff00"..ERR_NOT_IN_COMBAT.."|r") else FreeUIConfig.UFPos = {} ReloadUI() end end,
